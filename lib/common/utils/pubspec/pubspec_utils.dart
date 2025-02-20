@@ -31,19 +31,20 @@ class PubspecUtils {
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
-    var yaml = pubspecJson;
+    try {
+      var yaml = pubspecJson;
 
-    if (yaml.containsKey('get_cli')) {
-      if ((yaml['get_cli'] as Map).containsKey('separator')) {
-        return (yaml['get_cli']['separator'] as String?) ?? '';
+      if (yaml.containsKey('get_cli')) {
+        if ((yaml['get_cli'] as Map).containsKey('separator')) {
+          return (yaml['get_cli']['separator'] as String?) ?? '';
+        }
       }
-    }
 
-    yaml = getCliJson;
-    if (yaml != null && yaml.containsKey('separator')) {
-      return yaml['separator'] as String? ?? '';
-    }
-
+      yaml = getCliJson;
+      if (yaml != null && yaml.containsKey('separator')) {
+        return yaml['separator'] as String? ?? '';
+      }
+    } catch (_) {}
     return '';
   });
 
@@ -163,7 +164,7 @@ class PubspecUtils {
 
   static bool get nullSafeSupport =>
       !(pubSpec.environment['sdkConstraint'] ?? pubSpec.environment['sdk'])!
-      .allowsAny(VersionConstraint.parse('<2.12.0'));
+          .allowsAny(VersionConstraint.parse('<2.12.0'));
 
   /// make sure it is a get_server project
   static bool get isServerProject {
