@@ -89,7 +89,7 @@ get update
 
 // 显示当前 CLI 版本:
 get -v
-// 或 `get -version`
+// 或 `get version`
 
 // 帮助
 get help

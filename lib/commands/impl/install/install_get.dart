@@ -4,6 +4,6 @@ Future<void> installGet([bool runPubGet = false]) async {
   PubspecUtils.removeDependencies('get', logger: false);
   // TODO: 当 get 5 正式发布之后修改
   final isVersion5 = PubspecUtilsExt.getxVersion == 5;
-  final version = isVersion5 ? '5.0.0-release-candidate-9.2' : null;
+  final version = isVersion5 ? '5.0.0-release-candidate-9.3.2' : null;
   await PubspecUtils.addDependencies('get', runPubGet: runPubGet, version: version);
 }

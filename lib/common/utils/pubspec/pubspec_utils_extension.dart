@@ -1,7 +1,7 @@
 part of 'pubspec_utils.dart';
 
 /// 工具拓展
-class PubspecUtilsExt {
+extension PubspecUtilsExt on PubspecUtils {
   static final _pageName = _PubValue<String?>(
     () {
       try {
@@ -66,6 +66,7 @@ class PubspecUtilsExt {
     },
   );
 
+  /// 获取 get_cli 配置
   static get getCliJson => PubspecUtils.getCliJson;
 
   /// 配置的 Getx Version
@@ -77,14 +78,16 @@ class PubspecUtilsExt {
   /// 配置的本地化文件 localesFileName
   static String? get localesFileName => _localesFileName.value;
 
-  /// 配置的本地化输出路径
-  static String? get localesOutput => _localesOutput.value;
-
   /// 配置的本地化输入路径
   static String? get localesInput => _localesInput.value;
 
+  /// 配置的本地化输出路径
+  static String? get localesOutput => _localesOutput.value;
+
   /// 配置的 pageName
   static String get pageName => _pageName.value ?? 'page';
+
+  /// 获取 pubspec 配置
   static get pubspecJson => PubspecUtils.pubspecJson;
 
   static Map get _getCliMap {
