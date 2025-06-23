@@ -66,9 +66,6 @@ extension PubspecUtilsExt on PubspecUtils {
     },
   );
 
-  /// 获取 get_cli 配置
-  static get getCliJson => PubspecUtils.getCliJson;
-
   /// 配置的 Getx Version
   static int get getxVersion => _getxVersion.value ?? 4;
 
@@ -88,7 +85,10 @@ extension PubspecUtilsExt on PubspecUtils {
   static String get pageName => _pageName.value ?? 'page';
 
   /// 获取 pubspec 配置
-  static get pubspecJson => PubspecUtils.pubspecJson;
+  static dynamic get pubspecJson => PubspecUtils.pubspecJson;
+
+  /// 获取 get_cli 配置
+  static dynamic get getCliJson => PubspecUtils.getCliJson;
 
   static Map get _getCliMap {
     try {
@@ -112,16 +112,27 @@ extension PubspecUtilsExt on PubspecUtils {
     bool logger = true,
   }) {
     try {
-      var yaml = pubspecJson;
-      final entries = (yaml['get_cli'] as YamlMap?)?.entries;
+      YamlMap? yaml;
+      bool isGetCli = false;
+      try {
+        yaml = getCliJson as YamlMap?;
+        isGetCli = true;
+      } catch (e) {
+        yaml = pubspecJson['get_cli'] as YamlMap?;
+        isGetCli = false;
+      }
+      final entries = yaml?.entries;
+      final yamlEditor = YamlEditor(
+        isGetCli ? PubspecUtils.getCliString : PubspecUtils.pubspecString,
+      );
+      final List<Object?> path = isGetCli ? [] : ['get_cli'];
+      final file =
+          isGetCli ? PubspecUtils._getCliFile : PubspecUtils._pubspecFile;
       var newVaule = Map.fromEntries(entries ?? {})..[key] = value;
       // 创建一个 YamlEditor 来编辑 YAML 文件
-      final yamlEditor = YamlEditor(PubspecUtils.pubspecString);
-      yamlEditor.update(
-        ["get_cli"],
-        newVaule,
-      );
-      _savePub(yamlEditor);
+      yamlEditor.update(path, newVaule);
+
+      file.writeAsStringSync(yamlEditor.toString());
     } on Exception catch (_) {
       return false;
     }
@@ -130,9 +141,5 @@ extension PubspecUtilsExt on PubspecUtils {
           LocaleKeys.sucess_update_yaml.trArgs(['$key: $value']));
     }
     return true;
-  }
-
-  static void _savePub(YamlEditor yaml) {
-    PubspecUtils._pubspecFile.writeAsStringSync(yaml.toString());
   }
 }

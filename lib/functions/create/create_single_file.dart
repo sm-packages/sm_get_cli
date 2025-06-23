@@ -78,8 +78,11 @@ File writeFile(String path, String content,
 /// Replace the file name separator
 String replacePathTypeSeparator(String path, String separator) {
   if (separator.isNotEmpty) {
-    var index = path.indexOf(RegExp(r'controller.dart|model.dart|provider.dart|'
-        'binding.dart|view.dart|screen.dart|widget.dart|repository.dart'));
+    var index = path.indexOf(RegExp(
+      r'controller.dart|model.dart|provider.dart|'
+      'binding.dart|view.dart|screen.dart|widget.dart|repository.dart'
+      '|page.dart',
+    ));
     if (index != -1) {
       var chars = path.split('');
       index--;

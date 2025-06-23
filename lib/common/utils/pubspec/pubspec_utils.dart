@@ -20,20 +20,17 @@ class PubspecUtils {
   static final _getCliFile = File('.get_cli.yaml');
 
   static Pubspec get pubSpec => Pubspec.parse(pubspecString);
-  // NOTE: 暂时没用到
-  static Pubspec get getCli => Pubspec.parse(getCliString);
 
   static String get pubspecString => _pubspecFile.readAsStringSync();
   static String get getCliString => _getCliFile.readAsStringSync();
 
-  static get pubspecJson => loadYaml(pubspecString);
-  static get getCliJson => loadYaml(getCliString);
+  static dynamic get pubspecJson => loadYaml(pubspecString);
+  static dynamic get getCliJson => loadYaml(getCliString);
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
     try {
       var yaml = pubspecJson;
-
       if (yaml.containsKey('get_cli')) {
         if ((yaml['get_cli'] as Map).containsKey('separator')) {
           return (yaml['get_cli']['separator'] as String?) ?? '';
@@ -163,8 +160,13 @@ class PubspecUtils {
   }
 
   static bool get nullSafeSupport =>
-      !(pubSpec.environment['sdkConstraint'] ?? pubSpec.environment['sdk'])!
-          .allowsAny(VersionConstraint.parse('<2.12.0'));
+      !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
+
+  static bool get tallStyle =>
+      !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('>=3.7.0'));
+
+  static VersionConstraint? get sdkVersionConstraint =>
+      pubSpec.environment['sdkConstraint'] ?? pubSpec.environment['sdk'];
 
   /// make sure it is a get_server project
   static bool get isServerProject {
