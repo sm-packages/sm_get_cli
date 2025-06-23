@@ -10,8 +10,8 @@ import 'locales.g.dart';
 
 class Structure {
   static final Map<String, String> _paths = {
-    'page': Directory(replaceAsExpected(
-                path: '${Directory.current.path}/lib/pages/'))
+    'page': Directory(
+                replaceAsExpected(path: '${Directory.current.path}/lib/pages/'))
             .existsSync()
         ? replaceAsExpected(path: 'lib/pages')
         : replaceAsExpected(path: 'lib/app/modules'),
@@ -34,8 +34,13 @@ class Structure {
     'generate_locales': replaceAsExpected(path: 'lib/generated'),
   };
 
-  static FileModel model(String? name, String command, bool wrapperFolder,
-      {String? on, String? folderName}) {
+  static FileModel model(
+    String? name,
+    String command,
+    bool wrapperFolder, {
+    String? on,
+    String? folderName,
+  }) {
     if (on != null && on != '') {
       on = replaceAsExpected(path: on).replaceAll('\\\\', '\\');
       var current = Directory('lib');

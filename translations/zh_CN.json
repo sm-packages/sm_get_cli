@@ -57,7 +57,7 @@
     "remove": "为你的项目移除依赖:",
     "sort": "排序 import 并格式化 dart 文件",
     "update": "更新 GET_CLI",
-    "version": "显示当前 CLI 版本'"
+    "version": "显示当前 CLI 版本"
   },
   "info": {
     "unnecessary_flag": "%s 是多余的",

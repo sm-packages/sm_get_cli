@@ -8,7 +8,10 @@ import '../../interface/command.dart';
 
 class VersionCommand extends Command {
   @override
-  String get commandName => '--version';
+  String get commandName => 'version';
+
+  @override
+  List<String> get acceptedFlags => alias;
 
   @override
   Future<void> execute() async {
@@ -22,7 +25,7 @@ class VersionCommand extends Command {
   String? get hint => Translation(LocaleKeys.hint_version).tr;
 
   @override
-  List<String> get alias => ['-v'];
+  List<String> get alias => ['--version', '-v'];
 
   @override
   bool validate() {
@@ -32,7 +35,7 @@ class VersionCommand extends Command {
   }
 
   @override
-  String get codeSample => 'get --version';
+  String get codeSample => 'get version';
 
   @override
   int get maxParameters => 0;

@@ -59,21 +59,32 @@ class ShellUtils {
     LogService.info('Upgrading get_cli …');
 
     try {
-      if (Platform.script.path.contains('flutter')) {
+      var result = await Process.run('which', ['flutter']);
+      final flutterPath = result.stdout.toString().trim();
+      var hasFvm = false;
+      if (flutterPath.contains('fvm')) {
+        LogService.info('fvm exists, will use fvm flutter to upgrade get_cli');
+        hasFvm = true;
+      }
+      if (flutterPath.contains('flutter')) {
         if (isGit) {
           await run(
-              'flutter pub global activate -sgit https://github.com/jonataslaw/get_cli/',
+              '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
               verbose: true);
         } else {
-          await run('flutter pub global activate get_cli', verbose: true);
+          await run(
+              '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+              verbose: true);
         }
       } else {
         if (isGit) {
           await run(
-              'flutter pub global activate -sgit https://github.com/jonataslaw/get_cli/',
+              '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
               verbose: true);
         } else {
-          await run('flutter pub global activate get_cli', verbose: true);
+          await run(
+              '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+              verbose: true);
         }
       }
       return LogService.success(LocaleKeys.sucess_update_cli.tr);

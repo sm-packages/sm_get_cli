@@ -17,23 +17,31 @@ part 'pubspec_utils_extension.dart';
 // ignore: avoid_classes_with_only_static_members
 class PubspecUtils {
   static final _pubspecFile = File('pubspec.yaml');
+  static final _getCliFile = File('.get_cli.yaml');
 
   static Pubspec get pubSpec => Pubspec.parse(pubspecString);
 
   static String get pubspecString => _pubspecFile.readAsStringSync();
+  static String get getCliString => _getCliFile.readAsStringSync();
 
-  static get pubspecJson => loadYaml(pubspecString);
+  static dynamic get pubspecJson => loadYaml(pubspecString);
+  static dynamic get getCliJson => loadYaml(getCliString);
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
-    var yaml = pubspecJson;
-
-    if (yaml.containsKey('get_cli')) {
-      if ((yaml['get_cli'] as Map).containsKey('separator')) {
-        return (yaml['get_cli']['separator'] as String?) ?? '';
+    try {
+      var yaml = pubspecJson;
+      if (yaml.containsKey('get_cli')) {
+        if ((yaml['get_cli'] as Map).containsKey('separator')) {
+          return (yaml['get_cli']['separator'] as String?) ?? '';
+        }
       }
-    }
 
+      yaml = getCliJson;
+      if (yaml != null && yaml.containsKey('separator')) {
+        return yaml['separator'] as String? ?? '';
+      }
+    } catch (_) {}
     return '';
   });
 
@@ -51,6 +59,11 @@ class PubspecUtils {
           if ((yaml['get_cli'] as Map).containsKey('sub_folder')) {
             return (yaml['get_cli']['sub_folder'] as bool?);
           }
+        }
+
+        yaml = getCliJson;
+        if (yaml != null && yaml.containsKey('sub_folder')) {
+          return yaml['sub_folder'] as bool?;
         }
       } on Exception catch (_) {}
       // retorno nulo está sendo tratado
@@ -146,8 +159,14 @@ class PubspecUtils {
     return dependencies.containsKey(package.trim());
   }
 
-  static bool get nullSafeSupport => !pubSpec.environment!['sdk']!
-      .allowsAny(VersionConstraint.parse('<2.12.0'));
+  static bool get nullSafeSupport =>
+      !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
+
+  static bool get tallStyle =>
+      !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('>=3.7.0'));
+
+  static VersionConstraint? get sdkVersionConstraint =>
+      pubSpec.environment['sdkConstraint'] ?? pubSpec.environment['sdk'];
 
   /// make sure it is a get_server project
   static bool get isServerProject {

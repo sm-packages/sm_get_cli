@@ -1,0 +1,3 @@
+locales:
+  input: translations
+  output: lib/core

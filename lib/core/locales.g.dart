@@ -223,7 +223,7 @@ class Locales {
     'hint_remove': '为你的项目移除依赖:',
     'hint_sort': '排序 import 并格式化 dart 文件',
     'hint_update': '更新 GET_CLI',
-    'hint_version': '显示当前 CLI 版本\'',
+    'hint_version': '显示当前 CLI 版本',
     'info_unnecessary_flag': '%s 是多余的',
     'info_unnecessary_flag_prural': '%s 是多余的',
     'info_package_not_installed': 'Package: %s 在本应用中未安装',

@@ -26,11 +26,20 @@ class GetCli {
               command.commandName == currentArgument ||
               command.alias.contains(currentArgument),
           orElse: () => ErrorCommand('command not found'));
-      if (command.childrens.isNotEmpty) {
+      var childrens = command.childrens;
+      if (command.showHelp) {
+        childrens.add(
+          HelpCommand(
+            commands: command.childrens.isNotEmpty ? command.childrens : null,
+            command: command.childrens.isEmpty ? command : null,
+          ),
+        );
+      }
+      if (childrens.isNotEmpty) {
         if (command is CommandParent) {
-          command = _findCommand(++currentIndex, command.childrens);
+          command = _findCommand(++currentIndex, childrens);
         } else {
-          var childrenCommand = _findCommand(++currentIndex, command.childrens);
+          var childrenCommand = _findCommand(++currentIndex, childrens);
           if (childrenCommand is! ErrorCommand) {
             command = childrenCommand;
           }

@@ -89,7 +89,7 @@ get update
 
 // 显示当前 CLI 版本:
 get -v
-// 或 `get -version`
+// 或 `get version`
 
 // 帮助
 get help
@@ -346,7 +346,7 @@ class User {
 
 ### 拆分不同类型文件
 
-有一天有个用户问我，是否可能修改一下最终文件名，他发现 `my_controller_name.controller.dart` 比 CLI 生成的默认文件 `my_controller_name_controller. dart` 更具有可读性，考虑到像他这样的用户，我加了个选项，可以让你选择你自己的分隔符，只需要在你的 pubsepc.yaml 里这样写
+有一天有个用户问我，是否可能修改一下最终文件名，他发现 `my_controller_name.controller.dart` 比 CLI 生成的默认文件 `my_controller_name_controller. dart` 更具有可读性，考虑到像他这样的用户，我加了个选项，可以让你选择你自己的分隔符，只需要在你的 pubsepc.yaml 或 `.get_cli.yaml` 里这样写
 
 例子:
 
@@ -359,17 +359,19 @@ get_cli:
 
 当你创建一个 Page 或 Screen 时，每个模块都会有 binding , controller, view 子目录。
 
-如果你更想要一个平级文件结构，添加以下内容到你的`pubspec.yaml`:
+如果你更想要一个平级文件结构，添加以下内容到你的`pubspec.yaml` 或 `.get_cli.yaml`:
 
 ```yml
 get_cli:
     sub_folder: false
 ```
 
+<!-- TODO: pubpesc.yaml 和 .get_cli.yaml 示例 -->
+
 ### 你的 import 乱不乱?
 
 为了帮你管理你的 import 我加了个新命令: `get sort`, 除了帮你排序整理 import, 这条命令还帮你格式化 dart 文件。感谢 [dart_style](https://pub.dev/packages/dart_style).
- `get sort` 会用 [separator](#separator-file-type) 重命名所有文件。
+ `get sort` 会用 [separator](#拆分不同类型文件) 重命名所有文件。
 如果不想重命名文件，使用 `--skipRename` 。
 
 如果你喜欢用相对路径写 import, 使用 `--relative` 选项. get_cli 会自动转换。

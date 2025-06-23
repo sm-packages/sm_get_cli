@@ -5,6 +5,13 @@ import '../../commands_list.dart';
 import '../../interface/command.dart';
 
 class HelpCommand extends Command {
+  HelpCommand({List<Command>? commands, Command? command})
+      : _commands = commands,
+        _command = command;
+
+  final List<Command>? _commands;
+  final Command? _command;
+
   @override
   String get commandName => 'help';
 
@@ -13,7 +20,8 @@ class HelpCommand extends Command {
 
   @override
   Future<void> execute() async {
-    final commandsHelp = _getCommandsHelp(commands, 0);
+    final commandsHelp = _getCommandsHelp(
+        _commands ?? (_command != null ? [_command!] : commands), 0);
     LogService.info('''
 List available commands:
 $commandsHelp
@@ -29,9 +37,18 @@ $commandsHelp
     });
     var result = '';
     for (var command in commands) {
-      result += '\n ${'  ' * index} ${command.commandName}:  ${command.hint}';
+      result += _getCommandHelp(command, index);
       result += _getCommandsHelp(command.childrens, index + 1);
     }
+    return result;
+  }
+
+  String _getCommandHelp(Command command, int index) {
+    var result = '\n ${'  ' * index} ${command.commandName}';
+    if (command.alias.isNotEmpty) {
+      result += ', ${command.alias.join(', ')}';
+    }
+    result += ':  ${command.hint}';
     return result;
   }
 
@@ -43,4 +60,9 @@ $commandsHelp
 
   @override
   List<String> get alias => ['-h'];
+
+  @override
+  bool validate() {
+    return _commands != null || _command != null || super.validate();
+  }
 }
