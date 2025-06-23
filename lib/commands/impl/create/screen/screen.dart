@@ -64,8 +64,20 @@ class CreateScreenCommand extends Command {
   void _writeFiles(String path, String name, {bool overwrite = false}) {
     var isServer = PubspecUtils.isServerProject;
 
-    var controller = handleFileCreate(name, 'controller', path, true,
-        ControllerSample('', name, isServer), 'controllers', '.');
+    var controller = handleFileCreate(
+      name,
+      'controller',
+      path,
+      true,
+      ControllerSample(
+        '',
+        name,
+        isServer,
+        templatePath: PubspecUtilsTemplates.controllerTemplate,
+      ),
+      'controllers',
+      '.',
+    );
 
     var controllerImport = Structure.pathToDirImport(controller.path);
 
@@ -76,10 +88,12 @@ class CreateScreenCommand extends Command {
         false,
         GetViewSample(
           '',
+          name,
           '${name.pascalCase}Screen',
           '${name.pascalCase}Controller',
           controllerImport,
           isServer,
+          templatePath: PubspecUtilsTemplates.pageTemplate,
         ),
         '',
         '.');
@@ -94,6 +108,7 @@ class CreateScreenCommand extends Command {
           '${name.pascalCase}ControllerBinding',
           controllerImport,
           isServer,
+          templatePath: PubspecUtilsTemplates.bindingTemplate,
         ),
         'controllers',
         '.');

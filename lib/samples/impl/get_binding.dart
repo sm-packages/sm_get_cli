@@ -19,12 +19,17 @@ class BindingSample extends Sample {
     this._isServer, {
     super.overwrite,
     this.isVersion5 = false,
+    super.templatePath,
   });
 
-  String get _import => _isServer ? "import 'package:get_server/get_server.dart';" : "import 'package:get/get.dart';";
+  String get _import => _isServer
+      ? "import 'package:get_server/get_server.dart';"
+      : "import 'package:get/get.dart';";
 
   @override
-  String get content => '''$_import
+  String get content =>
+      renderTemplate() ??
+      '''$_import
 import 'package:${PubspecUtils.projectName}/$_controllerDir';
 
 class $_bindingName extends Binding${isVersion5 ? '' : 's'} {
@@ -36,4 +41,11 @@ class $_bindingName extends Binding${isVersion5 ? '' : 's'} {
   }
 }
 ''';
+
+  @override
+  Map<String, String>? get variables => {
+        'import_path':
+            "import 'package:${PubspecUtils.projectName}/$_controllerDir';",
+        'name': _fileName.pascalCase,
+      };
 }

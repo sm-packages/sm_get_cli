@@ -55,7 +55,12 @@ class CreateControllerCommand extends Command {
 
   Future<void> createController(String name,
       {String withArgument = '', String onCommand = ''}) async {
-    var sample = ControllerSample('', name, PubspecUtils.isServerProject);
+    var sample = ControllerSample(
+      '',
+      name,
+      PubspecUtils.isServerProject,
+      templatePath: PubspecUtilsTemplates.controllerTemplate,
+    );
     if (withArgument.isNotEmpty) {
       if (isURL(withArgument)) {
         var res = await get(Uri.parse(withArgument));

@@ -87,6 +87,7 @@ class CreatePageCommand extends Command {
         name,
         isServer,
         overwrite: overwrite,
+        templatePath: PubspecUtilsTemplates.controllerTemplate,
       ),
       'controllers',
     );
@@ -98,11 +99,13 @@ class CreatePageCommand extends Command {
       extraFolder,
       GetViewSample(
         '',
+        name,
         '${name.pascalCase}${pageName.pascalCase}',
         '${name.pascalCase}Controller',
         controllerDir,
         isServer,
         overwrite: overwrite,
+        templatePath: PubspecUtilsTemplates.pageTemplate,
       ),
       'views',
     );
@@ -120,6 +123,7 @@ class CreatePageCommand extends Command {
         isServer,
         overwrite: overwrite,
         isVersion5: isVersion5,
+        templatePath: PubspecUtilsTemplates.bindingTemplate,
       ),
       'bindings',
     );

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:path/path.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml/yaml.dart';
@@ -13,6 +14,7 @@ import '../logger/log_utils.dart';
 import '../shell/shel.utils.dart';
 
 part 'pubspec_utils_extension.dart';
+part 'pubspec_utils_templates.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class PubspecUtils {

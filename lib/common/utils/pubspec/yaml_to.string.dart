@@ -21,7 +21,7 @@ class CliYamlToString {
     _writeYamlString(node, 0, sink, true, false);
   }
 
-  void _writeYamlString(node, int indentCount, StringSink stringSink,
+  void _writeYamlString(dynamic node, int indentCount, StringSink stringSink,
       bool isTopLevel, bool isList) {
     if (node is Map) {
       _mapToYamlString(node.cast<String, dynamic>(), indentCount, stringSink,

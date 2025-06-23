@@ -12,7 +12,6 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
-
   static final _localesClassName = _PubValue<String?>(
     () {
       try {
@@ -23,6 +22,7 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
+
   static final _localesFileName = _PubValue<String?>(
     () {
       try {
@@ -33,7 +33,6 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
-
   static final _localesOutput = _PubValue<String?>(
     () {
       try {
@@ -44,6 +43,7 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
+
   static final _localesInput = _PubValue<String?>(
     () {
       try {
@@ -54,7 +54,6 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
-
   static final _getxVersion = _PubValue<int?>(
     () {
       try {
@@ -65,6 +64,9 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
+
+  /// 获取 get_cli 配置
+  static dynamic get getCliJson => PubspecUtils.getCliJson;
 
   /// 配置的 Getx Version
   static int get getxVersion => _getxVersion.value ?? 4;
@@ -86,9 +88,6 @@ extension PubspecUtilsExt on PubspecUtils {
 
   /// 获取 pubspec 配置
   static dynamic get pubspecJson => PubspecUtils.pubspecJson;
-
-  /// 获取 get_cli 配置
-  static dynamic get getCliJson => PubspecUtils.getCliJson;
 
   static Map get _getCliMap {
     try {

@@ -40,10 +40,12 @@ Future<void> createView(String name,
     {String withArgument = '', String onCommand = ''}) async {
   var sample = GetViewSample(
     '',
+    name,
     '${name.pascalCase}View',
     '',
     '',
     PubspecUtils.isServerProject,
+    templatePath: PubspecUtilsTemplates.pageTemplate,
   );
   if (withArgument.isNotEmpty) {
     if (isURL(withArgument)) {

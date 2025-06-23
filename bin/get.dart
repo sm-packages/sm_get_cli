@@ -29,5 +29,5 @@ Future<void> main(List<String> arguments) async {
  Core core = Core();
   core
       .generate(arguments: List.from(arguments))
-      .then((value) => checkForUpdate()); 
+      .then((value) => checkForUpdate());
 } */
