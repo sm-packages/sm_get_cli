@@ -32,7 +32,9 @@ void addRoute(String nameRoute, String bindingDir, String viewDir) {
     pathSplit.removeLast();
   }
 
-  pathSplit.removeWhere((element) => element == 'app' || element == 'modules');
+  // remove the first 2 folders
+  pathSplit.removeRange(0, 2);
+  // pathSplit.removeWhere((element) => element == 'app' || element == 'modules');
 
   for (var i = 0; i < pathSplit.length; i++) {
     pathSplit[i] =

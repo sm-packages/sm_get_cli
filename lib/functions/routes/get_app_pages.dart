@@ -35,7 +35,9 @@ void addAppPage(String name, String bindingDir, String viewDir) {
     var pathSplit = path.split('/');
     pathSplit.removeLast();
     pathSplit.removeLast();
-    pathSplit.removeWhere((element) => element == 'app' || element == 'modules');
+    // remove the first 2 folders
+    pathSplit.removeRange(0, 2);
+    // pathSplit.removeWhere((element) => element == 'app' || element == 'modules');
     var onPageIndex = -1;
     while (pathSplit.isNotEmpty && onPageIndex == -1) {
       onPageIndex = lines.indexWhere(
