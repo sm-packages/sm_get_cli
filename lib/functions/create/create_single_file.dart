@@ -56,7 +56,7 @@ File writeFile(
       }
     }
     if (!skipRename && newFile.path != 'pubspec.yaml') {
-      var separatorFileType = PubspecUtils.separatorFileType!;
+      var separatorFileType = PubspecUtils.separatorFileType ?? '';
       if (separatorFileType.isNotEmpty) {
         newFile = newFile.existsSync()
             ? newFile = newFile

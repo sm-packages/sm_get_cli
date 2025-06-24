@@ -116,6 +116,6 @@ String sortImports(
 }
 
 String _replacePath(String str) {
-  var separator = PubspecUtils.separatorFileType!;
+  var separator = PubspecUtils.separatorFileType ?? '';
   return replacePathTypeSeparator(str, separator);
 }

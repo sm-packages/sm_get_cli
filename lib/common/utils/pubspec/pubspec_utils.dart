@@ -30,21 +30,21 @@ class PubspecUtils {
   static dynamic get getCliJson => loadYaml(getCliString);
 
   /// separtor
-  static final _mapSep = _PubValue<String>(() {
+  static final _mapSep = _PubValue<String?>(() {
     try {
       var yaml = pubspecJson;
       if (yaml.containsKey('get_cli')) {
         if ((yaml['get_cli'] as Map).containsKey('separator')) {
-          return (yaml['get_cli']['separator'] as String?) ?? '';
+          return (yaml['get_cli']['separator'] as String?);
         }
       }
 
       yaml = getCliJson;
       if (yaml != null && yaml.containsKey('separator')) {
-        return yaml['separator'] as String? ?? '';
+        return yaml['separator'] as String?;
       }
     } catch (_) {}
-    return '';
+    return null;
   });
 
   static String? get separatorFileType => _mapSep.value;

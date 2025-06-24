@@ -1,6 +1,6 @@
 # get 版本
 version: 5
-separator: _
+# separator: _
 sub_folder: false
 locales:
   input: ../translations
