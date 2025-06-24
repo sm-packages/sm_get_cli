@@ -35,7 +35,8 @@ extension DartCodeExt on File {
       throw CliException('The class $className is not found in the file $path');
     } else if (matches.length > 1) {
       throw CliException(
-          'The class $className is found more than once in the file $path');
+        'The class $className is found more than once in the file $path',
+      );
     }
     var match = matches.first;
     content = content.insert(match.end - 1, value);

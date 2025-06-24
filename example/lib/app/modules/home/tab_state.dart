@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-/// MeState
-class MeState {
+/// TabState
+class TabState {
   /// count
   final count = 0.obs;
 }

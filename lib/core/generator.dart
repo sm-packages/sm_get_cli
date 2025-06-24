@@ -22,10 +22,11 @@ class GetCli {
       final currentArgument = arguments[currentIndex].split(':').first;
 
       var command = commands.firstWhere(
-          (command) =>
-              command.commandName == currentArgument ||
-              command.alias.contains(currentArgument),
-          orElse: () => ErrorCommand('command not found'));
+        (command) =>
+            command.commandName == currentArgument ||
+            command.alias.contains(currentArgument),
+        orElse: () => ErrorCommand('command not found'),
+      );
       var childrens = command.childrens;
       if (command.showHelp) {
         childrens.add(

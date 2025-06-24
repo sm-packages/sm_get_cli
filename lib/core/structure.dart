@@ -11,8 +11,8 @@ import 'locales.g.dart';
 class Structure {
   static final Map<String, String> _paths = {
     'page': Directory(
-                replaceAsExpected(path: '${Directory.current.path}/lib/pages/'))
-            .existsSync()
+      replaceAsExpected(path: '${Directory.current.path}/lib/pages/'),
+    ).existsSync()
         ? replaceAsExpected(path: 'lib/pages')
         : replaceAsExpected(path: 'lib/app/modules'),
     'widget': replaceAsExpected(path: 'lib/app/widgets'),
@@ -30,7 +30,8 @@ class Structure {
     'controller.binding':
         replaceAsExpected(path: 'lib/infrastructure/navigation/bindings'),
     'navigation': replaceAsExpected(
-        path: 'lib/infrastructure/navigation/navigation.dart'),
+      path: 'lib/infrastructure/navigation/navigation.dart',
+    ),
     //generator files
     'generate_locales': replaceAsExpected(path: 'lib/generated'),
   };
@@ -46,23 +47,30 @@ class Structure {
       on = replaceAsExpected(path: on).replaceAll('\\\\', '\\');
       var current = Directory('lib');
       final list = current.listSync(recursive: true, followLinks: false);
-      final contains = list.firstWhere((element) {
-        if (element is File) {
-          return false;
-        }
-
-        return '${element.path}${p.separator}'.contains('$on${p.separator}');
-      }, orElse: () {
-        return list.firstWhere((element) {
-          //Fix erro ao encontrar arquivo com nome
+      final contains = list.firstWhere(
+        (element) {
           if (element is File) {
             return false;
           }
-          return element.path.contains(on!);
-        }, orElse: () {
-          throw CliException(LocaleKeys.error_folder_not_found.trArgs([on]));
-        });
-      });
+
+          return '${element.path}${p.separator}'.contains('$on${p.separator}');
+        },
+        orElse: () {
+          return list.firstWhere(
+            (element) {
+              //Fix erro ao encontrar arquivo com nome
+              if (element is File) {
+                return false;
+              }
+              return element.path.contains(on!);
+            },
+            orElse: () {
+              throw CliException(
+                  LocaleKeys.error_folder_not_found.trArgs([on]));
+            },
+          );
+        },
+      );
 
       return FileModel(
         name: name,
@@ -105,8 +113,12 @@ class Structure {
     }
   }
 
-  static String? getPathWithName(String? firstPath, String secondPath,
-      {bool createWithWrappedFolder = false, required String? folderName}) {
+  static String? getPathWithName(
+    String? firstPath,
+    String secondPath, {
+    bool createWithWrappedFolder = false,
+    required String? folderName,
+  }) {
     late String betweenPaths;
     if (Platform.isWindows) {
       betweenPaths = '\\\\';

@@ -13,8 +13,11 @@ import '../create/create_single_file.dart';
 import '../formatter_dart_file/frommatter_dart_file.dart';
 
 void arcAddRoute(String nameRoute) {
-  var routesFile = File(Structure.replaceAsExpected(
-      path: 'lib/infrastructure/navigation/routes.dart'));
+  var routesFile = File(
+    Structure.replaceAsExpected(
+      path: 'lib/infrastructure/navigation/routes.dart',
+    ),
+  );
   var lines = <String>[];
   if (!routesFile.existsSync()) {
     ArcRouteSample(nameRoute.camelCase).create();
@@ -39,7 +42,8 @@ void arcAddRoute(String nameRoute) {
 
   writeFile(routesFile.path, lines.join('\n'), overwrite: true);
   LogService.success(
-      Translation(LocaleKeys.sucess_route_created).trArgs([nameRoute]));
+    Translation(LocaleKeys.sucess_route_created).trArgs([nameRoute]),
+  );
   addNavigation(nameRoute);
 }
 

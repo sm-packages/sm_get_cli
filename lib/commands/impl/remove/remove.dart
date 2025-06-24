@@ -27,8 +27,10 @@ class RemoveCommand extends Command {
   bool validate() {
     super.validate();
     if (args.isEmpty) {
-      CliException(LocaleKeys.error_no_package_to_remove.tr,
-          codeSample: codeSample);
+      CliException(
+        LocaleKeys.error_no_package_to_remove.tr,
+        codeSample: codeSample,
+      );
     }
     return true;
   }

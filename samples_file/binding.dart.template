@@ -1,0 +1,14 @@
+@{import}
+@{import_path}
+
+/// @{name_pascal}Binding
+class @{name_pascal}Binding extends Binding {
+  @override
+  List<Bind> dependencies() {
+    return [
+      Bind.lazyPut<@{name_pascal}Controller>(
+        @{name_pascal}Controller.new,
+      ),
+    ];
+  }
+}

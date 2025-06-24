@@ -54,7 +54,8 @@ void addRoute(String nameRoute, String bindingDir, String viewDir) {
   addAppPage(nameRoute, bindingDir, viewDir);
 
   LogService.success(
-      Translation(LocaleKeys.sucess_route_created).trArgs([nameRoute]));
+    Translation(LocaleKeys.sucess_route_created).trArgs([nameRoute]),
+  );
 }
 
 /// Create routes from the path

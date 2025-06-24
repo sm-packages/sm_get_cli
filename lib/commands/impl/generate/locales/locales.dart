@@ -49,7 +49,8 @@ class GenerateLocalesCommand extends Command {
 
     if (!await Directory(inputPath).exists()) {
       LogService.error(
-          LocaleKeys.error_nonexistent_directory.trArgs([inputPath]));
+        LocaleKeys.error_nonexistent_directory.trArgs([inputPath]),
+      );
       return;
     }
 
@@ -101,7 +102,8 @@ class GenerateLocalesCommand extends Command {
         value = _replaceValue(value);
         if (RegExp(r'^[0-9]|[!@#<>?":`~;[\]\\|=+)(*&^%-\s]').hasMatch(key)) {
           throw CliException(
-              LocaleKeys.error_special_characters_in_key.trArgs([key]));
+            LocaleKeys.error_special_characters_in_key.trArgs([key]),
+          );
         }
         parsedLocales.writeln('\t\t\'$key\': \'$value\',');
       });
@@ -146,8 +148,11 @@ class GenerateLocalesCommand extends Command {
     return true;
   }
 
-  void _resolve(Map<String, dynamic> localization, Map<String, String?> result,
-      [String? accKey]) {
+  void _resolve(
+    Map<String, dynamic> localization,
+    Map<String, String?> result, [
+    String? accKey,
+  ]) {
     final sortedKeys = localization.keys.toList();
 
     for (var key in sortedKeys) {

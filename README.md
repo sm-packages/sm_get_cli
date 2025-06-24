@@ -7,7 +7,7 @@ Official CLI for the GetX™ framework.
 
 ```dart
 // To install:
-pub global activate get_cli 
+pub global activate get_cli
 // (to use this add the following to system PATH: [FlutterSDKInstallDir]\bin\cache\dart-sdk\bin
 
 flutter pub global activate get_cli
@@ -31,7 +31,7 @@ get create page:home
 // (Screens have controller, view, and binding)
 // Note: you can use any name, ex: `get screen page:login`
 // Nota: use this option if the chosen structure was CLEAN (by Arktekko)
-get create screen:home 
+get create screen:home
 
 // To create a new controller in a specific folder:
 // Note: you don't need to reference the folder,
@@ -171,9 +171,9 @@ _run_
 input:
 
 ```dart
-@import
+@{import}
 
-class @controller extends GetxController {
+class @{controller} extends GetxController {
   final  email = ''.obs;
   final  password = ''.obs;
   void login() {

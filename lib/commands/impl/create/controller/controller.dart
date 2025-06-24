@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:http/http.dart';
 import 'package:path/path.dart';
 
 import '../../../../common/utils/pubspec/pubspec_utils.dart';
@@ -11,7 +8,6 @@ import '../../../../exception_handler/exceptions/cli_exception.dart';
 import '../../../../functions/binding/add_dependencies.dart';
 import '../../../../functions/binding/find_bindings.dart';
 import '../../../../functions/create/create_single_file.dart';
-import '../../../../functions/is_url/is_url.dart';
 import '../../../../functions/replace_vars/replace_vars.dart';
 import '../../../../samples/impl/get_controller.dart';
 import '../../../../samples/impl/get_state.dart';
@@ -52,17 +48,21 @@ class CreateControllerCommand extends Command {
     final useState = PubspecUtilsExt.useState;
     String? stateDir;
     if (useState) {
+      var stateSample = StateSample(
+        '',
+        name,
+        isServer,
+      );
+      if (PubspecUtilsTemplates.stateTemplate.isNotEmpty) {
+        stateSample.customContent =
+            await loadContent(PubspecUtilsTemplates.stateTemplate, name);
+      }
       final stateFile = handleFileCreate(
         name,
         'state',
         onCommand,
         onCommand.isNotEmpty ? extraFolder : true,
-        StateSample(
-          '',
-          name,
-          isServer,
-          templatePath: PubspecUtilsTemplates.stateTemplate,
-        ),
+        stateSample,
         'states',
       );
       stateDir = Structure.pathToDirImport(stateFile.path);
@@ -72,28 +72,10 @@ class CreateControllerCommand extends Command {
       name,
       stateDir,
       isServer,
-      templatePath: PubspecUtilsTemplates.controllerTemplate,
     );
     if (withArgument.isNotEmpty) {
-      if (isURL(withArgument)) {
-        var res = await get(Uri.parse(withArgument));
-        if (res.statusCode == 200) {
-          var content = res.body;
-          sample.customContent = replaceVars(content, name);
-        } else {
-          throw CliException(
-              LocaleKeys.error_failed_to_connect.trArgs([withArgument]));
-        }
-      } else {
-        var file = File(withArgument);
-        if (file.existsSync()) {
-          var content = file.readAsStringSync();
-          sample.customContent = replaceVars(content, name);
-        } else {
-          throw CliException(
-              LocaleKeys.error_no_valid_file_or_url.trArgs([withArgument]));
-        }
-      }
+      sample.customContent =
+          await loadContent(withArgument, name, dir: stateDir);
     }
     var controllerFile = handleFileCreate(
       name,
@@ -111,7 +93,7 @@ class CreateControllerCommand extends Command {
     pathSplit.remove('.');
     pathSplit.remove('lib');
     if (binindingPath.isNotEmpty) {
-      addDependencyToBinding(
+      await addDependencyToBinding(
         binindingPath,
         name,
         pathSplit.join('/'),
@@ -122,8 +104,13 @@ class CreateControllerCommand extends Command {
 
   @override
   Future<void> execute() async {
-    return createController(name,
-        withArgument: withArgument, onCommand: onCommand);
+    return createController(
+      name,
+      withArgument: withArgument.isEmpty
+          ? PubspecUtilsTemplates.controllerTemplate
+          : withArgument,
+      onCommand: onCommand,
+    );
   }
 
   @override
@@ -132,12 +119,13 @@ class CreateControllerCommand extends Command {
     if (args.length > 2) {
       var unnecessaryParameter = args.skip(2).toList();
       throw CliException(
-          LocaleKeys.error_unnecessary_parameter.trArgsPlural(
-            LocaleKeys.error_unnecessary_parameter_plural,
-            unnecessaryParameter.length,
-            [unnecessaryParameter.toString()],
-          ),
-          codeSample: codeSample);
+        LocaleKeys.error_unnecessary_parameter.trArgsPlural(
+          LocaleKeys.error_unnecessary_parameter_plural,
+          unnecessaryParameter.length,
+          [unnecessaryParameter.toString()],
+        ),
+        codeSample: codeSample,
+      );
     }
     return true;
   }

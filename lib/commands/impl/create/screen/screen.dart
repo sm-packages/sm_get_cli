@@ -10,6 +10,7 @@ import '../../../../core/locales.g.dart';
 import '../../../../core/structure.dart';
 import '../../../../functions/create/create_single_file.dart';
 import '../../../../functions/exports_files/add_export.dart';
+import '../../../../functions/replace_vars/replace_vars.dart';
 import '../../../../functions/routes/arc_add_route.dart';
 import '../../../../samples/impl/get_binding.dart';
 import '../../../../samples/impl/get_controller.dart';
@@ -40,10 +41,13 @@ class CreateScreenCommand extends Command {
     var path = pathSplit.join('/');
     path = Structure.replaceAsExpected(path: path);
     if (Directory(path).existsSync()) {
-      final menu = Menu([
-        LocaleKeys.options_yes.tr,
-        LocaleKeys.options_no.tr,
-      ], title: LocaleKeys.ask_existing_page.trArgs([name]).toString());
+      final menu = Menu(
+        [
+          LocaleKeys.options_yes.tr,
+          LocaleKeys.options_no.tr,
+        ],
+        title: LocaleKeys.ask_existing_page.trArgs([name]).toString(),
+      );
       final result = menu.choose();
       if (result.index == 0) {
         _writeFiles(path, name, overwrite: true);
@@ -62,88 +66,119 @@ class CreateScreenCommand extends Command {
     return true;
   }
 
-  void _writeFiles(String path, String name, {bool overwrite = false}) {
+  Future<void> _writeFiles(
+    String path,
+    String name, {
+    bool overwrite = false,
+  }) async {
     final isServer = PubspecUtils.isServerProject;
     final extraFolder = PubspecUtils.extraFolder ?? true;
     final isVersion5 = PubspecUtilsExt.getxVersion == 5;
     final useState = PubspecUtilsExt.useState;
     String? stateDir;
     if (useState) {
+      var stateSample = StateSample(
+        '',
+        name,
+        isServer,
+        overwrite: overwrite,
+      );
+      if (PubspecUtilsTemplates.stateTemplate.isNotEmpty) {
+        stateSample.customContent =
+            await loadContent(PubspecUtilsTemplates.stateTemplate, name);
+      }
       final stateFile = handleFileCreate(
         name,
         'state',
         path,
         extraFolder,
-        StateSample(
-          '',
-          name,
-          isServer,
-          overwrite: overwrite,
-          templatePath: PubspecUtilsTemplates.stateTemplate,
-        ),
+        stateSample,
         'states',
       );
       stateDir = Structure.pathToDirImport(stateFile.path);
     }
 
+    var controllerSample = ControllerSample(
+      '',
+      name,
+      stateDir,
+      isServer,
+    );
+    if (PubspecUtilsTemplates.controllerTemplate.isNotEmpty) {
+      controllerSample.customContent = await loadContent(
+        PubspecUtilsTemplates.controllerTemplate,
+        name,
+        dir: stateDir,
+      );
+    }
     var controller = handleFileCreate(
       name,
       'controller',
       path,
       extraFolder,
-      ControllerSample(
-        '',
-        name,
-        stateDir,
-        isServer,
-        templatePath: PubspecUtilsTemplates.controllerTemplate,
-      ),
+      controllerSample,
       'controllers',
       '.',
     );
 
     var controllerImport = Structure.pathToDirImport(controller.path);
 
+    var getViewSample = GetViewSample(
+      '',
+      '${name.pascalCase}Screen',
+      '${name.pascalCase}Controller',
+      controllerImport,
+      isServer,
+    );
+    if (PubspecUtilsTemplates.pageTemplate.isNotEmpty) {
+      getViewSample.customContent = await loadContent(
+        PubspecUtilsTemplates.pageTemplate,
+        name,
+        dir: controllerImport,
+      );
+    }
     var view = handleFileCreate(
+      name,
+      'screen',
+      path,
+      false,
+      getViewSample,
+      '',
+      '.',
+    );
+    var bindingSample = BindingSample(
+      '',
+      name,
+      '${name.pascalCase}ControllerBinding',
+      controllerImport,
+      isServer,
+      isVersion5: isVersion5,
+    );
+    if (PubspecUtilsTemplates.bindingTemplate.isNotEmpty) {
+      bindingSample.customContent = await loadContent(
+        PubspecUtilsTemplates.bindingTemplate,
         name,
-        'screen',
-        path,
-        false,
-        GetViewSample(
-          '',
-          name,
-          '${name.pascalCase}Screen',
-          '${name.pascalCase}Controller',
-          controllerImport,
-          isServer,
-          templatePath: PubspecUtilsTemplates.pageTemplate,
-        ),
-        '',
-        '.');
+        dir: controllerImport,
+      );
+    }
     var binding = handleFileCreate(
-        name,
-        'controller.binding',
-        '',
-        extraFolder,
-        BindingSample(
-          '',
-          name,
-          '${name.pascalCase}ControllerBinding',
-          controllerImport,
-          isServer,
-          isVersion5: isVersion5,
-          templatePath: PubspecUtilsTemplates.bindingTemplate,
-        ),
-        'controllers',
-        '.');
+      name,
+      'controller.binding',
+      '',
+      extraFolder,
+      bindingSample,
+      'controllers',
+      '.',
+    );
 
     var exportView = 'package:${PubspecUtils.projectName}/'
         '${Structure.pathToDirImport(view.path)}';
     addExport('lib/presentation/screens.dart', "export '$exportView';");
 
     addExport(
-        'lib/infrastructure/navigation/bindings/controllers/controllers_bindings.dart',
-        "export 'package:${PubspecUtils.projectName}/${Structure.pathToDirImport(binding.path)}'; ");
+      'lib/infrastructure/navigation/bindings/controllers/controllers_bindings.dart',
+      "export 'package:${PubspecUtils.projectName}/${Structure.pathToDirImport(binding.path)}'; ",
+    );
     arcAddRoute(name);
   }
 

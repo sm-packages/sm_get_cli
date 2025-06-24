@@ -13,13 +13,13 @@ extension PubspecUtilsTemplates on PubspecUtils {
           if (path != null && Directory(path).existsSync()) {
             final files = Directory(path)
                 .listSync(recursive: false)
-                .where((entry) => entry.path.endsWith('template.dart'))
+                .where((entry) => entry.path.endsWith('.template'))
                 .toList();
 
             for (var file in files) {
               final name =
-                  basenameWithoutExtension(file.path).split('_').firstOrNull;
-              template.putIfAbsent(name!, () => file.path);
+                  basenameWithoutExtension(file.path).removeAll('.dart');
+              template.putIfAbsent(name, () => file.path);
             }
           }
 
@@ -34,14 +34,22 @@ extension PubspecUtilsTemplates on PubspecUtils {
   static Map get templates => _templates.value ?? {};
 
   /// 配置的 controller 模板
-  static String? get controllerTemplate => templates['controller'];
+  static String get controllerTemplate => templates['controller'] ?? '';
 
   /// 配置的 page 模板
-  static String? get pageTemplate => templates['page'] ?? templates['view'];
+  static String get pageTemplate =>
+      templates['page'] ?? templates['view'] ?? '';
 
   /// 配置的 binding 模板
-  static String? get bindingTemplate => templates['binding'];
+  static String get bindingTemplate => templates['binding'] ?? '';
 
   /// 配置的 state 模板
-  static String? get stateTemplate => templates['state'];
+  static String get stateTemplate => templates['state'] ?? '';
+
+  /// 配置的插入 state 模板
+  static String get insertStateTemplate => templates['insert_state'] ?? '';
+
+  /// 配置的插入 controller 模板
+  static String get insertControllerTemplate =>
+      templates['insert_controller'] ?? '';
 }

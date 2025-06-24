@@ -25,5 +25,6 @@ class AppPages {
 }
 ''';
 
-  String get _initialRoute => initial.isNotEmpty ? '\nstatic const initial = Routes.$initial;' : '';
+  String get _initialRoute =>
+      initial.isNotEmpty ? '\nstatic const initial = Routes.$initial;' : '';
 }

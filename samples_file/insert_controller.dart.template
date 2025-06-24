@@ -1,0 +1,3 @@
+Bind.lazyPut<@{name_pascal}Controller>(
+  @{name_pascal}Controller.new,
+),

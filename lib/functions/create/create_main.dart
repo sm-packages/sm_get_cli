@@ -15,8 +15,10 @@ Future<bool> createMain() async {
     /// apenas quem chama essa função é o create project e o init,
     /// ambas funções iniciam um projeto e sobrescreve os arquivos
 
-    final menu = Menu([LocaleKeys.options_yes.tr, LocaleKeys.options_no.tr],
-        title: LocaleKeys.ask_lib_not_empty.tr);
+    final menu = Menu(
+      [LocaleKeys.options_yes.tr, LocaleKeys.options_no.tr],
+      title: LocaleKeys.ask_lib_not_empty.tr,
+    );
     final result = menu.choose();
     if (result.index == 1) {
       LogService.info(LocaleKeys.info_no_file_overwritten.tr);

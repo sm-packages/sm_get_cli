@@ -7,6 +7,7 @@ import '../../common/utils/pubspec/pubspec_utils.dart';
 import '../../core/internationalization.dart';
 import '../../core/locales.g.dart';
 import '../create/create_single_file.dart';
+import '../replace_vars/replace_vars.dart';
 
 ///
 /// Add a new dependency to bindings
@@ -44,30 +45,60 @@ import '../create/create_single_file.dart';
 ///    }
 ///}
 ///```
-void addDependencyToBinding(
-    String path, String controllerName, String import, bool isVersion5) {
+Future<void> addDependencyToBinding(
+  String path,
+  String controllerName,
+  String import,
+  bool isVersion5,
+) async {
   import = '''import 'package:${PubspecUtils.projectName}/$import';''';
+  final insertController = '${controllerName.pascalCase}Controller';
+
   var file = File(path);
   if (file.existsSync()) {
     var lines = file.readAsLinesSync();
-    lines.insert(2, import);
-    var index = lines.indexWhere((element) {
-      element = element.trim();
-      return element.startsWith(
-        isVersion5 ? 'return [' : 'void dependencies() {',
+    final contains = lines.any((element) => element.contains(insertController));
+    if (!contains) {
+      lines.insert(2, import);
+      var index = lines.indexWhere((element) {
+        element = element.trim();
+        return element.startsWith(
+          isVersion5 ? 'return [' : 'void dependencies() {',
+        );
+      });
+      index++;
+
+      String insertContent;
+      if (PubspecUtilsTemplates.insertControllerTemplate.isNotEmpty) {
+        insertContent = await loadContent(
+          PubspecUtilsTemplates.insertControllerTemplate,
+          controllerName,
+        );
+      } else {
+        insertContent =
+            '''${isVersion5 ? "Bind" : "Get"}.lazyPut<$insertController>(() => $insertController(),)${isVersion5 ? "," : ";"}''';
+      }
+
+      lines.insert(
+        index,
+        insertContent,
       );
-    });
-    index++;
-    lines.insert(index,
-        '''${isVersion5 ? "Bind" : "Get"}.lazyPut<${controllerName.pascalCase}Controller>(() => ${controllerName.pascalCase}Controller(),)${isVersion5 ? "," : ";"}''');
-    writeFile(file.path, lines.join('\n'), overwrite: true, logger: false);
-    LogService.success(
-      LocaleKeys.sucess_add_controller_in_bindings.trArgs(
-        [
-          '${controllerName.pascalCase}Controller',
-          path,
-        ],
-      ),
-    );
+
+      writeFile(
+        file.path,
+        lines.join('\n'),
+        overwrite: true,
+        logger: false,
+        useRelativeImport: true,
+      );
+      LogService.success(
+        LocaleKeys.sucess_add_controller_in_bindings.trArgs(
+          [
+            '${controllerName.pascalCase}Controller',
+            path,
+          ],
+        ),
+      );
+    }
   }
 }

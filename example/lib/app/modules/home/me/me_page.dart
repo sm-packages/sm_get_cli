@@ -7,6 +7,7 @@ import 'me_controller.dart';
 /// MePage
 class MePage extends GetView<MeController> {
   const MePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

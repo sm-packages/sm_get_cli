@@ -40,8 +40,11 @@ abstract class Command with ArgsMixin {
         LogService.info(LocaleKeys.info_unnecessary_flag.trArgsPlural(
           LocaleKeys.info_unnecessary_flag_prural,
           flagsNotAceppts.length,
-          [flagsNotAceppts.toString()],
-        )!);
+            [
+              flagsNotAceppts.toString(),
+            ],
+          )!,
+        );
       }
 
       if (args.length > maxParameters) {
@@ -52,7 +55,8 @@ abstract class Command with ArgsMixin {
               pars.length,
               [pars.toString()],
             ),
-            codeSample: codeSample);
+          codeSample: codeSample,
+        );
       }
     }
     return true;

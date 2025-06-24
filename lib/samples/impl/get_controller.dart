@@ -14,7 +14,6 @@ class ControllerSample extends Sample {
     this._stateDir,
     this._isServer, {
     super.overwrite,
-    super.templatePath,
   });
 
   String get import => _stateDir != null && _stateDir!.isNotEmpty
@@ -22,8 +21,7 @@ class ControllerSample extends Sample {
       : '';
 
   @override
-  String get content =>
-      renderTemplate() ?? (_isServer ? serverController : flutterController);
+  String get content => _isServer ? serverController : flutterController;
 
   String get serverController => '''import 'package:get_server/get_server.dart';
 
@@ -76,11 +74,4 @@ class ${_fileName.pascalCase}Controller extends GetxController {
   String get state => _stateDir != null
       ? 'final ${_fileName.pascalCase}State state = ${_fileName.pascalCase}State();'
       : '';
-
-  @override
-  Map<String, String>? get variables => {
-        'name': _fileName.pascalCase,
-        'state': state,
-        'import_path': import,
-      };
 }

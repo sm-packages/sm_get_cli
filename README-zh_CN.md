@@ -170,9 +170,9 @@ _运行_
 输入:
 
 ```dart
-@import
+@{import}
 
-class @controller extends GetxController {
+class @{controller} extends GetxController {
   final  email = ''.obs;
   final  password = ''.obs;
   void login() {

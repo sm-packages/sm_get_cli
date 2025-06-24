@@ -51,7 +51,7 @@ class PubspecUtils {
 
   static final _mapName = _PubValue<String>(() => pubSpec.name.trim());
 
-  static String? get projectName => _mapName.value;
+  static String get projectName => _mapName.value ?? '';
 
   static final _extraFolder = _PubValue<bool?>(
     () {
@@ -76,13 +76,18 @@ class PubspecUtils {
 
   static bool? get extraFolder => _extraFolder.value;
 
-  static Future<bool> addDependencies(String package,
-      {String? version, bool isDev = false, bool runPubGet = true}) async {
+  static Future<bool> addDependencies(
+    String package, {
+    String? version,
+    bool isDev = false,
+    bool runPubGet = true,
+  }) async {
     if (containsPackage(package)) {
       LogService.info(
-          LocaleKeys.ask_package_already_installed.trArgs([package]),
-          false,
-          false);
+        LocaleKeys.ask_package_already_installed.trArgs([package]),
+        false,
+        false,
+      );
       final menu = Menu(
         [
           LocaleKeys.options_yes.tr,
@@ -127,8 +132,10 @@ class PubspecUtils {
     return true;
   }
 
-  static Future<void> removeDependencies(String package,
-      {bool logger = true}) async {
+  static Future<void> removeDependencies(
+    String package, {
+    bool logger = true,
+  }) async {
     if (logger) LogService.info('Removing package: "$package"');
 
     await ShellUtils.removePackage(package);

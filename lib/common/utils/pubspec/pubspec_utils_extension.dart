@@ -152,7 +152,8 @@ extension PubspecUtilsExt on PubspecUtils {
     }
     if (logger) {
       LogService.success(
-          LocaleKeys.sucess_update_yaml.trArgs(['$key: $value']));
+        LocaleKeys.sucess_update_yaml.trArgs(['$key: $value']),
+      );
     }
     return true;
   }

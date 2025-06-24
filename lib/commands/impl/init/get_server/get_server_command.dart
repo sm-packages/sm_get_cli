@@ -20,8 +20,11 @@ class InitGetServer extends Command {
       include: 'include: package:pedantic/analysis_options.yaml',
     ).create();
     await PubspecUtils.addDependencies('get_server', runPubGet: false);
-    await PubspecUtils.addDependencies('pedantic',
-        isDev: true, runPubGet: false);
+    await PubspecUtils.addDependencies(
+      'pedantic',
+      isDev: true,
+      runPubGet: false,
+    );
     await PubspecUtils.addDependencies('test', isDev: true, runPubGet: false);
 
     await createInitGetxPattern();

@@ -20,13 +20,20 @@ class InstallCommand extends Command {
       var packageInfo = element.split(':');
       LogService.info('Installing package "${packageInfo.first}" …');
       if (packageInfo.length == 1) {
-        runPubGet = await PubspecUtils.addDependencies(packageInfo.first,
-                isDev: isDev, runPubGet: false)
+        runPubGet = await PubspecUtils.addDependencies(
+          packageInfo.first,
+          isDev: isDev,
+          runPubGet: false,
+        )
             ? true
             : runPubGet;
       } else {
-        runPubGet = await PubspecUtils.addDependencies(packageInfo.first,
-                version: packageInfo[1], isDev: isDev, runPubGet: false)
+        runPubGet = await PubspecUtils.addDependencies(
+          packageInfo.first,
+          version: packageInfo[1],
+          isDev: isDev,
+          runPubGet: false,
+        )
             ? true
             : runPubGet;
       }
@@ -44,8 +51,9 @@ class InstallCommand extends Command {
 
     if (args.isEmpty) {
       throw CliException(
-          'Please, enter the name of a package you wanna install',
-          codeSample: codeSample);
+        'Please, enter the name of a package you wanna install',
+        codeSample: codeSample,
+      );
     }
     return true;
   }

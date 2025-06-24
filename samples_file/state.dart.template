@@ -1,0 +1,7 @@
+@{import}
+
+/// @{name_pascal}State
+class @{name_pascal}State {
+  /// count
+  final count = 0.obs;
+}

@@ -10,15 +10,26 @@ import '../../core/structure.dart';
 import '../../samples/interface/sample_interface.dart';
 import '../sorter_imports/sort.dart';
 
-File handleFileCreate(String name, String command, String on, bool extraFolder,
-    Sample sample, String folderName,
-    [String sep = '_']) {
+File handleFileCreate(
+  String name,
+  String command,
+  String on,
+  bool extraFolder,
+  Sample sample,
+  String folderName, [
+  String sep = '_',
+]) {
   folderName = folderName;
   /* if (folderName.isNotEmpty) {
     extraFolder = PubspecUtils.extraFolder ?? extraFolder;
   } */
-  final fileModel = Structure.model(name, command, extraFolder,
-      on: on, folderName: folderName);
+  final fileModel = Structure.model(
+    name,
+    command,
+    extraFolder,
+    on: on,
+    folderName: folderName,
+  );
   var path = '${fileModel.path}$sep${fileModel.commandName}.dart';
   sample.path = path;
   return sample.create();
@@ -49,7 +60,8 @@ File writeFile(
         } on Exception catch (_) {
           if (newFile.existsSync()) {
             LogService.info(
-                LocaleKeys.error_invalid_dart.trArgs([newFile.path]));
+              LocaleKeys.error_invalid_dart.trArgs([newFile.path]),
+            );
           }
           rethrow;
         }
@@ -81,11 +93,13 @@ File writeFile(
 /// Replace the file name separator
 String replacePathTypeSeparator(String path, String separator) {
   if (separator.isNotEmpty) {
-    var index = path.indexOf(RegExp(
-      r'controller.dart|model.dart|provider.dart|'
-      'binding.dart|view.dart|screen.dart|widget.dart|repository.dart'
-      '|page.dart|state.dart',
-    ));
+    var index = path.indexOf(
+      RegExp(
+        r'controller.dart|model.dart|provider.dart|'
+        'binding.dart|view.dart|screen.dart|widget.dart|repository.dart|'
+        'page.dart|state.dart',
+      ),
+    );
     if (index != -1) {
       var chars = path.split('');
       index--;

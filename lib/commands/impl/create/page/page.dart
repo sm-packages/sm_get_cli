@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
+import 'package:get_cli/functions/replace_vars/replace_vars.dart';
 import 'package:get_cli/samples/impl/get_state.dart';
 import 'package:recase/recase.dart';
 
@@ -76,7 +77,11 @@ class CreatePageCommand extends Command {
     }
   }
 
-  void _writeFiles(String path, String name, {bool overwrite = false}) {
+  Future<void> _writeFiles(
+    String path,
+    String name, {
+    bool overwrite = false,
+  }) async {
     final isServer = PubspecUtils.isServerProject;
     final extraFolder = PubspecUtils.extraFolder ?? true;
     final pageName = PubspecUtilsExt.pageName;
@@ -84,72 +89,96 @@ class CreatePageCommand extends Command {
     final useState = PubspecUtilsExt.useState;
     String? stateDir;
     if (useState) {
+      var stateSample = StateSample(
+        '',
+        name,
+        isServer,
+        overwrite: overwrite,
+      );
+      if (PubspecUtilsTemplates.stateTemplate.isNotEmpty) {
+        stateSample.customContent =
+            await loadContent(PubspecUtilsTemplates.stateTemplate, name);
+      }
       final stateFile = handleFileCreate(
         name,
         'state',
         path,
         extraFolder,
-        StateSample(
-          '',
-          name,
-          isServer,
-          overwrite: overwrite,
-          templatePath: PubspecUtilsTemplates.stateTemplate,
-        ),
+        stateSample,
         'states',
       );
       stateDir = Structure.pathToDirImport(stateFile.path);
     }
 
+    var controllerSample = ControllerSample(
+      '',
+      name,
+      stateDir,
+      isServer,
+      overwrite: overwrite,
+    );
+    if (PubspecUtilsTemplates.controllerTemplate.isNotEmpty) {
+      controllerSample.customContent = await loadContent(
+        PubspecUtilsTemplates.controllerTemplate,
+        name,
+        dir: stateDir,
+      );
+    }
     var controllerFile = handleFileCreate(
       name,
       'controller',
       path,
       extraFolder,
-      ControllerSample(
-        '',
-        name,
-        stateDir,
-        isServer,
-        overwrite: overwrite,
-        templatePath: PubspecUtilsTemplates.controllerTemplate,
-      ),
+      controllerSample,
       'controllers',
     );
     var controllerDir = Structure.pathToDirImport(controllerFile.path);
+    var getViewSample = GetViewSample(
+      '',
+      '${name.pascalCase}${pageName.pascalCase}',
+      '${name.pascalCase}Controller',
+      controllerDir,
+      isServer,
+      overwrite: overwrite,
+    );
+    if (PubspecUtilsTemplates.pageTemplate.isNotEmpty) {
+      getViewSample.customContent = await loadContent(
+        PubspecUtilsTemplates.pageTemplate,
+        name,
+        dir: controllerDir,
+      );
+    }
     var viewFile = handleFileCreate(
       name,
       pageName.toLowerCase(),
       path,
       extraFolder,
-      GetViewSample(
-        '',
-        name,
-        '${name.pascalCase}${pageName.pascalCase}',
-        '${name.pascalCase}Controller',
-        controllerDir,
-        isServer,
-        overwrite: overwrite,
-        templatePath: PubspecUtilsTemplates.pageTemplate,
-      ),
+      getViewSample,
       'views',
     );
 
+    var bindingSample = BindingSample(
+      '',
+      name,
+      '${name.pascalCase}Binding',
+      controllerDir,
+      isServer,
+      overwrite: overwrite,
+      isVersion5: isVersion5,
+    );
+    if (PubspecUtilsTemplates.bindingTemplate.isNotEmpty) {
+      bindingSample.customContent = await loadContent(
+        PubspecUtilsTemplates.bindingTemplate,
+        name,
+        dir: controllerDir,
+      );
+    }
     var bindingFile = handleFileCreate(
       name,
       'binding',
       path,
       extraFolder,
-      BindingSample(
-        '',
-        name,
-        '${name.pascalCase}Binding',
-        controllerDir,
-        isServer,
-        overwrite: overwrite,
-        isVersion5: isVersion5,
-        templatePath: PubspecUtilsTemplates.bindingTemplate,
-      ),
+      bindingSample,
       'bindings',
     );
 

@@ -62,8 +62,12 @@ class TypeDefinition {
         // when array is empty insert Null just to warn the user
         elemType = 'Null';
       }
-      return TypeDefinition(type,
-          astNode: astNode, subtype: elemType, isAmbiguous: isAmbiguous);
+      return TypeDefinition(
+        type,
+        astNode: astNode,
+        subtype: elemType,
+        isAmbiguous: isAmbiguous,
+      );
     }
     return TypeDefinition(type, astNode: astNode, isAmbiguous: isAmbiguous);
   }
@@ -200,8 +204,11 @@ class ClassDefinition {
     return dependenciesList;
   }
 
-  ClassDefinition(this._name,
-      [this._privateFields = false, this._withCopyConstructor = false]);
+  ClassDefinition(
+    this._name, [
+    this._privateFields = false,
+    this._withCopyConstructor = false,
+  ]);
 
   @override
   bool operator ==(Object other) {

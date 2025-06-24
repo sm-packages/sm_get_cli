@@ -109,7 +109,7 @@ String sortImports(
     '',
     ...exports,
     '',
-    ...contentLines
+    ...contentLines,
   ]);
 
   return formatterDartFile(sortedLines.join('\n'));

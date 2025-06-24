@@ -26,13 +26,13 @@ final Map<String, TokenType> punctuatorTokensMap = {
   '[': TokenType.LEFT_BRACKET,
   ']': TokenType.RIGHT_BRACKET,
   ':': TokenType.COLON,
-  ',': TokenType.COMMA
+  ',': TokenType.COMMA,
 };
 
 final Map<String, TokenType> keywordTokensMap = {
   'true': TokenType.TRUE,
   'false': TokenType.FALSE,
-  'null': TokenType.NULL
+  'null': TokenType.NULL,
 };
 
 enum _StringState { _START_, START_QUOTE_OR_CHAR, ESCAPE }
@@ -46,7 +46,7 @@ final Map<String, int> escapes = {
   'n': 5, // New line
   'r': 6, // Carriage return
   't': 7, // Horizontal tab
-  'u': 8 // 4 hexadecimal digits
+  'u': 8, // 4 hexadecimal digits
 };
 
 enum _NumberState {
@@ -426,8 +426,13 @@ Token? parseString(String input, int index, int line, int column) {
             state = _StringState.ESCAPE;
           } else if (char == '"') {
             index++;
-            return Token(TokenType.STRING, line, column + index - startIndex,
-                index, safeSubstring(input, startIndex, index));
+            return Token(
+              TokenType.STRING,
+              line,
+              column + index - startIndex,
+              index,
+              safeSubstring(input, startIndex, index),
+            );
           } else {
             // buffer.write(char);
             index++;
@@ -579,8 +584,13 @@ Token? parseNumber(String input, int index, int line, int column) {
   }
 
   if (passedValueIndex > 0) {
-    return Token(TokenType.NUMBER, line, column + passedValueIndex - startIndex,
-        passedValueIndex, safeSubstring(input, startIndex, passedValueIndex));
+    return Token(
+      TokenType.NUMBER,
+      line,
+      column + passedValueIndex - startIndex,
+      passedValueIndex,
+      safeSubstring(input, startIndex, passedValueIndex),
+    );
   }
 
   return null;
@@ -590,7 +600,7 @@ List<Token? Function(String, int, int, int)> _parsers = [
   parseChar,
   parseKeyword,
   parseString,
-  parseNumber
+  parseNumber,
 ];
 
 Token? _parseToken(String input, int index, int line, int column) {
@@ -621,15 +631,26 @@ List<Token> tokenize(String input, Settings settings) {
     final token = _parseToken(input, index, line, column);
 
     if (token != null) {
-      token.loc = Location.create(line, column, index, token.line, token.column,
-          token.index, settings.source);
+      token.loc = Location.create(
+        line,
+        column,
+        index,
+        token.line,
+        token.column,
+        token.index,
+        settings.source,
+      );
       tokens.add(token);
       index = token.index;
       line = token.line;
       column = token.column;
     } else {
       final msg = unexpectedSymbol(
-          substring(input, index, index + 1), settings.source, line, column);
+        substring(input, index, index + 1),
+        settings.source,
+        line,
+        column,
+      );
       throw JSONASTException(msg, input, settings.source, line, column);
     }
   }

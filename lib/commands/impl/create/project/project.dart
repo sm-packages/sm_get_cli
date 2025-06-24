@@ -20,10 +20,13 @@ class CreateProjectCommand extends Command {
   String get commandName => 'project';
   @override
   Future<void> execute() async {
-    final menu = Menu([
-      'Flutter Project',
-      'Get Server',
-    ], title: LocaleKeys.ask_type_to_project.tr);
+    final menu = Menu(
+      [
+        'Flutter Project',
+        'Get Server',
+      ],
+      title: LocaleKeys.ask_type_to_project.tr,
+    );
     final result = menu.choose();
     String? nameProject = name;
     if (name == '.') {
@@ -34,7 +37,8 @@ class CreateProjectCommand extends Command {
     }
 
     var path = Structure.replaceAsExpected(
-        path: Directory.current.path + p.separator + nameProject.snakeCase);
+      path: Directory.current.path + p.separator + nameProject.snakeCase,
+    );
     await Directory(path).create(recursive: true);
 
     Directory.current = path;
@@ -66,10 +70,13 @@ class CreateProjectCommand extends Command {
 
       var androidLang = androidResult.index == 0 ? 'kotlin' : 'java';
 
-      final linterMenu = Menu([
-        'Yes',
-        'No',
-      ], title: LocaleKeys.ask_use_linter.tr);
+      final linterMenu = Menu(
+        [
+          'Yes',
+          'No',
+        ],
+        title: LocaleKeys.ask_use_linter.tr,
+      );
       final linterResult = linterMenu.choose();
 
       await ShellUtils.flutterCreate(path, org, iosLang, androidLang);
@@ -79,17 +86,23 @@ class CreateProjectCommand extends Command {
       switch (linterResult.index) {
         case 0:
           if (PubspecUtils.isServerProject) {
-            await PubspecUtils.addDependencies('lints',
-                isDev: true, runPubGet: true);
+            await PubspecUtils.addDependencies(
+              'lints',
+              isDev: true,
+              runPubGet: true,
+            );
             AnalysisOptionsSample(
-                    include: 'include: package:lints/recommended.yaml')
-                .create();
+              include: 'include: package:lints/recommended.yaml',
+            ).create();
           } else {
-            await PubspecUtils.addDependencies('flutter_lints',
-                isDev: true, runPubGet: true);
+            await PubspecUtils.addDependencies(
+              'flutter_lints',
+              isDev: true,
+              runPubGet: true,
+            );
             AnalysisOptionsSample(
-                    include: 'include: package:flutter_lints/flutter.yaml')
-                .create();
+              include: 'include: package:flutter_lints/flutter.yaml',
+            ).create();
           }
           break;
 

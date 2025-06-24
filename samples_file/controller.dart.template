@@ -1,0 +1,13 @@
+@{import}
+@{import_path}
+
+/// @{name_pascal}Controller
+class @{name_pascal}Controller extends GetxController {
+  /// state
+  final @{name_pascal}State state = @{name_pascal}State();
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+}

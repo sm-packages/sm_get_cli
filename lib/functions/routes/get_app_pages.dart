@@ -26,8 +26,10 @@ void addAppPage(String name, String bindingDir, String viewDir) {
 
   var routesOrPath = 'Routes';
 
-  var indexRoutes = lines.indexWhere((element) => element.trim().contains('static final routes'));
-  var index = lines.indexWhere((element) => element.contains('];'), indexRoutes);
+  var indexRoutes = lines
+      .indexWhere((element) => element.trim().contains('static final routes'));
+  var index =
+      lines.indexWhere((element) => element.contains('];'), indexRoutes);
 
   var tabEspaces = 2;
   if (supportChildrenRoutes) {
@@ -41,25 +43,33 @@ void addAppPage(String name, String bindingDir, String viewDir) {
     var onPageIndex = -1;
     while (pathSplit.isNotEmpty && onPageIndex == -1) {
       onPageIndex = lines.indexWhere(
-          (element) => element.contains('_Paths.${pathSplit.last.camelCase},'), // app_page 中 _Path.xxx 的命名
-          indexRoutes);
+        (element) => element.contains(
+            '_Paths.${pathSplit.last.camelCase},'), // app_page 中 _Path.xxx 的命名
+        indexRoutes,
+      );
 
       pathSplit.removeLast();
     }
     if (onPageIndex != -1) {
-      var onPageStartIndex = lines.sublist(0, onPageIndex).lastIndexWhere((element) => element.contains('GetPage'));
+      var onPageStartIndex = lines
+          .sublist(0, onPageIndex)
+          .lastIndexWhere((element) => element.contains('GetPage'));
 
       var onPageEndIndex = -1;
 
       if (onPageStartIndex != -1) {
         onPageEndIndex = lines.indexWhere(
-            (element) => element.startsWith('${_getTabs(_countTabs(lines[onPageStartIndex]))}),'), onPageStartIndex);
+          (element) => element
+              .startsWith('${_getTabs(_countTabs(lines[onPageStartIndex]))}),'),
+          onPageStartIndex,
+        );
       } else {
         _logInvalidFormart();
       }
       if (onPageEndIndex != -1) {
-        var indexChildrenStart =
-            lines.sublist(onPageStartIndex, onPageEndIndex).indexWhere((element) => element.contains('children'));
+        var indexChildrenStart = lines
+            .sublist(onPageStartIndex, onPageEndIndex)
+            .indexWhere((element) => element.contains('children'));
         if (indexChildrenStart == -1) {
           tabEspaces = _countTabs(lines[onPageStartIndex]) + 1;
           index = onPageEndIndex;
@@ -70,8 +80,10 @@ void addAppPage(String name, String bindingDir, String viewDir) {
         } else {
           var indexChildrenEnd = -1;
           indexChildrenEnd = lines.indexWhere(
-              (element) => element.startsWith('${_getTabs(_countTabs(lines[onPageStartIndex]) + 1)}],'),
-              onPageStartIndex);
+            (element) => element.startsWith(
+                '${_getTabs(_countTabs(lines[onPageStartIndex]) + 1)}],'),
+            onPageStartIndex,
+          );
           if (indexChildrenEnd != -1) {
             index = indexChildrenEnd;
             tabEspaces = _countTabs(lines[onPageStartIndex]) + 2;
@@ -126,8 +138,9 @@ int _countTabs(String line) {
 /// log invalid format file
 void _logInvalidFormart() {
   LogService.info(
-      'the app_pages.dart file does not meet the '
-      'expected format, fails to create children pages',
-      false,
-      false);
+    'the app_pages.dart file does not meet the '
+    'expected format, fails to create children pages',
+    false,
+    false,
+  );
 }

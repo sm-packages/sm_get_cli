@@ -20,14 +20,22 @@ Future<void> createInitKatekko() async {
   }
   var initialDirs = [
     Directory(Structure.replaceAsExpected(path: 'lib/domain/core/interfaces/')),
-    Directory(Structure.replaceAsExpected(
-        path: 'lib/infrastructure/navigation/bindings/controllers/')),
-    Directory(Structure.replaceAsExpected(
-        path: 'lib/infrastructure/navigation/bindings/domains/')),
     Directory(
-        Structure.replaceAsExpected(path: 'lib/infrastructure/dal/daos/')),
+      Structure.replaceAsExpected(
+        path: 'lib/infrastructure/navigation/bindings/controllers/',
+      ),
+    ),
     Directory(
-        Structure.replaceAsExpected(path: 'lib/infrastructure/dal/services/')),
+      Structure.replaceAsExpected(
+        path: 'lib/infrastructure/navigation/bindings/domains/',
+      ),
+    ),
+    Directory(
+      Structure.replaceAsExpected(path: 'lib/infrastructure/dal/daos/'),
+    ),
+    Directory(
+      Structure.replaceAsExpected(path: 'lib/infrastructure/dal/services/'),
+    ),
     Directory(Structure.replaceAsExpected(path: 'lib/presentation/')),
     Directory(Structure.replaceAsExpected(path: 'lib/infrastructure/theme/')),
   ];

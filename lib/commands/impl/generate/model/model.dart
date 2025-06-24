@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:dcli/dcli.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
@@ -34,7 +33,10 @@ class GenerateModelCommand extends Command {
 
     FileModel newFileModel;
     final classGenerator = ModelGenerator(
-        name, containsArg('--private'), containsArg('--withCopy'));
+      name,
+      containsArg('--private'),
+      containsArg('--withCopy'),
+    );
 
     newFileModel = Structure.model(name, 'model', false, on: onCommand);
 
@@ -74,8 +76,10 @@ class GenerateModelCommand extends Command {
         fromArgument.isEmpty) {
       var codeSample =
           'get generate model on home with assets/models/user.json';
-      throw CliException(LocaleKeys.error_invalid_json.trArgs([withArgument]),
-          codeSample: codeSample);
+      throw CliException(
+        LocaleKeys.error_invalid_json.trArgs([withArgument]),
+        codeSample: codeSample,
+      );
     }
     return true;
   }
@@ -89,15 +93,18 @@ class GenerateModelCommand extends Command {
         return result.body;
       } on Exception catch (_) {
         throw CliException(
-            LocaleKeys.error_failed_to_connect.trArgs([fromArgument]));
+          LocaleKeys.error_failed_to_connect.trArgs([fromArgument]),
+        );
       }
     }
   }
 
   final String? codeSample1 = LogService.code(
-      'get generate model on home with assets/models/user.json');
+    'get generate model on home with assets/models/user.json',
+  );
   final String? codeSample2 = LogService.code(
-      'get generate model on home from "https://api.github.com/users/CpdnCristiano"');
+    'get generate model on home from "https://api.github.com/users/CpdnCristiano"',
+  );
 
   @override
   String get codeSample => '''

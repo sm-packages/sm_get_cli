@@ -25,18 +25,21 @@ void checkForUpdate() async {
           final needsUpdate = v1.compareTo(v2);
           // needs update.
           if (needsUpdate == 1) {
-            LogService.info(Translation(
-                    LocaleKeys.info_update_available.trArgs([versionInstalled]))
-                .toString());
+            LogService.info(
+              Translation(
+                LocaleKeys.info_update_available.trArgs([versionInstalled]),
+              ).toString(),
+            );
             //await versionCommand();
             printGetCli();
             final String codeSample = LogService.code('get update');
             LogService.info(
-                '${LocaleKeys.info_update_available2.trArgs([
-                      versionInPubDev
-                    ])}${' $codeSample'}',
-                false,
-                true);
+              '${LocaleKeys.info_update_available2.trArgs([
+                    versionInPubDev,
+                  ])}${' $codeSample'}',
+              false,
+              true,
+            );
           }
         });
       });

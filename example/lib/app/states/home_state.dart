@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-/// MeState
-class MeState {
+/// HomeState
+class HomeState {
   /// count
   final count = 0.obs;
 }

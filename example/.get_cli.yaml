@@ -7,4 +7,4 @@ locales:
   output: lib/gen
 use_state: true
 templates:
-  path: assets/templates
+  path: ../samples_file

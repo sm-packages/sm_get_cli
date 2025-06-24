@@ -11,12 +11,10 @@ class StateSample extends Sample {
     this._fileName,
     this._isServer, {
     super.overwrite,
-    super.templatePath,
   });
 
   @override
-  String get content =>
-      renderTemplate() ?? (_isServer ? serverController : flutterState);
+  String get content => _isServer ? serverController : flutterState;
 
   String get serverController => '''import 'package:get_server/get_server.dart';
 
@@ -35,9 +33,4 @@ class ${_fileName.pascalCase}State {
   void increment() => count.value++;
 }
 ''';
-
-  @override
-  Map<String, String>? get variables => {
-        'name': _fileName.pascalCase,
-      };
 }

@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:get_cli/functions/controller/add_states.dart';
 import 'package:get_cli/functions/controller/find_controllers.dart';
 import 'package:get_cli/samples/impl/get_state.dart';
-import 'package:http/http.dart';
 import 'package:path/path.dart';
 
 import '../../../../common/utils/pubspec/pubspec_utils.dart';
@@ -12,7 +9,6 @@ import '../../../../core/locales.g.dart';
 import '../../../../core/structure.dart';
 import '../../../../exception_handler/exceptions/cli_exception.dart';
 import '../../../../functions/create/create_single_file.dart';
-import '../../../../functions/is_url/is_url.dart';
 import '../../../../functions/replace_vars/replace_vars.dart';
 import '../../../interface/command.dart';
 
@@ -50,28 +46,9 @@ class CreateStateCommand extends Command {
       '',
       name,
       isServer,
-      templatePath: PubspecUtilsTemplates.stateTemplate,
     );
     if (withArgument.isNotEmpty) {
-      if (isURL(withArgument)) {
-        var res = await get(Uri.parse(withArgument));
-        if (res.statusCode == 200) {
-          var content = res.body;
-          sample.customContent = replaceVars(content, name);
-        } else {
-          throw CliException(
-              LocaleKeys.error_failed_to_connect.trArgs([withArgument]));
-        }
-      } else {
-        var file = File(withArgument);
-        if (file.existsSync()) {
-          var content = file.readAsStringSync();
-          sample.customContent = replaceVars(content, name);
-        } else {
-          throw CliException(
-              LocaleKeys.error_no_valid_file_or_url.trArgs([withArgument]));
-        }
-      }
+      sample.customContent = await loadContent(withArgument, name);
     }
     var stateFile = handleFileCreate(
       name,
@@ -93,7 +70,7 @@ class CreateStateCommand extends Command {
     pathSplit.remove('.');
     pathSplit.remove('lib');
     if (controllerPath.isNotEmpty) {
-      addStatesToController(
+      await addStatesToController(
         controllerPath,
         controllerName,
         pathSplit.join('/'),
@@ -106,7 +83,9 @@ class CreateStateCommand extends Command {
   Future<void> execute() async {
     return createState(
       name,
-      withArgument: withArgument,
+      withArgument: withArgument.isEmpty
+          ? PubspecUtilsTemplates.stateTemplate
+          : withArgument,
       onCommand: onCommand,
     );
   }

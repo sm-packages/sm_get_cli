@@ -34,13 +34,16 @@ class ShellUtils {
     LogService.info('Running `flutter create $path` …');
 
     await run(
-        'flutter create --no-pub -i $iosLang -a $androidLang --org $org'
-        ' "$path"',
-        verbose: true);
+      'flutter create --no-pub -i $iosLang -a $androidLang --org $org'
+      ' "$path"',
+      verbose: true,
+    );
   }
 
-  static Future<void> update(
-      [bool isGit = false, bool forceUpdate = false]) async {
+  static Future<void> update([
+    bool isGit = false,
+    bool forceUpdate = false,
+  ]) async {
     isGit = GetCli.arguments.contains('--git');
     forceUpdate = GetCli.arguments.contains('-f');
     if (!isGit && !forceUpdate) {
@@ -51,8 +54,9 @@ class ShellUtils {
 
       if (versionInstalled == versionInPubDev) {
         return LogService.info(
-            Translation(LocaleKeys.info_cli_last_version_already_installed.tr)
-                .toString());
+          Translation(LocaleKeys.info_cli_last_version_already_installed.tr)
+              .toString(),
+        );
       }
     }
 
@@ -69,22 +73,26 @@ class ShellUtils {
       if (flutterPath.contains('flutter')) {
         if (isGit) {
           await run(
-              '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
-              verbose: true);
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
+            verbose: true,
+          );
         } else {
           await run(
-              '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
-              verbose: true);
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+            verbose: true,
+          );
         }
       } else {
         if (isGit) {
           await run(
-              '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
-              verbose: true);
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
+            verbose: true,
+          );
         } else {
           await run(
-              '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
-              verbose: true);
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+            verbose: true,
+          );
         }
       }
       return LogService.success(LocaleKeys.sucess_update_cli.tr);

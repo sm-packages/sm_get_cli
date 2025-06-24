@@ -1,25 +1,20 @@
-import 'package:recase/recase.dart';
-
 import '../../common/utils/pubspec/pubspec_utils.dart';
 import '../interface/sample_interface.dart';
 
 /// [Sample] file from Module_View file creation.
 class GetViewSample extends Sample {
   final String _controllerDir;
-  final String _fileName;
   final String _viewName;
   final String _controller;
   final bool _isServer;
 
   GetViewSample(
     super.path,
-    this._fileName,
     this._viewName,
     this._controller,
     this._controllerDir,
     this._isServer, {
     super.overwrite,
-    super.templatePath,
   });
 
   String get import => _controllerDir.isNotEmpty
@@ -65,13 +60,5 @@ class $_viewName extends $_controllerName {
   ''';
 
   @override
-  String get content =>
-      renderTemplate() ?? (_isServer ? _serverView : _flutterView);
-
-  @override
-  Map<String, String>? get variables => {
-        'name': _fileName.pascalCase,
-        'controller': _controllerName,
-        'import_path': import,
-      };
+  String get content => _isServer ? _serverView : _flutterView;
 }

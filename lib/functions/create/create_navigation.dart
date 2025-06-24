@@ -16,8 +16,11 @@ void createNavigation() {
 }
 
 void addNavigation(String name) {
-  var navigationFile = File(Structure.replaceAsExpected(
-      path: 'lib/infrastructure/navigation/navigation.dart'));
+  var navigationFile = File(
+    Structure.replaceAsExpected(
+      path: 'lib/infrastructure/navigation/navigation.dart',
+    ),
+  );
 
   List<String> lines;
 
@@ -46,9 +49,16 @@ void addNavigation(String name) {
       binding: ${name.pascalCase}ControllerBinding(),
     ),    ''');
 
-  writeFile(navigationFile.path, lines.join('\n'),
-      overwrite: true, logger: false);
+  writeFile(
+    navigationFile.path,
+    lines.join('\n'),
+    overwrite: true,
+    logger: false,
+  );
 
-  LogService.success(Translation(
-      LocaleKeys.sucess_navigation_added.trArgs([name.pascalCase])));
+  LogService.success(
+    Translation(
+      LocaleKeys.sucess_navigation_added.trArgs([name.pascalCase]),
+    ),
+  );
 }
