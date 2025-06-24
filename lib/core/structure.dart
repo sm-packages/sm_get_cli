@@ -24,6 +24,7 @@ class Structure {
     'controller': replaceAsExpected(path: 'lib/app'),
     'binding': replaceAsExpected(path: 'lib/app'),
     'view': replaceAsExpected(path: 'lib/app'),
+    'state': replaceAsExpected(path: 'lib/app'),
     //artekko files
     'screen': replaceAsExpected(path: 'lib/presentation'),
     'controller.binding':

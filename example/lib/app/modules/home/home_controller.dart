@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
 
-import 'home_state.dart';
+import 'package:example/app/modules/home/home_state.dart';
 
 /// HomeController
 class HomeController extends GetxController {
-  /// state
-  final HomeState state = HomeState();
-
+  final HomeState homeState = HomeState();
   @override
   void onInit() {
     super.onInit();

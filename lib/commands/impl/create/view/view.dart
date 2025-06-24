@@ -69,5 +69,13 @@ Future<void> createView(String name,
     }
   }
 
-  handleFileCreate(name, 'view', onCommand, true, sample, 'views');
+  final extraFolder = PubspecUtils.extraFolder ?? true;
+  handleFileCreate(
+    name,
+    'view',
+    onCommand,
+    onCommand.isNotEmpty ? extraFolder : true,
+    sample,
+    'views',
+  );
 }

@@ -77,7 +77,7 @@ class CreateStateCommand extends Command {
       name,
       'state',
       onCommand,
-      extraFolder,
+      onCommand.isNotEmpty ? extraFolder : true,
       sample,
       'states',
     );

@@ -1,2 +1,0 @@
-/// TabState
-class TabState {}

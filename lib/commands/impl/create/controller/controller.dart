@@ -56,7 +56,7 @@ class CreateControllerCommand extends Command {
         name,
         'state',
         onCommand,
-        extraFolder,
+        onCommand.isNotEmpty ? extraFolder : true,
         StateSample(
           '',
           name,
@@ -99,7 +99,7 @@ class CreateControllerCommand extends Command {
       name,
       'controller',
       onCommand,
-      extraFolder,
+      onCommand.isNotEmpty ? extraFolder : true,
       sample,
       'controllers',
     );
