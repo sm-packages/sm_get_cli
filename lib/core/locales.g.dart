@@ -98,6 +98,8 @@ class LocaleKeys {
   static const warning = 'warning';
   static const hint_create_state = 'hint_create_state';
   static const options_rename = 'options_rename';
+  static const sucess_add_state_in_controller =
+      'sucess_add_state_in_controller';
   static const sucess_update_yaml = 'sucess_update_yaml';
 }
 
@@ -247,7 +249,8 @@ class Locales {
     'sucess_package_removed': 'Package: %s 已移除！',
     'sucess_package_installed': '\'Package: %s 已安装！',
     'sucess_update_cli': '升级完成',
-    'sucess_add_controller_in_bindings': '%s 已经被添加到在 %s 的binding\'',
+    'sucess_add_controller_in_bindings': '%s 已经被添加到在 %s 的 binding 中',
+    'sucess_add_state_in_controller': '%s 已经被添加到在 %s 的 controller 中',
     'sucess_navigation_added': '%s navigation添加成功.',
     'sucess_file_created': '文件: %s 创建成功，路径: %s',
     'sucess_route_created': '%s route 创建成功.',
@@ -524,7 +527,9 @@ class Locales {
     'sucess_package_installed': '\'Package: %s installed!',
     'sucess_update_cli': 'Upgrade complete',
     'sucess_add_controller_in_bindings':
-        'The %s has been added to binding at path: %s\'',
+        'The %s has been added to binding at path: %s',
+    'sucess_add_state_in_controller':
+        'The %s has been added to controller at path: %s',
     'sucess_navigation_added': '%s navigation added successfully.',
     'sucess_file_created': 'File: %s created successfully at path: %s',
     'sucess_route_created': '%s route created successfully.',

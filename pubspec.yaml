@@ -1,5 +1,5 @@
 name: get_cli
-version: 1.9.3+1
+version: 1.9.3+2
 homepage: https://github.com/jonataslaw/get_cli
 description: Official CLI for GetX™ framework to build Flutter and Server Applications easily
 environment:

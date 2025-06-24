@@ -34,9 +34,9 @@ void addStatesToController(
       logger: false,
     );
     LogService.success(
-      LocaleKeys.sucess_add_controller_in_bindings.trArgs(
+      LocaleKeys.sucess_add_state_in_controller.trArgs(
         [
-          controllerName.pascalCase,
+          '${name.pascalCase}State',
           path,
         ],
       ),

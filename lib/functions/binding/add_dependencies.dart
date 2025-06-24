@@ -61,7 +61,13 @@ void addDependencyToBinding(
     lines.insert(index,
         '''${isVersion5 ? "Bind" : "Get"}.lazyPut<${controllerName.pascalCase}Controller>(() => ${controllerName.pascalCase}Controller(),)${isVersion5 ? "," : ";"}''');
     writeFile(file.path, lines.join('\n'), overwrite: true, logger: false);
-    LogService.success(LocaleKeys.sucess_add_controller_in_bindings
-        .trArgs([controllerName.pascalCase, path]));
+    LogService.success(
+      LocaleKeys.sucess_add_controller_in_bindings.trArgs(
+        [
+          '${controllerName.pascalCase}Controller',
+          path,
+        ],
+      ),
+    );
   }
 }
