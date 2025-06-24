@@ -1,0 +1,2 @@
+/// MeState
+class MeState {}

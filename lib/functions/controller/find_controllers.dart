@@ -6,28 +6,28 @@ import 'package:recase/recase.dart';
 import '../../common/utils/pubspec/pubspec_utils.dart';
 import '../../core/structure.dart';
 
-String findBindingFromName(String path, String name) {
+String findControllerFromName(String path, String name) {
   path = Structure.replaceAsExpected(path: path);
   var splitPath = Structure.safeSplitPath(path);
   splitPath
     ..remove('.')
     ..removeLast();
 
-  var bindingPath = '';
-  while (splitPath.isNotEmpty && bindingPath == '') {
+  var controllerPath = '';
+  while (splitPath.isNotEmpty && controllerPath == '') {
     Directory(splitPath.join(separator))
         .listSync(recursive: true, followLinks: false)
         .forEach((element) {
       if (element is File) {
         var fileName = basename(element.path);
         final separatorFileType = PubspecUtils.separatorFileType ?? '_';
-        if (fileName == '${name.snakeCase}${separatorFileType}binding.dart' ||
-            fileName == '${name.snakeCase}.controller.binding.dart') {
-          bindingPath = element.path;
+        if (fileName ==
+            '${name.snakeCase}${separatorFileType}controller.dart') {
+          controllerPath = element.path;
         }
       }
     });
     splitPath.removeLast();
   }
-  return bindingPath;
+  return controllerPath;
 }

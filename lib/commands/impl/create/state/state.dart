@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:get_cli/functions/controller/add_states.dart';
+import 'package:get_cli/functions/controller/find_controllers.dart';
+import 'package:get_cli/samples/impl/get_state.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart';
 
@@ -8,71 +11,46 @@ import '../../../../core/internationalization.dart';
 import '../../../../core/locales.g.dart';
 import '../../../../core/structure.dart';
 import '../../../../exception_handler/exceptions/cli_exception.dart';
-import '../../../../functions/binding/add_dependencies.dart';
-import '../../../../functions/binding/find_bindings.dart';
 import '../../../../functions/create/create_single_file.dart';
 import '../../../../functions/is_url/is_url.dart';
 import '../../../../functions/replace_vars/replace_vars.dart';
-import '../../../../samples/impl/get_controller.dart';
-import '../../../../samples/impl/get_state.dart';
 import '../../../interface/command.dart';
 
-/// This command is a controller with the template:
+/// This command is a state with the template:
 ///```
-///import 'package:get/get.dart';,
-///
-///class NameController extends GetxController {
+///class NameState {
 ///
 ///}
 ///```
-class CreateControllerCommand extends Command {
+class CreateStateCommand extends Command {
   @override
-  List<String> get alias => ['-ctrl'];
+  List<String> get alias => ['-st'];
 
   @override
-  String get codeSample => 'get create controller:name [OPTINAL PARAMETERS] \n'
+  String get codeSample => 'get create state:name [OPTINAL PARAMETERS] \n'
       '${LocaleKeys.optional_parameters.trArgs(['[on, with]'])} ';
 
   @override
-  String get commandName => 'controller';
+  String get commandName => 'state';
 
   @override
-  String? get hint => LocaleKeys.hint_create_controller.tr;
+  String? get hint => LocaleKeys.hint_create_state.tr;
 
   @override
   int get maxParameters => 0;
 
-  Future<void> createController(
+  Future<void> createState(
     String name, {
     String withArgument = '',
     String onCommand = '',
   }) async {
     final isServer = PubspecUtils.isServerProject;
     final extraFolder = PubspecUtils.extraFolder ?? true;
-    final useState = PubspecUtilsExt.useState;
-    String? stateDir;
-    if (useState) {
-      final stateFile = handleFileCreate(
-        name,
-        'state',
-        onCommand,
-        extraFolder,
-        StateSample(
-          '',
-          name,
-          isServer,
-          templatePath: PubspecUtilsTemplates.stateTemplate,
-        ),
-        'states',
-      );
-      stateDir = Structure.pathToDirImport(stateFile.path);
-    }
-    var sample = ControllerSample(
+    var sample = StateSample(
       '',
       name,
-      stateDir,
       isServer,
-      templatePath: PubspecUtilsTemplates.controllerTemplate,
+      templatePath: PubspecUtilsTemplates.stateTemplate,
     );
     if (withArgument.isNotEmpty) {
       if (isURL(withArgument)) {
@@ -95,35 +73,42 @@ class CreateControllerCommand extends Command {
         }
       }
     }
-    var controllerFile = handleFileCreate(
+    var stateFile = handleFileCreate(
       name,
-      'controller',
+      'state',
       onCommand,
       extraFolder,
       sample,
-      'controllers',
+      'states',
     );
 
-    final isVersion5 = PubspecUtilsExt.getxVersion == 5;
-    var binindingPath =
-        findBindingFromName(controllerFile.path, basename(onCommand));
-    var pathSplit = Structure.safeSplitPath(controllerFile.path);
+    var controllerName = name;
+    var controllerPath = findControllerFromName(stateFile.path, controllerName);
+    if (controllerPath.isEmpty) {
+      controllerName = onCommand;
+      controllerPath =
+          findControllerFromName(stateFile.path, basename(controllerName));
+    }
+    var pathSplit = Structure.safeSplitPath(stateFile.path);
     pathSplit.remove('.');
     pathSplit.remove('lib');
-    if (binindingPath.isNotEmpty) {
-      addDependencyToBinding(
-        binindingPath,
-        name,
+    if (controllerPath.isNotEmpty) {
+      addStatesToController(
+        controllerPath,
+        controllerName,
         pathSplit.join('/'),
-        isVersion5,
+        name,
       );
     }
   }
 
   @override
   Future<void> execute() async {
-    return createController(name,
-        withArgument: withArgument, onCommand: onCommand);
+    return createState(
+      name,
+      withArgument: withArgument,
+      onCommand: onCommand,
+    );
   }
 
   @override
@@ -132,12 +117,13 @@ class CreateControllerCommand extends Command {
     if (args.length > 2) {
       var unnecessaryParameter = args.skip(2).toList();
       throw CliException(
-          LocaleKeys.error_unnecessary_parameter.trArgsPlural(
-            LocaleKeys.error_unnecessary_parameter_plural,
-            unnecessaryParameter.length,
-            [unnecessaryParameter.toString()],
-          ),
-          codeSample: codeSample);
+        LocaleKeys.error_unnecessary_parameter.trArgsPlural(
+          LocaleKeys.error_unnecessary_parameter_plural,
+          unnecessaryParameter.length,
+          [unnecessaryParameter.toString()],
+        ),
+        codeSample: codeSample,
+      );
     }
     return true;
   }

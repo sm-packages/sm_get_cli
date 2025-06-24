@@ -366,7 +366,32 @@ get_cli:
     sub_folder: false
 ```
 
-<!-- TODO: pubpesc.yaml 和 .get_cli.yaml 示例 -->
+### 所有示例
+
+可以在 `pubspec.yaml` 或 `.get_cli.yaml` 中配置。
+
+如果在 `.get_cli.yaml` 中，则移除 `get_cli:`。
+
+```yml
+get_cli:
+    # get 版本
+    version: 5
+    # 文件名分隔符
+    separator: .
+    # 是否生成子文件夹
+    sub_folder: false
+    # 使用自定义模板
+    templates:
+      path: assets/templates
+      # page 和 view 等同
+      # page: assets/templates/page_template.dart
+      # controller: assets/templates/controller_template.dart
+      # binding: assets/templates/binding_template.dart
+    locales:
+      input: translations
+      output: lib/gen
+    use_state: true
+```
 
 ### 你的 import 乱不乱?
 

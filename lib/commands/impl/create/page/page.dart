@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
+import 'package:get_cli/samples/impl/get_state.dart';
 import 'package:recase/recase.dart';
 
 import '../../../../common/menu/menu.dart';
@@ -24,6 +25,7 @@ class CreatePageCommand extends Command {
 
   @override
   List<String> get alias => ['module', '-p', '-m'];
+
   @override
   Future<void> execute() async {
     var isProject = false;
@@ -41,7 +43,8 @@ class CreatePageCommand extends Command {
   String? get hint => LocaleKeys.hint_create_page.tr;
 
   void checkForAlreadyExists(String? name) {
-    var newFileModel = Structure.model(name, 'page', true, on: onCommand, folderName: name);
+    var newFileModel =
+        Structure.model(name, 'page', true, on: onCommand, folderName: name);
     var pathSplit = Structure.safeSplitPath(newFileModel.path!);
 
     pathSplit.removeLast();
@@ -54,7 +57,8 @@ class CreatePageCommand extends Command {
           LocaleKeys.options_no.tr,
           LocaleKeys.options_rename.tr,
         ],
-        title: Translation(LocaleKeys.ask_existing_page.trArgs([name])).toString(),
+        title:
+            Translation(LocaleKeys.ask_existing_page.trArgs([name])).toString(),
       );
       final result = menu.choose();
       if (result.index == 0) {
@@ -73,10 +77,30 @@ class CreatePageCommand extends Command {
   }
 
   void _writeFiles(String path, String name, {bool overwrite = false}) {
-    var isServer = PubspecUtils.isServerProject;
-    var extraFolder = PubspecUtils.extraFolder ?? true;
-    var pageName = PubspecUtilsExt.pageName;
-    var isVersion5 = PubspecUtilsExt.getxVersion == 5;
+    final isServer = PubspecUtils.isServerProject;
+    final extraFolder = PubspecUtils.extraFolder ?? true;
+    final pageName = PubspecUtilsExt.pageName;
+    final isVersion5 = PubspecUtilsExt.getxVersion == 5;
+    final useState = PubspecUtilsExt.useState;
+    String? stateDir;
+    if (useState) {
+      final stateFile = handleFileCreate(
+        name,
+        'state',
+        path,
+        extraFolder,
+        StateSample(
+          '',
+          name,
+          isServer,
+          overwrite: overwrite,
+          templatePath: PubspecUtilsTemplates.stateTemplate,
+        ),
+        'states',
+      );
+      stateDir = Structure.pathToDirImport(stateFile.path);
+    }
+
     var controllerFile = handleFileCreate(
       name,
       'controller',
@@ -85,6 +109,7 @@ class CreatePageCommand extends Command {
       ControllerSample(
         '',
         name,
+        stateDir,
         isServer,
         overwrite: overwrite,
         templatePath: PubspecUtilsTemplates.controllerTemplate,
@@ -133,7 +158,11 @@ class CreatePageCommand extends Command {
       Structure.pathToDirImport(bindingFile.path),
       Structure.pathToDirImport(viewFile.path),
     );
-    LogService.success(LocaleKeys.sucess_page_create.trArgs([name.pascalCase]));
+    LogService.success(
+      LocaleKeys.sucess_page_create.trArgs(
+        [name.pascalCase],
+      ),
+    );
   }
 
   @override

@@ -13,7 +13,8 @@
     "use_linter": "do you want to use some linter?",
     "new_page_name": "what new name for the page?",
     "use_architecture": "Which architecture do you want to use?",
-    "use_getx_version": "Which getx version do you want to use?"
+    "use_getx_version": "Which getx version do you want to use?",
+    "use_create_state": "Do you want to use create state?"
   },
   "error": {
     "failed_to_connect": "Failed to connect with %s",
@@ -45,7 +46,8 @@
       "project": "Use to generate new project",
       "provider": "Create a new Provider",
       "screen": "Generate new screen",
-      "view": "Generate view"
+      "view": "Generate view",
+      "state": "Generate state"
     },
     "generate": {
       "locales": "Generate translation file from json files",

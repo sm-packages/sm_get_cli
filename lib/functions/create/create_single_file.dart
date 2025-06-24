@@ -25,12 +25,15 @@ File handleFileCreate(String name, String command, String on, bool extraFolder,
 }
 
 /// Create or edit the contents of a file
-File writeFile(String path, String content,
-    {bool overwrite = false,
-    bool skipFormatter = false,
-    bool logger = true,
-    bool skipRename = false,
-    bool useRelativeImport = false}) {
+File writeFile(
+  String path,
+  String content, {
+  bool overwrite = false,
+  bool skipFormatter = false,
+  bool logger = true,
+  bool skipRename = false,
+  bool useRelativeImport = false,
+}) {
   var newFile = File(Structure.replaceAsExpected(path: path));
 
   if (!newFile.existsSync() || overwrite) {
@@ -81,7 +84,7 @@ String replacePathTypeSeparator(String path, String separator) {
     var index = path.indexOf(RegExp(
       r'controller.dart|model.dart|provider.dart|'
       'binding.dart|view.dart|screen.dart|widget.dart|repository.dart'
-      '|page.dart',
+      '|page.dart|state.dart',
     ));
     if (index != -1) {
       var chars = path.split('');

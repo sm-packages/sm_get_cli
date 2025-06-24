@@ -54,11 +54,23 @@ extension PubspecUtilsExt on PubspecUtils {
       return null;
     },
   );
+
   static final _getxVersion = _PubValue<int?>(
     () {
       try {
         if (_getCliMap.containsKey('version')) {
           return (_getCliMap['version'] as int);
+        }
+      } on Exception catch (_) {}
+      return null;
+    },
+  );
+
+  static final _useState = _PubValue<bool?>(
+    () {
+      try {
+        if (_getCliMap.containsKey('use_state')) {
+          return (_getCliMap['use_state'] as bool);
         }
       } on Exception catch (_) {}
       return null;
@@ -88,6 +100,9 @@ extension PubspecUtilsExt on PubspecUtils {
 
   /// 获取 pubspec 配置
   static dynamic get pubspecJson => PubspecUtils.pubspecJson;
+
+  /// 是否使用 state
+  static bool get useState => _useState.value ?? false;
 
   static Map get _getCliMap {
     try {

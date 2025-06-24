@@ -3,6 +3,7 @@ import 'package:get_cli/commands/impl/create/page/page.dart';
 import 'package:get_cli/commands/impl/create/project/project.dart';
 import 'package:get_cli/commands/impl/create/provider/provider.dart';
 import 'package:get_cli/commands/impl/create/screen/screen.dart';
+import 'package:get_cli/commands/impl/create/state/state.dart';
 import 'package:get_cli/commands/impl/create/view/view.dart';
 import 'package:get_cli/commands/interface/command.dart';
 
@@ -19,6 +20,7 @@ class CreateCommand extends Command {
         CreateProviderCommand(),
         CreateScreenCommand(),
         CreateViewCommand(),
+        CreateStateCommand(),
       ];
 
   @override

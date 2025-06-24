@@ -13,6 +13,7 @@ import '../../../../functions/exports_files/add_export.dart';
 import '../../../../functions/routes/arc_add_route.dart';
 import '../../../../samples/impl/get_binding.dart';
 import '../../../../samples/impl/get_controller.dart';
+import '../../../../samples/impl/get_state.dart';
 import '../../../../samples/impl/get_view.dart';
 import '../../../interface/command.dart';
 
@@ -62,16 +63,38 @@ class CreateScreenCommand extends Command {
   }
 
   void _writeFiles(String path, String name, {bool overwrite = false}) {
-    var isServer = PubspecUtils.isServerProject;
+    final isServer = PubspecUtils.isServerProject;
+    final extraFolder = PubspecUtils.extraFolder ?? true;
+    final isVersion5 = PubspecUtilsExt.getxVersion == 5;
+    final useState = PubspecUtilsExt.useState;
+    String? stateDir;
+    if (useState) {
+      final stateFile = handleFileCreate(
+        name,
+        'state',
+        path,
+        extraFolder,
+        StateSample(
+          '',
+          name,
+          isServer,
+          overwrite: overwrite,
+          templatePath: PubspecUtilsTemplates.stateTemplate,
+        ),
+        'states',
+      );
+      stateDir = Structure.pathToDirImport(stateFile.path);
+    }
 
     var controller = handleFileCreate(
       name,
       'controller',
       path,
-      true,
+      extraFolder,
       ControllerSample(
         '',
         name,
+        stateDir,
         isServer,
         templatePath: PubspecUtilsTemplates.controllerTemplate,
       ),
@@ -101,13 +124,14 @@ class CreateScreenCommand extends Command {
         name,
         'controller.binding',
         '',
-        true,
+        extraFolder,
         BindingSample(
           '',
           name,
           '${name.pascalCase}ControllerBinding',
           controllerImport,
           isServer,
+          isVersion5: isVersion5,
           templatePath: PubspecUtilsTemplates.bindingTemplate,
         ),
         'controllers',

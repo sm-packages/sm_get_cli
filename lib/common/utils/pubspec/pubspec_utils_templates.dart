@@ -19,7 +19,6 @@ extension PubspecUtilsTemplates on PubspecUtils {
             for (var file in files) {
               final name =
                   basenameWithoutExtension(file.path).split('_').firstOrNull;
-              print(name);
               template.putIfAbsent(name!, () => file.path);
             }
           }
@@ -42,4 +41,7 @@ extension PubspecUtilsTemplates on PubspecUtils {
 
   /// 配置的 binding 模板
   static String? get bindingTemplate => templates['binding'];
+
+  /// 配置的 state 模板
+  static String? get stateTemplate => templates['state'];
 }

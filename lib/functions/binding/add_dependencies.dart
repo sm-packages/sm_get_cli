@@ -44,7 +44,8 @@ import '../create/create_single_file.dart';
 ///    }
 ///}
 ///```
-void addDependencyToBinding(String path, String controllerName, String import) {
+void addDependencyToBinding(
+    String path, String controllerName, String import, bool isVersion5) {
   import = '''import 'package:${PubspecUtils.projectName}/$import';''';
   var file = File(path);
   if (file.existsSync()) {
@@ -52,12 +53,13 @@ void addDependencyToBinding(String path, String controllerName, String import) {
     lines.insert(2, import);
     var index = lines.indexWhere((element) {
       element = element.trim();
-      return element.startsWith('void dependencies() {');
+      return element.startsWith(
+        isVersion5 ? 'return [' : 'void dependencies() {',
+      );
     });
     index++;
-    lines.insert(index, '''Get.lazyPut<${controllerName.pascalCase}Controller>(
-          () => ${controllerName.pascalCase}Controller(),
-);''');
+    lines.insert(index,
+        '''${isVersion5 ? "Bind" : "Get"}.lazyPut<${controllerName.pascalCase}Controller>(() => ${controllerName.pascalCase}Controller(),)${isVersion5 ? "," : ";"}''');
     writeFile(file.path, lines.join('\n'), overwrite: true, logger: false);
     LogService.success(LocaleKeys.sucess_add_controller_in_bindings
         .trArgs([controllerName.pascalCase, path]));

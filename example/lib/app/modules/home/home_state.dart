@@ -1,0 +1,2 @@
+/// HomeState
+class HomeState {}

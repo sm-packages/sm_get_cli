@@ -16,16 +16,15 @@ class InitCommand extends Command {
   Future<void> execute() async {
     final getxVersionMenu = Menu(
       [
-        'GetX 4',
         'GetX 5',
+        'GetX 4',
       ],
       title: LocaleKeys.ask_use_getx_version.tr,
     );
     final getxVersionResult = getxVersionMenu.choose();
-
     PubspecUtilsExt.updateGetCliYaml(
       'version',
-      getxVersionResult.index == 0 ? 4 : 5,
+      getxVersionResult.index == 0 ? 5 : 4,
     );
 
     final menu = Menu(
@@ -36,6 +35,19 @@ class InitCommand extends Command {
       title: LocaleKeys.ask_use_architecture.tr,
     );
     final result = menu.choose();
+
+    final useStateMenu = Menu(
+      [
+        LocaleKeys.options_yes.tr,
+        LocaleKeys.options_no.tr,
+      ],
+      title: LocaleKeys.ask_use_create_state.tr,
+    );
+    final useState = useStateMenu.choose();
+    PubspecUtilsExt.updateGetCliYaml(
+      'use_state',
+      useState.index == 0 ? true : false,
+    );
 
     result.index == 0
         ? await createInitGetxPattern()

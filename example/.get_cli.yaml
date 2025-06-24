@@ -1,0 +1,10 @@
+# get 版本
+version: 5
+separator: _
+sub_folder: false
+locales:
+  input: ../translations
+  output: lib/gen
+use_state: true
+templates:
+  path: assets/templates

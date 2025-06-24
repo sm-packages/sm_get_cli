@@ -13,7 +13,8 @@
     "use_linter": "你想用代码检查器吗？",
     "new_page_name": "page 的名字是？",
     "use_architecture": "您想使用哪种架构？",
-    "use_getx_version": "您要使用哪个 get 版本？"
+    "use_getx_version": "您要使用哪个 get 版本？",
+    "use_create_state": "要自动创建 state 吗？"
   },
   "error": {
     "failed_to_connect": "连接到 %s 失败",
@@ -45,7 +46,8 @@
       "project": "用于生成新项目",
       "provider": "创建一个新 Provider",
       "screen": "生成新 Screen",
-      "view": "生成 view"
+      "view": "生成 view",
+      "state": "生成 state"
     },
     "generate": {
       "locales": "从 json 文件生成国际化翻译文件",

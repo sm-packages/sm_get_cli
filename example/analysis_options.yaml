@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - assets/templates/**
+
+linter:
+  rules:
+    unnecessary_lambdas: true

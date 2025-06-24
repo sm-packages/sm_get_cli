@@ -43,7 +43,7 @@ class GenerateLocalesCommand extends Command {
     final inputPath =
         inputIndex >= 0 && inputIndex + 1 < GetCli.arguments.length
             ? GetCli.arguments[inputIndex + 1]
-            : args.isNotEmpty
+            : args.isNotEmpty && outputIndex == -1
                 ? args.first
                 : PubspecUtilsExt.localesInput ?? 'assets/locales';
 
@@ -165,7 +165,7 @@ class GenerateLocalesCommand extends Command {
   }
 
   @override
-  bool get showHelp => true;
+  bool get showHelp => false;
 }
 
 String _replaceValue(String value) {
