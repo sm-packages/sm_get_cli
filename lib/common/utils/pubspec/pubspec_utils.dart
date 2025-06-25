@@ -6,7 +6,6 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
-import '../../../core/internationalization.dart';
 import '../../../core/locales.g.dart';
 import '../../../extensions.dart';
 import '../../menu/menu.dart';

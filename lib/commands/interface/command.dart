@@ -37,9 +37,10 @@ abstract class Command with ArgsMixin {
       var flagsNotAceppts = flags;
       flagsNotAceppts.removeWhere((element) => acceptedFlags.contains(element));
       if (flagsNotAceppts.isNotEmpty) {
-        LogService.info(LocaleKeys.info_unnecessary_flag.trArgsPlural(
-          LocaleKeys.info_unnecessary_flag_prural,
-          flagsNotAceppts.length,
+        LogService.info(
+          LocaleKeys.info_unnecessary_flag.trArgsPlural(
+            LocaleKeys.info_unnecessary_flag_prural,
+            flagsNotAceppts.length,
             [
               flagsNotAceppts.toString(),
             ],
@@ -50,11 +51,11 @@ abstract class Command with ArgsMixin {
       if (args.length > maxParameters) {
         List pars = args.skip(maxParameters).toList();
         throw CliException(
-            LocaleKeys.error_unnecessary_parameter.trArgsPlural(
-              LocaleKeys.error_unnecessary_parameter_plural,
-              pars.length,
-              [pars.toString()],
-            ),
+          LocaleKeys.error_unnecessary_parameter.trArgsPlural(
+            LocaleKeys.error_unnecessary_parameter_plural,
+            pars.length,
+            [pars.toString()],
+          ),
           codeSample: codeSample,
         );
       }

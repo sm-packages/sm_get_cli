@@ -22,6 +22,7 @@ void addRoute(String nameRoute, String bindingDir, String viewDir) {
     routesFile = File(RouteSample().path);
     // content = routesFile.readAsStringSync();
   }
+
   var pathSplit = viewDir.split('/');
 
   ///remove file
@@ -47,9 +48,23 @@ void addRoute(String nameRoute, String bindingDir, String viewDir) {
   if (supportChildrenRoutes) {
     line = '$declareRoute ${_pathsToRoute(pathSplit)};';
     var linePath = "$declareRoute '/${pathSplit.last}';";
-    routesFile.appendClassContent('_Paths', linePath);
+    final result = routesFile.appendClassContent('_Paths', linePath);
+    if (!result) {
+      LogService.info(
+        'The route $route already exists in app_routes.dart, skip adding',
+        false,
+        false,
+      );
+    }
   }
-  routesFile.appendClassContent('Routes', line);
+  final result = routesFile.appendClassContent('Routes', line);
+  if (!result) {
+    LogService.info(
+      'The route $route already exists in app_routes.dart, skip adding',
+      false,
+      false,
+    );
+  }
 
   addAppPage(nameRoute, bindingDir, viewDir);
 

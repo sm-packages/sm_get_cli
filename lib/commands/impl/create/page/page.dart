@@ -37,13 +37,13 @@ class CreatePageCommand extends Command {
     if (name.isEmpty || isProject) {
       name = 'home';
     }
-    checkForAlreadyExists(name);
+    await checkForAlreadyExists(name);
   }
 
   @override
   String? get hint => LocaleKeys.hint_create_page.tr;
 
-  void checkForAlreadyExists(String? name) {
+  Future<void> checkForAlreadyExists(String? name) async {
     var newFileModel =
         Structure.model(name, 'page', true, on: onCommand, folderName: name);
     var pathSplit = Structure.safeSplitPath(newFileModel.path!);
@@ -63,7 +63,7 @@ class CreatePageCommand extends Command {
       );
       final result = menu.choose();
       if (result.index == 0) {
-        _writeFiles(path, name!, overwrite: true);
+        await _writeFiles(path, name!, overwrite: true);
       } else if (result.index == 2) {
         // final dialog = CLI_Dialog();
         // dialog.addQuestion(LocaleKeys.ask_new_page_name.tr, 'name');
@@ -73,7 +73,7 @@ class CreatePageCommand extends Command {
       }
     } else {
       Directory(path).createSync(recursive: true);
-      _writeFiles(path, name!, overwrite: false);
+      await _writeFiles(path, name!, overwrite: false);
     }
   }
 

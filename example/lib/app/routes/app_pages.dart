@@ -25,5 +25,10 @@ class AppPages {
         ),
       ],
     ),
+    GetPage(
+      name: _Paths.me,
+      page: () => const MePage(),
+      binding: MeBinding(),
+    ),
   ];
 }

@@ -6,6 +6,7 @@ import 'me_controller.dart';
 
 /// MePage
 class MePage extends GetView<MeController> {
+  // ignore: public_member_api_docs
   const MePage({super.key});
 
   @override

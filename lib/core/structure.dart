@@ -66,7 +66,8 @@ class Structure {
             },
             orElse: () {
               throw CliException(
-                  LocaleKeys.error_folder_not_found.trArgs([on]));
+                LocaleKeys.error_folder_not_found.trArgs([on]),
+              );
             },
           );
         },

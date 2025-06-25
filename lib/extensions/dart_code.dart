@@ -26,11 +26,13 @@ extension DartCodeExt on File {
   ///  _Paths._();
   /// }
   ///
-  void appendClassContent(String className, String value) {
+  bool appendClassContent(String className, String value) {
     var content = dartCode;
-    var matches =
-        RegExp('class $className {.*?(^})', multiLine: true, dotAll: true)
-            .allMatches(content);
+    var matches = RegExp(
+      r'class\s+' + RegExp.escape(className) + r'\s*{(.*?)}',
+      dotAll: true,
+      multiLine: true,
+    ).allMatches(content);
     if (matches.isEmpty) {
       throw CliException('The class $className is not found in the file $path');
     } else if (matches.length > 1) {
@@ -39,6 +41,13 @@ extension DartCodeExt on File {
       );
     }
     var match = matches.first;
+
+    // 检查是否已包含该 value
+    final classBody = match.group(1) ?? '';
+    if (classBody.contains(value)) {
+      return false; // 已包含，不添加
+    }
+
     content = content.insert(match.end - 1, value);
     writeFile(
       path,
@@ -47,6 +56,7 @@ extension DartCodeExt on File {
       logger: false,
       useRelativeImport: true,
     );
+    return true;
   }
 
   String get dartCode {

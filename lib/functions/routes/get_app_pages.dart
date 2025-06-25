@@ -32,6 +32,9 @@ void addAppPage(String name, String bindingDir, String viewDir) {
       lines.indexWhere((element) => element.contains('];'), indexRoutes);
 
   var tabEspaces = 2;
+  // 是否已存在
+  bool? existed;
+  final nameCameCase = name.camelCase;
   if (supportChildrenRoutes) {
     routesOrPath = '_Paths';
     var pathSplit = path.split('/');
@@ -44,7 +47,8 @@ void addAppPage(String name, String bindingDir, String viewDir) {
     while (pathSplit.isNotEmpty && onPageIndex == -1) {
       onPageIndex = lines.indexWhere(
         (element) => element.contains(
-            '_Paths.${pathSplit.last.camelCase},'), // app_page 中 _Path.xxx 的命名
+          '_Paths.${pathSplit.last.camelCase},',
+        ), // app_page 中 _Path.xxx 的命名
         indexRoutes,
       );
 
@@ -77,16 +81,27 @@ void addAppPage(String name, String bindingDir, String viewDir) {
           index++;
           lines.insert(index, '${_getTabs(tabEspaces)}],');
           tabEspaces++;
+          existed = false;
         } else {
           var indexChildrenEnd = -1;
           indexChildrenEnd = lines.indexWhere(
             (element) => element.startsWith(
-                '${_getTabs(_countTabs(lines[onPageStartIndex]) + 1)}],'),
+              '${_getTabs(_countTabs(lines[onPageStartIndex]) + 1)}],',
+            ),
             onPageStartIndex,
           );
           if (indexChildrenEnd != -1) {
             index = indexChildrenEnd;
             tabEspaces = _countTabs(lines[onPageStartIndex]) + 2;
+            existed = lines
+                .sublist(
+                  onPageStartIndex + indexChildrenStart,
+                  indexChildrenEnd,
+                )
+                .any(
+                  (element) =>
+                      element.contains('name: $routesOrPath.$nameCameCase'),
+                );
           } else {
             _logInvalidFormart();
           }
@@ -96,22 +111,43 @@ void addAppPage(String name, String bindingDir, String viewDir) {
       }
     }
   }
-  // var nameSnakeCase = name.snakeCase;
-  var nameCameCase = name.camelCase;
-  var namePascalCase = name.pascalCase;
-  var pageName = PubspecUtilsExt.pageName;
-  var line = '''${_getTabs(tabEspaces)}GetPage(
+  if ((existed != null && existed) ||
+      (existed == null &&
+          lines.any(
+            (element) => element.contains('name: $routesOrPath.$nameCameCase'),
+          ))) {
+    LogService.info(
+      'The page $name already exists in app_pages.dart, skip adding',
+      false,
+      false,
+    );
+    return;
+  }
+  final namePascalCase = name.pascalCase;
+  final pageName = PubspecUtilsExt.pageName;
+  final line = '''${_getTabs(tabEspaces)}GetPage(
 ${_getTabs(tabEspaces + 1)}name: $routesOrPath.$nameCameCase,
 ${_getTabs(tabEspaces + 1)}page:()=> const $namePascalCase${pageName.pascalCase}(),
 ${_getTabs(tabEspaces + 1)}binding: ${namePascalCase}Binding(),
 ${_getTabs(tabEspaces)}),''';
 
-  var import = "import 'package:${PubspecUtils.projectName}/";
+  final import = "import 'package:${PubspecUtils.projectName}/";
 
   lines.insert(index, line);
 
-  lines.insert(0, "$import$bindingDir';");
-  lines.insert(0, "$import$viewDir';");
+  // 判断是否已经导入
+  var bindingDirSplit = bindingDir.split('/')..removeRange(0, 2);
+  final bindingImport = "${bindingDirSplit.join('/')}';";
+  if (!lines.any((element) => element.contains(bindingImport))) {
+    lines.insert(0, "$import$bindingDir';");
+  }
+
+  // 判断是否已经导入
+  var viewDirSplit = viewDir.split('/')..removeRange(0, 2);
+  final viewImport = "${viewDirSplit.join('/')}';";
+  if (!lines.any((element) => element.contains(viewImport))) {
+    lines.insert(0, "$import$viewDir';");
+  }
 
   writeFile(
     appPagesFile.path,
