@@ -7,6 +7,8 @@ import 'exceptions/cli_exception.dart';
 
 class ExceptionHandler {
   void handle(dynamic e) {
+    exitCode = 1;
+
     if (e is CliException) {
       LogService.error(e.message!);
       if (e.codeSample!.isNotEmpty) {
@@ -26,7 +28,6 @@ class ExceptionHandler {
     } else {
       _logException(e.toString());
     }
-    if (!Platform.isWindows) exit(0);
   }
 
   static void _logException(String msg) {
