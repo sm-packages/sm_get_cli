@@ -27,15 +27,22 @@ class ShellUtils {
 
   static Future<void> flutterCreate(
     String path,
-    String? org,
-    String iosLang,
+    String org,
     String androidLang,
   ) async {
     LogService.info('Running `flutter create $path` …');
 
-    await run(
-      'flutter create --no-pub -i $iosLang -a $androidLang --org $org'
-      ' "$path"',
+    await runExecutableArguments(
+      'flutter',
+      [
+        'create',
+        '--no-pub',
+        '--android-language',
+        androidLang,
+        '--org',
+        org,
+        path,
+      ],
       verbose: true,
     );
   }

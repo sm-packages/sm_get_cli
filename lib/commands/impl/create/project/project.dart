@@ -58,12 +58,6 @@ class CreateProjectCommand extends Command {
         defaultValue: "com.$nameProject", // 默认为项目名称
       );
 
-      final iosLangMenu =
-          Menu(['Swift', 'Objective-C'], title: LocaleKeys.ask_ios_lang.tr);
-      final iosResult = iosLangMenu.choose();
-
-      var iosLang = iosResult.index == 0 ? 'swift' : 'objc';
-
       final androidLangMenu =
           Menu(['Kotlin', 'Java'], title: LocaleKeys.ask_android_lang.tr);
       final androidResult = androidLangMenu.choose();
@@ -79,7 +73,7 @@ class CreateProjectCommand extends Command {
       );
       final linterResult = linterMenu.choose();
 
-      await ShellUtils.flutterCreate(path, org, iosLang, androidLang);
+      await ShellUtils.flutterCreate(path, org, androidLang);
 
       File('test/widget_test.dart').writeAsStringSync('');
 
