@@ -9,6 +9,11 @@ import '../logger/log_utils.dart';
 import '../pub_dev/pub_dev_api.dart';
 import '../pubspec/pubspec_lock.dart';
 
+typedef ProcessRunner = Future<ProcessResult> Function(
+  String executable,
+  List<String> arguments,
+);
+
 class ShellUtils {
   static Future<void> pubGet() async {
     LogService.info('Running `flutter pub get` …');
@@ -28,24 +33,39 @@ class ShellUtils {
   static Future<void> flutterCreate(
     String path,
     String org,
-    String androidLang,
-  ) async {
+    String androidLang, {
+    ProcessRunner? processRunner,
+  }) async {
     LogService.info('Running `flutter create $path` …');
 
-    await runExecutableArguments(
+    final arguments = [
+      'create',
+      '--no-pub',
+      '--android-language',
+      androidLang,
+      '--org',
+      org,
+      path,
+    ];
+    final result = await (processRunner ?? _runExecutableArguments)(
       'flutter',
-      [
-        'create',
-        '--no-pub',
-        '--android-language',
-        androidLang,
-        '--org',
-        org,
-        path,
-      ],
-      verbose: true,
+      arguments,
     );
+    if (result.exitCode != 0) {
+      throw ProcessException(
+        'flutter',
+        arguments,
+        result.stderr.toString(),
+        result.exitCode,
+      );
+    }
   }
+
+  static Future<ProcessResult> _runExecutableArguments(
+    String executable,
+    List<String> arguments,
+  ) =>
+      runExecutableArguments(executable, arguments, verbose: true);
 
   static Future<void> update([
     bool isGit = false,
