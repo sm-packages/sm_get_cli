@@ -100,7 +100,7 @@ class ShellUtils {
       if (flutterPath.contains('flutter')) {
         if (isGit) {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/get_cli/',
             verbose: true,
           );
         } else {
@@ -112,7 +112,7 @@ class ShellUtils {
       } else {
         if (isGit) {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/shay-wong/get_cli/',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/get_cli/',
             verbose: true,
           );
         } else {
