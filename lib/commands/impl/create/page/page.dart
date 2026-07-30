@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
-import 'package:get_cli/functions/replace_vars/replace_vars.dart';
-import 'package:get_cli/samples/impl/get_state.dart';
+import 'package:sm_get_cli/functions/replace_vars/replace_vars.dart';
+import 'package:sm_get_cli/samples/impl/get_state.dart';
 import 'package:recase/recase.dart';
 
 import '../../../../common/menu/menu.dart';

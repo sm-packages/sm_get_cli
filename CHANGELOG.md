@@ -1,6 +1,7 @@
 ## [1.9.3+3]
 
 - Keep Flutter project creation compatible with current Android and iOS options
+- Rename the package and repository to `sm_get_cli`
 
 ## [1.9.1]
 

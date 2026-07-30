@@ -1,6 +1,6 @@
-import 'package:get_cli/commands/impl/generate/locales/locales.dart';
-import 'package:get_cli/commands/impl/generate/model/model.dart';
-import 'package:get_cli/commands/interface/command.dart';
+import 'package:sm_get_cli/commands/impl/generate/locales/locales.dart';
+import 'package:sm_get_cli/commands/impl/generate/model/model.dart';
+import 'package:sm_get_cli/commands/interface/command.dart';
 
 class GenerateCommand extends Command {
   GenerateCommand();

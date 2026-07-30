@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:get_cli/core/internationalization.dart';
+import 'package:sm_get_cli/core/internationalization.dart';
 import 'package:http/http.dart';
 import 'package:recase/recase.dart';
 

@@ -75,7 +75,7 @@ class ShellUtils {
     forceUpdate = GetCli.arguments.contains('-f');
     if (!isGit && !forceUpdate) {
       var versionInPubDev =
-          await PubDevApi.getLatestVersionFromPackage('get_cli');
+          await PubDevApi.getLatestVersionFromPackage('sm_get_cli');
 
       var versionInstalled = await PubspecLock.getVersionCli(disableLog: true);
 
@@ -87,37 +87,39 @@ class ShellUtils {
       }
     }
 
-    LogService.info('Upgrading get_cli …');
+    LogService.info('Upgrading sm_get_cli …');
 
     try {
       var result = await Process.run('which', ['flutter']);
       final flutterPath = result.stdout.toString().trim();
       var hasFvm = false;
       if (flutterPath.contains('fvm')) {
-        LogService.info('fvm exists, will use fvm flutter to upgrade get_cli');
+        LogService.info(
+          'fvm exists, will use fvm flutter to upgrade sm_get_cli',
+        );
         hasFvm = true;
       }
       if (flutterPath.contains('flutter')) {
         if (isGit) {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/get_cli/',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/sm_get_cli/',
             verbose: true,
           );
         } else {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate sm_get_cli',
             verbose: true,
           );
         }
       } else {
         if (isGit) {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/get_cli/',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate -sgit https://github.com/sm-packages/sm_get_cli/',
             verbose: true,
           );
         } else {
           await run(
-            '${hasFvm ? 'fvm ' : ''}flutter pub global activate get_cli',
+            '${hasFvm ? 'fvm ' : ''}flutter pub global activate sm_get_cli',
             verbose: true,
           );
         }

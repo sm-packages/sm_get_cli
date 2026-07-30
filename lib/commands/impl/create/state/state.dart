@@ -1,6 +1,6 @@
-import 'package:get_cli/functions/controller/add_states.dart';
-import 'package:get_cli/functions/controller/find_controllers.dart';
-import 'package:get_cli/samples/impl/get_state.dart';
+import 'package:sm_get_cli/functions/controller/add_states.dart';
+import 'package:sm_get_cli/functions/controller/find_controllers.dart';
+import 'package:sm_get_cli/samples/impl/get_state.dart';
 import 'package:path/path.dart';
 
 import '../../../../common/utils/pubspec/pubspec_utils.dart';

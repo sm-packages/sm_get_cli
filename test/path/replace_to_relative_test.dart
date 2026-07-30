@@ -1,4 +1,4 @@
-import 'package:get_cli/functions/path/replace_to_relative.dart';
+import 'package:sm_get_cli/functions/path/replace_to_relative.dart';
 import 'package:test/test.dart';
 
 void main() {

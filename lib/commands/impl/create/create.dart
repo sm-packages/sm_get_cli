@@ -1,11 +1,11 @@
-import 'package:get_cli/commands/impl/create/controller/controller.dart';
-import 'package:get_cli/commands/impl/create/page/page.dart';
-import 'package:get_cli/commands/impl/create/project/project.dart';
-import 'package:get_cli/commands/impl/create/provider/provider.dart';
-import 'package:get_cli/commands/impl/create/screen/screen.dart';
-import 'package:get_cli/commands/impl/create/state/state.dart';
-import 'package:get_cli/commands/impl/create/view/view.dart';
-import 'package:get_cli/commands/interface/command.dart';
+import 'package:sm_get_cli/commands/impl/create/controller/controller.dart';
+import 'package:sm_get_cli/commands/impl/create/page/page.dart';
+import 'package:sm_get_cli/commands/impl/create/project/project.dart';
+import 'package:sm_get_cli/commands/impl/create/provider/provider.dart';
+import 'package:sm_get_cli/commands/impl/create/screen/screen.dart';
+import 'package:sm_get_cli/commands/impl/create/state/state.dart';
+import 'package:sm_get_cli/commands/impl/create/view/view.dart';
+import 'package:sm_get_cli/commands/interface/command.dart';
 
 class CreateCommand extends Command {
   CreateCommand();

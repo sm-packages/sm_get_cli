@@ -26,7 +26,7 @@
     "invalid_file_or_directory": "%s ليس ملفات او مجلدا صحيحا",
     "package_not_found": "المكتبة: %s ليست موجودة فى pub.dev",
     "cli_version_not_found": "لم يتم العثور على الاصدار الذى قمت بتثبيته.",
-    "update_cli": "هناك خطأ اثناء تحديث get_cli",
+    "update_cli": "هناك خطأ اثناء تحديث sm_get_cli",
     "folder_not_found": "المجلد %s غير موجود",
     "file_not_found": "لم يتم العثور على الملف %s",
     "access_denied": "اذن الوصول غير مرخص %s",
@@ -60,7 +60,7 @@
     "unnecessary_flag": "%s ليس ضروريا",
     "unnecessary_flag_prural": "%s ليس ضروريا",
     "package_not_installed": "المكتبة: %s ليست مثبتة فى تطبيقك",
-    "cli_last_version_already_installed": "الإصدار الأخير من get_cli مثبت بالفعل",
+    "cli_last_version_already_installed": "الإصدار الأخير من sm_get_cli مثبت بالفعل",
     "no_file_overwritten": "لم يتم استبدال اي ملفات",
     "update_available": "هناك تحديث متوفر! الإصدار الحالي: %s",
     "update_available2": "الإصدار الجديد: %s يرجى تشغيل:"

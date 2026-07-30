@@ -7,10 +7,10 @@ Official CLI for the GetX™ framework.
 
 ```dart
 // To install:
-pub global activate get_cli
+pub global activate sm_get_cli
 // (to use this add the following to system PATH: [FlutterSDKInstallDir]\bin\cache\dart-sdk\bin
 
-flutter pub global activate get_cli
+flutter pub global activate sm_get_cli
 
 // To create a flutter project in the current directory:
 // Note: By default it will take the folder's name as project name
@@ -165,7 +165,7 @@ or with url
 _run_
 
 ```shell
-  get create controller:auth with 'https://raw.githubusercontent.com/jonataslaw/get_cli/master/samples_file/controller.dart.example' on your_folder
+  get create controller:auth with 'https://raw.githubusercontent.com/sm-packages/sm_get_cli/master/samples_file/controller.dart.example' on your_folder
 ```
 
 input:
@@ -373,7 +373,7 @@ To help you organize your imports a new command was created: `get sort`, in addi
 When using get sort all files are renamed, with the [separator](#separator-file-type).
 To not rename use the `--skipRename` flag.
 
-You are one of those who prefer to use relative imports instead of project imports, use the `--relative` option. get_cli will convert.
+You are one of those who prefer to use relative imports instead of project imports, use the `--relative` option. sm_get_cli will convert.
 
 ### Internationalization of the cli
 

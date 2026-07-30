@@ -1,5 +1,5 @@
-import 'package:get_cli/commands/impl/create/create.dart';
-import 'package:get_cli/commands/impl/generate/generate.dart';
+import 'package:sm_get_cli/commands/impl/create/create.dart';
+import 'package:sm_get_cli/commands/impl/generate/generate.dart';
 
 import 'impl/commads_export.dart';
 import 'interface/command.dart';

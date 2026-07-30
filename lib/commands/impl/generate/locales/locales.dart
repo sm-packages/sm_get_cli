@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:get_cli/common/utils/pubspec/pubspec_utils.dart';
-import 'package:get_cli/core/generator.dart';
+import 'package:sm_get_cli/common/utils/pubspec/pubspec_utils.dart';
+import 'package:sm_get_cli/core/generator.dart';
 import 'package:path/path.dart';
 
 import '../../../../common/utils/logger/log_utils.dart';

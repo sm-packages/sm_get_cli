@@ -1,4 +1,4 @@
-// DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
+// DO NOT EDIT. This is code generated via package:sm_get_cli/sm_get_cli.dart
 
 // ignore_for_file: lines_longer_than_80_chars, constant_identifier_names
 // ignore: avoid_classes_with_only_static_members
@@ -126,7 +126,7 @@ class Locales {
     'error_invalid_file_or_directory': '%s geçerli bir dosya veya dizin değil',
     'error_package_not_found': 'Paket: %s pub.dev\'de bulunamadı',
     'error_cli_version_not_found': 'Yüklemek istediğiniz sürüm bulunamadı.',
-    'error_update_cli': 'get_cli yükseltilirken bir hata oluştu',
+    'error_update_cli': 'sm_get_cli yükseltilirken bir hata oluştu',
     'error_folder_not_found': '%s klasörü bulunamadı',
     'error_file_not_found': '%s içinde dosya bulunamadı',
     'error_access_denied': '%s için erişim engellendi',
@@ -151,7 +151,7 @@ class Locales {
     'info_unnecessary_flag_prural': '%s gerekli değil',
     'info_package_not_installed': 'Paket: %s bu uygulama için yüklenemedi',
     'info_cli_last_version_already_installed':
-        'get_cli\'nin son sürümü zaten yüklü',
+        'sm_get_cli\'nin son sürümü zaten yüklü',
     'info_no_file_overwritten': 'Hiçbir dosyanın üzerine yazılmadı',
     'info_update_available': 'Bir güncelleme mevcut! Mevcut yüklü sürüm: %s',
     'info_update_available2': 'Yeni sürüm mevcut: %s çalıştırın:',
@@ -204,7 +204,7 @@ class Locales {
     'error_invalid_file_or_directory': '%s 不是有效的文件或目录',
     'error_package_not_found': '依赖: %s 在 pub.dev 中没有找到',
     'error_cli_version_not_found': '没有找到已安装版本。',
-    'error_update_cli': '升级 get_cli 错误',
+    'error_update_cli': '升级 sm_get_cli 错误',
     'error_folder_not_found': '文件夹 %s 未找到',
     'error_file_not_found': '在 %s 中没有找到文件',
     'error_access_denied': '对 %s 的访问被拒绝',
@@ -231,7 +231,7 @@ class Locales {
     'info_unnecessary_flag': '%s 是多余的',
     'info_unnecessary_flag_prural': '%s 是多余的',
     'info_package_not_installed': 'Package: %s 在本应用中未安装',
-    'info_cli_last_version_already_installed': '您已安装 get_cli 最新版本',
+    'info_cli_last_version_already_installed': '您已安装 sm_get_cli 最新版本',
     'info_no_file_overwritten': '没有文件被覆盖',
     'info_update_available': '新版本可用！当前版本: %s',
     'info_update_available2': '新版本可用: %s 运行:',
@@ -251,7 +251,7 @@ class Locales {
     'sucess_navigation_added': '%s navigation添加成功.',
     'sucess_file_created': '文件: %s 创建成功，路径: %s',
     'sucess_route_created': '%s route 创建成功.',
-    'sucess_update_yaml': 'Yaml get_cli %s 更新完成',
+    'sucess_update_yaml': 'Yaml sm_get_cli %s 更新完成',
   };
   static const de = {
     'ask_existing_page':
@@ -288,7 +288,7 @@ class Locales {
     'error_cli_version_not_found':
         'die von Ihnen installierte Version wurde nicht gefunden.',
     'error_update_cli':
-        'Es gab einen Fehler bei der Aktualisierung von get_cli',
+        'Es gab einen Fehler bei der Aktualisierung von sm_get_cli',
     'error_folder_not_found': 'Ordner %s nicht gefunden',
     'error_file_not_found': 'Datei nicht gefunden in %s',
     'error_access_denied': 'Zugriff auf %s verweigert',
@@ -320,7 +320,7 @@ class Locales {
     'info_package_not_installed':
         'Paket: %s ist in dieser Anwendung nicht installiert',
     'info_cli_last_version_already_installed':
-        'Neueste Version von get_cli bereits installiert',
+        'Neueste Version von sm_get_cli bereits installiert',
     'info_no_file_overwritten': 'Es wurden keine Dateien überschrieben',
     'info_update_available':
         'Es ist ein Update verfügbar! Aktuell installierte Version: %s',
@@ -380,7 +380,7 @@ class Locales {
     'error_cli_version_not_found':
         'Impossibile trovare la versione installata.',
     'error_update_cli':
-        'Si è verificato un errore durante l\'aggiornamento di get_cli',
+        'Si è verificato un errore durante l\'aggiornamento di sm_get_cli',
     'error_folder_not_found': 'La cartella %s non è stata trovata',
     'error_file_not_found': 'Il file al percorso %s non è stato trovato',
     'error_access_denied': 'Accesso negato a %s',
@@ -409,7 +409,7 @@ class Locales {
     'info_unnecessary_flag_prural': '%s non sono argomenti necessari',
     'info_package_not_installed': 'Pacchetto: %s non sembra essere installato',
     'info_cli_last_version_already_installed':
-        'Hai già la versione più recente di get_cli',
+        'Hai già la versione più recente di sm_get_cli',
     'info_no_file_overwritten': 'Nessun file è stato sovrascritto',
     'info_update_available':
         'C\'è un aggiornamento disponibile! Versione attualmente installata: %s',
@@ -474,7 +474,7 @@ class Locales {
     'error_package_not_found': 'Package: %s not found in pub.dev',
     'error_cli_version_not_found':
         'failed to find the version you have installed.',
-    'error_update_cli': 'There was an error upgrading get_cli',
+    'error_update_cli': 'There was an error upgrading sm_get_cli',
     'error_folder_not_found': 'Folder %s not found',
     'error_file_not_found': 'File not found in %s',
     'error_access_denied': 'Access denied to %s',
@@ -504,7 +504,7 @@ class Locales {
     'info_package_not_installed':
         'Package: %s is not installed in this application',
     'info_cli_last_version_already_installed':
-        'Latest version of get_cli already installed',
+        'Latest version of sm_get_cli already installed',
     'info_no_file_overwritten': 'No files were overwritten',
     'info_update_available':
         'There\'s an update available! Current installed version: %s',
@@ -528,7 +528,7 @@ class Locales {
     'sucess_navigation_added': '%s navigation added successfully.',
     'sucess_file_created': 'File: %s created successfully at path: %s',
     'sucess_route_created': '%s route created successfully.',
-    'sucess_update_yaml': 'Yaml get_cli %s update complete',
+    'sucess_update_yaml': 'Yaml sm_get_cli %s update complete',
   };
   static const fr = {
     'ask_existing_page': 'La page [%s] existe déjà, voulez-vous l\'écraser?',
@@ -564,7 +564,7 @@ class Locales {
     'error_cli_version_not_found':
         'Echec pour trouver la version que vous avez installée',
     'error_update_cli':
-        'Il y a eu une erreur lors de la mise à niveau de get_cli',
+        'Il y a eu une erreur lors de la mise à niveau de sm_get_cli',
     'error_folder_not_found': 'Dossier %s introuvable',
     'error_file_not_found': 'Fichier introuvable dans %s',
     'error_access_denied': 'Accès refusé à %s',
@@ -589,14 +589,14 @@ class Locales {
     'hint_remove':
         'Utilisé pour retirer un package de votre projet(dépendances):',
     'hint_sort': 'Tri les imports et formate les fichiers dart',
-    'hint_update': 'Pour mettre à jour get_cli',
+    'hint_update': 'Pour mettre à jour sm_get_cli',
     'hint_version': 'Montrer la version actuelle du CLI',
     'info_unnecessary_flag': 'Le flag %s n\'est pas nécessaire',
     'info_unnecessary_flag_prural': 'Les flags %s ne sont pas nécessaires',
     'info_package_not_installed':
         'Package: %s n\'est pas installé dans cette application',
     'info_cli_last_version_already_installed':
-        'Dernière version de get_cli déjà installée',
+        'Dernière version de sm_get_cli déjà installée',
     'info_no_file_overwritten': 'Aucun fichier n\'a été écrasé',
     'info_update_available':
         'Une mise à jour est disponible! Version actuellement installée: %s',
@@ -650,7 +650,7 @@ class Locales {
     'error_package_not_found': 'Pacote: %s não encontrado em pub.dev',
     'error_cli_version_not_found':
         'Não foi possível encontrar a versão instalada da CLI',
-    'error_update_cli': 'Ocorreu um erro ao atualizar get_cli',
+    'error_update_cli': 'Ocorreu um erro ao atualizar sm_get_cli',
     'error_folder_not_found': 'Pasta %s não encontrada',
     'error_file_not_found': 'Arquivo não encontrado em %s',
     'error_access_denied': 'Acesso negado a %s',
@@ -675,13 +675,13 @@ class Locales {
     'hint_remove': 'Use para remover um pacote em seu projeto (dependencies):',
     'hint_sort': 'Classificar os imports e formatar arquivos dart',
     'hint_update': 'Para atualizar GET_CLI',
-    'hint_version': 'Mostra a versão atual do get_cli',
+    'hint_version': 'Mostra a versão atual do sm_get_cli',
     'info_unnecessary_flag': 'A flag: %s não é necessária',
     'info_unnecessary_flag_prural': 'As flags: %s não são necessárias',
     'info_package_not_installed':
         'Pacote: %s não está instalado neste aplicativo',
     'info_cli_last_version_already_installed':
-        'Versão mais recente de get_cli já instalada',
+        'Versão mais recente de sm_get_cli já instalada',
     'info_no_file_overwritten': 'Nenhum arquivo foi sobrescrito',
     'info_update_available':
         'Há uma atualização disponível! Versão atual instalada: %s',
@@ -735,7 +735,7 @@ class Locales {
     'error_package_not_found': 'المكتبة: %s ليست موجودة فى pub.dev',
     'error_cli_version_not_found':
         'لم يتم العثور على الاصدار الذى قمت بتثبيته.',
-    'error_update_cli': 'هناك خطأ اثناء تحديث get_cli',
+    'error_update_cli': 'هناك خطأ اثناء تحديث sm_get_cli',
     'error_folder_not_found': 'المجلد %s غير موجود',
     'error_file_not_found': 'لم يتم العثور على الملف %s',
     'error_access_denied': 'اذن الوصول غير مرخص %s',
@@ -762,7 +762,7 @@ class Locales {
     'info_unnecessary_flag_prural': '%s ليس ضروريا',
     'info_package_not_installed': 'المكتبة: %s ليست مثبتة فى تطبيقك',
     'info_cli_last_version_already_installed':
-        'الإصدار الأخير من get_cli مثبت بالفعل',
+        'الإصدار الأخير من sm_get_cli مثبت بالفعل',
     'info_no_file_overwritten': 'لم يتم استبدال اي ملفات',
     'info_update_available': 'هناك تحديث متوفر! الإصدار الحالي: %s',
     'info_update_available2': 'الإصدار الجديد: %s يرجى تشغيل:',

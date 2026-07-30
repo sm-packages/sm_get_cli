@@ -7,10 +7,10 @@ GetX™ 框架的官方 CLI。
 
 ```dart
 // 安装:
-pub global activate get_cli
+pub global activate sm_get_cli
 // 使用本命令需要设置系统环境变量: [FlutterSDK安装目录]\bin\cache\dart-sdk\bin 和 [FlutterSDK安装目录]\.pub-cache\bin
 
-flutter pub global activate get_cli
+flutter pub global activate sm_get_cli
 
 // 在当前目录创建一个 Flutter 项目:
 // 注: 默认使用文件夹名称作为项目名称
@@ -164,7 +164,7 @@ _运行_
 _运行_
 
 ```shell
-  get create controller:auth with 'https://raw.githubusercontent.com/jonataslaw/get_cli/master/samples_file/controller.dart.example' on your_folder
+  get create controller:auth with 'https://raw.githubusercontent.com/sm-packages/sm_get_cli/master/samples_file/controller.dart.example' on your_folder
 ```
 
 输入:
@@ -399,7 +399,7 @@ get_cli:
  `get sort` 会用 [separator](#拆分不同类型文件) 重命名所有文件。
 如果不想重命名文件，使用 `--skipRename` 。
 
-如果你喜欢用相对路径写 import, 使用 `--relative` 选项. get_cli 会自动转换。
+如果你喜欢用相对路径写 import, 使用 `--relative` 选项. sm_get_cli 会自动转换。
 
 ### cli 国际化
 

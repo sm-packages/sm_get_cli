@@ -1,4 +1,4 @@
-import 'package:get_cli/common/utils/pubspec/pubspec_utils.dart';
+import 'package:sm_get_cli/common/utils/pubspec/pubspec_utils.dart';
 import 'package:recase/recase.dart';
 
 import '../interface/sample_interface.dart';

@@ -1,7 +1,7 @@
-name: get_cli
+name: sm_get_cli
 version: 1.9.3+3
-homepage: https://github.com/jonataslaw/get_cli
-description: Official CLI for GetX™ framework to build Flutter and Server Applications easily
+homepage: https://github.com/sm-packages/sm_get_cli
+description: CLI for GetX™ framework to build Flutter and Server Applications easily
 environment:
   sdk: ">=3.0.0 <4.0.0"
 

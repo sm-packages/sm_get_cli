@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:get_cli/common/utils/shell/shel.utils.dart';
+import 'package:sm_get_cli/common/utils/shell/shel.utils.dart';
 import 'package:test/test.dart';
 
 void main() {

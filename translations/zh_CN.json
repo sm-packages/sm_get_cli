@@ -30,7 +30,7 @@
     "invalid_file_or_directory": "%s 不是有效的文件或目录",
     "package_not_found": "依赖: %s 在 pub.dev 中没有找到",
     "cli_version_not_found": "没有找到已安装版本。",
-    "update_cli": "升级 get_cli 错误",
+    "update_cli": "升级 sm_get_cli 错误",
     "folder_not_found": "文件夹 %s 未找到",
     "file_not_found": "在 %s 中没有找到文件",
     "access_denied": "对 %s 的访问被拒绝",
@@ -65,7 +65,7 @@
     "unnecessary_flag": "%s 是多余的",
     "unnecessary_flag_prural": "%s 是多余的",
     "package_not_installed": "Package: %s 在本应用中未安装",
-    "cli_last_version_already_installed": "您已安装 get_cli 最新版本",
+    "cli_last_version_already_installed": "您已安装 sm_get_cli 最新版本",
     "no_file_overwritten": "没有文件被覆盖",
     "update_available": "新版本可用！当前版本: %s",
     "update_available2": "新版本可用: %s 运行:"
@@ -90,6 +90,6 @@
     "navigation_added": "%s navigation添加成功.",
     "file_created": "文件: %s 创建成功，路径: %s",
     "route_created": "%s route 创建成功.",
-    "update_yaml": "Yaml get_cli %s 更新完成"
+    "update_yaml": "Yaml sm_get_cli %s 更新完成"
   }
 }

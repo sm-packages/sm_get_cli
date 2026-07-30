@@ -7,11 +7,11 @@ CLI oficial para a estrutura GetX ™.
 
 ```dart
 // Para instalar, rode esse comando no terminal:
-pub global activate get_cli
+pub global activate sm_get_cli
 // (para usar adicione a seguinte linha às variáveis do sistema: [FlutterSDKDiretório]\bin\cache\dart-sdk\bin
 
 // ou
-flutter pub global activate get_cli
+flutter pub global activate sm_get_cli
 
 // Para criar um projeto de flutter no diretório atual:
 // Nota: Por padrão, o nome da pasta será o nome do projeto
@@ -164,7 +164,7 @@ _execute no terminal_
 ou com uma URL _execute_
 
 ```shell
-  get create controller:auth with 'https://raw.githubusercontent.com/jonataslaw/get_cli/master/samples_file/controller.dart.example' on your_folder
+  get create controller:auth with 'https://raw.githubusercontent.com/sm-packages/sm_get_cli/master/samples_file/controller.dart.example' on your_folder
 ```
 
 input
@@ -360,7 +360,7 @@ Para ajudá-lo a organizar seus imports, um novo comando foi criado: `get sort`,
 Ao usar `get sort`, todos os arquivos são renomeados, com o [separador] (#separador-no-formato-do-arquivo).
 Para não renomear, use o sinalizador `--skipRename`.
 
-Você é um daqueles que prefere usar imports relativos em vez de imports de projeto, use a opção `--relative`. o get_cli irá converter para você.
+Você é um daqueles que prefere usar imports relativos em vez de imports de projeto, use a opção `--relative`. o sm_get_cli irá converter para você.
 
 ### Internacionalização da cli
 

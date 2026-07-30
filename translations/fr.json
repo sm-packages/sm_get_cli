@@ -26,7 +26,7 @@
         "invalid_file_or_directory": "%s n'est pas un fichier ou un dossier valide",
         "package_not_found": "Package: %s introuvable sur pub.dev",
         "cli_version_not_found": "Echec pour trouver la version que vous avez installée",
-        "update_cli": "Il y a eu une erreur lors de la mise à niveau de get_cli",
+        "update_cli": "Il y a eu une erreur lors de la mise à niveau de sm_get_cli",
         "folder_not_found": "Dossier %s introuvable",
         "file_not_found": "Fichier introuvable dans %s",
         "access_denied": "Accès refusé à %s",
@@ -53,14 +53,14 @@
         "install": "Utilisé pour installer un package dans votre projet (dépendances):",
         "remove": "Utilisé pour retirer un package de votre projet(dépendances):",
         "sort": "Tri les imports et formate les fichiers dart",
-        "update": "Pour mettre à jour get_cli",
+        "update": "Pour mettre à jour sm_get_cli",
         "version": "Montrer la version actuelle du CLI"
     },
     "info": {
         "unnecessary_flag": "Le flag %s n'est pas nécessaire",
         "unnecessary_flag_prural": "Les flags %s ne sont pas nécessaires",
         "package_not_installed": "Package: %s n'est pas installé dans cette application",
-        "cli_last_version_already_installed": "Dernière version de get_cli déjà installée",
+        "cli_last_version_already_installed": "Dernière version de sm_get_cli déjà installée",
         "no_file_overwritten": "Aucun fichier n'a été écrasé",
         "update_available": "Une mise à jour est disponible! Version actuellement installée: %s",
         "update_available2": "Nouvelle version disponible: %s S'il vous plaît, exécutez:"

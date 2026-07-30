@@ -26,7 +26,7 @@
         "invalid_file_or_directory": "Die %s ist keine gültige Datei oder Verzeichnis",
         "package_not_found": "Paket: %s wurde nicht in pub.dev gefunden",
         "cli_version_not_found": "die von Ihnen installierte Version wurde nicht gefunden.",
-        "update_cli": "Es gab einen Fehler bei der Aktualisierung von get_cli",
+        "update_cli": "Es gab einen Fehler bei der Aktualisierung von sm_get_cli",
         "folder_not_found": "Ordner %s nicht gefunden",
         "file_not_found": "Datei nicht gefunden in %s",
         "access_denied": "Zugriff auf %s verweigert",
@@ -60,7 +60,7 @@
         "unnecessary_flag": "Das %s ist nicht notwendig",
         "unnecessary_flag_prural": "Die %s ist nicht notwendig",
         "package_not_installed": "Paket: %s ist in dieser Anwendung nicht installiert",
-        "cli_last_version_already_installed": "Neueste Version von get_cli bereits installiert",
+        "cli_last_version_already_installed": "Neueste Version von sm_get_cli bereits installiert",
         "no_file_overwritten": "Es wurden keine Dateien überschrieben",
         "update_available": "Es ist ein Update verfügbar! Aktuell installierte Version: %s",
         "update_available2": "Neue Version verfügbar: %s Bitte, ausführen:"

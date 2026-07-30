@@ -26,7 +26,7 @@
     "invalid_file_or_directory": "%s non è un file o una cartella valida.",
     "package_not_found": "Package: %s non è stato trovato sul 'pub.dev'",
     "cli_version_not_found": "Impossibile trovare la versione installata.",
-    "update_cli": "Si è verificato un errore durante l'aggiornamento di get_cli",
+    "update_cli": "Si è verificato un errore durante l'aggiornamento di sm_get_cli",
     "folder_not_found": "La cartella %s non è stata trovata",
     "file_not_found": "Il file al percorso %s non è stato trovato",
     "access_denied": "Accesso negato a %s",
@@ -60,7 +60,7 @@
     "unnecessary_flag": "%s non è un argomento necessario",
     "unnecessary_flag_prural": "%s non sono argomenti necessari",
     "package_not_installed": "Pacchetto: %s non sembra essere installato",
-    "cli_last_version_already_installed": "Hai già la versione più recente di get_cli",
+    "cli_last_version_already_installed": "Hai già la versione più recente di sm_get_cli",
     "no_file_overwritten": "Nessun file è stato sovrascritto",
     "update_available": "C'è un aggiornamento disponibile! Versione attualmente installata: %s",
     "update_available2": "Nuova versione disponibile: %s Perfavore, esegui:"

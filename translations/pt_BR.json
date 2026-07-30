@@ -21,7 +21,7 @@
     "invalid_file_or_directory": "O %s não é um arquivo ou diretório válido",
     "package_not_found": "Pacote: %s não encontrado em pub.dev",
     "cli_version_not_found": "Não foi possível encontrar a versão instalada da CLI",
-    "update_cli": "Ocorreu um erro ao atualizar get_cli",
+    "update_cli": "Ocorreu um erro ao atualizar sm_get_cli",
     "folder_not_found": "Pasta %s não encontrada",
     "file_not_found": "Arquivo não encontrado em %s",
     "access_denied": "Acesso negado a %s",
@@ -47,13 +47,13 @@
     "remove": "Use para remover um pacote em seu projeto (dependencies):",
     "sort": "Classificar os imports e formatar arquivos dart",
     "update": "Para atualizar GET_CLI",
-    "version": "Mostra a versão atual do get_cli"
+    "version": "Mostra a versão atual do sm_get_cli"
   },
   "info": {
     "unnecessary_flag": "A flag: %s não é necessária",
     "unnecessary_flag_prural": "As flags: %s não são necessárias",
     "package_not_installed": "Pacote: %s não está instalado neste aplicativo",
-    "cli_last_version_already_installed": "Versão mais recente de get_cli já instalada",
+    "cli_last_version_already_installed": "Versão mais recente de sm_get_cli já instalada",
     "no_file_overwritten": "Nenhum arquivo foi sobrescrito",
     "update_available": "Há uma atualização disponível! Versão atual instalada: %s",
     "update_available2": "Nova versão disponível: %s Por favor, execute:"
