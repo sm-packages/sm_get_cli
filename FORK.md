@@ -30,7 +30,7 @@
 
 - **生命周期：** `长期保留`
 - **原始意图：** 以 `sm-packages/sm_get_cli` 独立维护和发布 GetX CLI。包计划正式发布到 pub.dev；发布前 GitHub 安装是临时渠道，发布后 pub.dev 是标准安装和版本检查渠道，Git 安装仍是显式选项。
-- **必须保持的不变量：** Dart 包名、仓库地址、package import、lockfile 查询、更新检查和安装目标统一使用 `sm_get_cli`；命令名继续为 `get` 和 `getx`；用户项目配置继续使用 `get_cli:` 和 `.get_cli.yaml`；`lib/get_cli.dart` 继续兼容性重导出 `lib/sm_get_cli.dart`。pub.dev 尚未发布或暂时返回 404 时，自动更新检查必须安全跳过，不能因空版本崩溃。
+- **必须保持的不变量：** Dart 包名、仓库地址、package import、lockfile 查询、更新检查和安装目标统一使用 `sm_get_cli`；命令名继续为 `get` 和 `getx`；用户项目配置继续使用 `get_cli:` 和 `.get_cli.yaml`；`lib/get_cli.dart` 继续兼容性重导出 `lib/sm_get_cli.dart`。发布版本使用上游 `pubspec.yaml` 的版本作为基线并追加 `-fork.N`：上游版本变化时从 `fork.1` 开始，同一上游基线上的后续本地发布递增 `N`。pub.dev 尚未发布或暂时返回 404 时，自动更新检查必须安全跳过，不能因空版本崩溃。
 - **当前代码和测试路径：** `pubspec.yaml`、`bin/get.dart`、`lib/sm_get_cli.dart`、`lib/get_cli.dart`、`lib/common/utils/pubspec/pubspec_lock.dart`、`lib/common/utils/pub_dev/pub_dev_api.dart`、`lib/common/utils/shell/shel.utils.dart`、`lib/functions/version/version_update.dart`、`README.md`、`README-zh_CN.md`、`README-pt_BR.md`。目前没有覆盖整套身份一致性的自动化测试。
 - **来源提交：** `b422403a9ad11ccf156fc23046fc3c2fcf65c1b0`、`8eca1a5c84e07552c9ada14d5b1d55c76ee0d119`。前者的中间仓库地址已经被后者的最终地址取代。
 - **合并审查：** 把包名、入口、两个 executable、pub.dev 查询、Git 更新 URL 和文档安装命令作为一个原子迁移面审查；先解决源码和模板，再重新生成派生输出。禁止只接受上游的 `get_cli` 包名而保留部分 `sm_get_cli` URL，反之亦然。
