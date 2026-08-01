@@ -165,7 +165,7 @@ or with url
 _run_
 
 ```shell
-  get create controller:auth with 'https://raw.githubusercontent.com/sm-packages/sm_get_cli/master/samples_file/controller.dart.example' on your_folder
+  get create controller:auth with 'https://raw.githubusercontent.com/sm-packages/sm_get_cli/master/samples_file/controller.dart.template' on your_folder
 ```
 
 input:
