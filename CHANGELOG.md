@@ -1,3 +1,8 @@
+## [Unreleased]
+
+- Fix `get --version` and `getx --version` after path activation by resolving
+  the installed package's own version metadata
+
 ## [1.9.1-fork.1]
 
 - Keep Flutter project creation compatible with current Android and iOS options

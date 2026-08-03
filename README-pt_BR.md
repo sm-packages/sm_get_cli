@@ -1,18 +1,96 @@
-###### Idiomas da documentação
+# sm_get_cli
 
-| pt_BR - Esse arquivo| [en_EN](README.md) | [zh_CN](README-zh_CN.md) |
-|-------|-------|-------|
+## Idiomas da documentação
 
-CLI oficial para a estrutura GetX ™.
+| pt_BR - este arquivo | [en_US](README.md) | [zh_CN](README-zh_CN.md) |
+| --- | --- | --- |
 
-```dart
-// Para instalar, rode esse comando no terminal:
-pub global activate sm_get_cli
-// (para usar adicione a seguinte linha às variáveis do sistema: [FlutterSDKDiretório]\bin\cache\dart-sdk\bin
+Um fork da CLI do GetX™ mantido pela comunidade para criar aplicações Flutter e Server. O projeto upstream é [`jonataslaw/get_cli`](https://github.com/jonataslaw/get_cli); as diferenças públicas deste fork estão resumidas abaixo.
 
-// ou
-flutter pub global activate sm_get_cli
+## Instalação
 
+Instale a versão publicada no pub.dev:
+
+```shell
+dart pub global activate sm_get_cli
+```
+
+Verifique se o diretório `bin` do pub cache está no `PATH`. O pacote instala os executáveis `get` e `getx`:
+
+```shell
+get --version
+getx --version
+```
+
+Também é possível ativar versões de desenvolvimento pelo Git ou por um caminho local:
+
+```shell
+dart pub global activate --source git https://github.com/sm-packages/sm_get_cli.git
+dart pub global activate --source path .
+```
+
+Ao migrar do `get_cli`, mantenha os comandos `get`/`getx`, a chave de configuração `get_cli:` e o arquivo `.get_cli.yaml`. Somente o nome do pacote Dart e da ativação muda para `sm_get_cli`.
+
+## Índice de recursos do fork
+
+| Recurso | Contrato para o usuário |
+| --- | --- |
+| Pacote independente e comandos compatíveis | Publicado como `sm_get_cli`; mantém `get`, `getx`, `get_cli:` e `.get_cli.yaml`. Todas as origens de ativação suportadas informam a versão do pacote. |
+| Geração de state e saída para GetX 4/5 | `get create state` e `use_state` geram e conectam arquivos de state; `version` seleciona o código de binding compatível. |
+| Templates definidos pelo projeto | Arquivos explícitos ou um diretório de `.template` podem substituir templates de page, controller, binding, state e trechos de inserção. |
+| Geração de traduções configurável | Entrada e saída podem ser configuradas ou substituídas por parâmetros do comando; nome do arquivo e nome da classe são definidos pela configuração. |
+| Geração de rotas aninhadas | `get create page:name on parent` adiciona rotas filhas sem duplicar rotas, pages ou imports. |
+| Criação segura de projetos Flutter | Usa as opções atuais de linguagem Android e argumentos estruturados para caminhos com espaços; uma falha interrompe a inicialização. |
+| Status de falha confiável | Falhas tratadas pela CLI mantêm um código de saída diferente de zero para scripts e CI. |
+| Compatibilidade atual com Dart e Flutter | O fork acompanha as APIs atuais de formatação e processos sem alterar o contrato do código gerado. |
+
+## Configuração do fork
+
+Coloque estas chaves em `get_cli:` no `pubspec.yaml` ou diretamente no nível principal de `.get_cli.yaml`. Quando os dois arquivos definem configurações, o mapa `get_cli:` do `pubspec.yaml` tem prioridade.
+
+```yaml
+get_cli:
+  # O padrão usa a semântica de geração do GetX 4.
+  version: 5
+  # O padrão é false. Pages, screens e controllers também geram state.
+  use_state: true
+  templates:
+    # Descobre arquivos *.template neste diretório, sem percorrer subdiretórios.
+    path: assets/templates
+    # Chaves explícitas têm prioridade sobre os arquivos descobertos.
+    # page: assets/templates/page.dart.template
+    # controller: assets/templates/controller.dart.template
+    # binding: assets/templates/binding.dart.template
+    # state: assets/templates/state.dart.template
+    # insert_state: assets/templates/insert_state.dart.template
+    # insert_controller: assets/templates/insert_controller.dart.template
+  locales:
+    input: translations
+    output: lib/gen
+    file_name: locales
+    class_name: AppTranslation
+```
+
+O valor padrão de `version` é `4`, e o de `use_state` é `false`. Execute `get create state:session on home` para criar um state explicitamente e conectá-lo a um controller correspondente. Para templates, `page` usa `view` como fallback; sem um template personalizado válido, a CLI usa os modelos internos.
+
+A geração de traduções lê somente arquivos JSON. Os parâmetros explícitos `-i` e `-o` substituem a configuração; a entrada padrão é `assets/locales`, o arquivo gerado padrão é `locales.g.dart` e a classe padrão é `AppTranslation`:
+
+```shell
+get generate locales -i translations -o lib/gen
+```
+
+As chaves de tradução são emitidas sem alteração como nomes de campos Dart; use identificadores Dart válidos e que não sejam palavras reservadas, como `welcome_message`. JSON inválido encerra a geração. O validador atual rejeita dígitos na primeira posição, espaços em branco e alguns caracteres especiais, mas não normaliza nem valida completamente os identificadores Dart.
+
+## Contratos de execução e compatibilidade
+
+- Repetir a geração de uma page principal ou aninhada não deve duplicar constantes de rota, entradas `GetPage`, rotas filhas ou imports.
+- A criação de projetos Flutter aceita Kotlin ou Java para Android. A opção de linguagem iOS removida pelo Flutter não é enviada; um resultado diferente de zero em `flutter create` interrompe a inicialização restante.
+- Exceções capturadas pela CLI mantêm um código de saída diferente de zero. A automação pode tratar `0` como sucesso e qualquer outro valor como falha.
+- A compatibilidade com a toolchain é automática. O projeto precisa apenas atender à restrição de SDK no `pubspec.yaml`, sem configuração adicional.
+
+## Referência rápida de comandos
+
+```shell
 // Para criar um projeto de flutter no diretório atual:
 // Nota: Por padrão, o nome da pasta será o nome do projeto
 // Você pode nomear o projeto com `get create project: my_project`
@@ -39,6 +117,9 @@ get create screen:home
 // Getx irá procurar automaticamente pela pasta pessoal
 // e adicione seu controlador lá.
 get create controller:dialogcontroller on home
+
+// Para criar um state e conectá-lo a um controller correspondente:
+get create state:session on home
 
 // Para criar uma nova view em uma pasta específica:
 // Observação: você não precisa fazer referência à pasta,
@@ -92,7 +173,7 @@ get update
 
 // Mostra a versão CLI atual:
 get -v
-// ou `get -version`
+// ou `get --version`
 
 // Para obter ajudar
 get help
@@ -135,7 +216,7 @@ Você pode criar um módulo dentro de outro módulo.
   get create page:name on other_module
 ```
 
-Agora ao criar um novo projeto e usar `on` para criar uma página, a CLI criará uma [Page filha] (<https://github.com/jonataslaw/getx/blob/master/CHANGELOG.md#3210---big-update>).
+Agora ao criar um novo projeto e usar `on` para criar uma página, a CLI criará uma [Page filha](https://github.com/jonataslaw/getx/blob/master/CHANGELOG.md#3210---big-update).
 
 ### Criar uma Screen
 
@@ -356,8 +437,8 @@ get_cli:
 
 ### Seus imports estão desorganizadas?
 
-Para ajudá-lo a organizar seus imports, um novo comando foi criado: `get sort`, além de organizar suas importações, o comando também formatará seu arquivo dart. graças a [dart_style] (<https://pub.dev/packages/dart_style>).
-Ao usar `get sort`, todos os arquivos são renomeados, com o [separador] (#separador-no-formato-do-arquivo).
+Para ajudá-lo a organizar seus imports, um novo comando foi criado: `get sort`, além de organizar suas importações, o comando também formatará seu arquivo dart. graças a [dart_style](https://pub.dev/packages/dart_style).
+Ao usar `get sort`, todos os arquivos são renomeados, com o [separador](#separador-no-formato-do-arquivo).
 Para não renomear, use o sinalizador `--skipRename`.
 
 Você é um daqueles que prefere usar imports relativos em vez de imports de projeto, use a opção `--relative`. o sm_get_cli irá converter para você.
@@ -369,7 +450,7 @@ CLI agora tem um sistema de internacionalização.
 para traduzir o cli para o seu idioma:
 
 1. crie um novo arquivo json com o seu idioma, na pasta [translations](/translations)
-2. Copie as chaves do [arquivo] (/translations/en.json) e traduza os valores
+2. Copie as chaves do [arquivo](/translations/en.json) e traduza os valores
 3. envie seu PR.
 
 A fazer:

@@ -1,4 +1,4 @@
-import '../../../common/utils/pubspec/pubspec_lock.dart';
+import '../../../common/utils/pubspec/package_version.dart';
 import '../../../core/internationalization.dart';
 import '../../../core/locales.g.dart';
 import '../../../functions/version/print_get_cli.dart';
@@ -15,7 +15,7 @@ class VersionCommand extends Command {
 
   @override
   Future<void> execute() async {
-    var version = await PubspecLock.getVersionCli();
+    var version = await PackageVersion.getVersionCli();
     if (version == null) return;
     printGetCli();
     print('Version: $version');

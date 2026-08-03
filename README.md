@@ -1,17 +1,96 @@
-###### Documentation languages
+# sm_get_cli
 
-| [pt_BR](README-pt_BR.md) | en_US - this file |[zh_CN](README-zh_CN.md) |
-|-------|-------|-------|
+## Documentation languages
 
-Official CLI for the GetX™ framework.
+| [pt_BR](README-pt_BR.md) | en_US - this file | [zh_CN](README-zh_CN.md) |
+| --- | --- | --- |
 
-```dart
-// To install:
-pub global activate sm_get_cli
-// (to use this add the following to system PATH: [FlutterSDKInstallDir]\bin\cache\dart-sdk\bin
+A community-maintained fork of the GetX™ CLI for building Flutter and Server applications. The upstream project is [`jonataslaw/get_cli`](https://github.com/jonataslaw/get_cli); fork-specific behavior is summarized below.
 
-flutter pub global activate sm_get_cli
+## Installation
 
+Install the published package from pub.dev:
+
+```shell
+dart pub global activate sm_get_cli
+```
+
+Ensure the pub cache `bin` directory is on `PATH`. The package installs both `get` and `getx` executables:
+
+```shell
+get --version
+getx --version
+```
+
+Git and local path activation are supported for development builds:
+
+```shell
+dart pub global activate --source git https://github.com/sm-packages/sm_get_cli.git
+dart pub global activate --source path .
+```
+
+When migrating from `get_cli`, keep the existing `get`/`getx` commands, `get_cli:` configuration key, and `.get_cli.yaml` file. Only the Dart package and activation name change to `sm_get_cli`.
+
+## Fork capability index
+
+| Capability | User contract |
+| --- | --- |
+| Independent package and compatible commands | Published as `sm_get_cli`; keeps `get`, `getx`, `get_cli:`, and `.get_cli.yaml`. All supported activation sources report the package version. |
+| State generation and GetX 4/5 output | `get create state` and `use_state` generate and connect state files; `version` selects compatible binding output. |
+| Project-defined templates | Explicit template files or a `.template` directory can replace page, controller, binding, state, and insertion templates. |
+| Configurable locale generation | Input and output can be configured or overridden with command flags; file name and class name are set through configuration. |
+| Nested route generation | `get create page:name on parent` adds child routes and avoids duplicate routes, pages, and imports. |
+| Safe Flutter project creation | Current Flutter Android language options and paths containing spaces are passed as structured arguments; failed creation stops initialization. |
+| Reliable failure status | Handled CLI failures leave a nonzero process exit code for scripts and CI. |
+| Current Dart and Flutter compatibility | The fork tracks current Dart formatting and process APIs without changing the generated-code contract. |
+
+## Fork configuration
+
+Place these keys under `get_cli:` in `pubspec.yaml`, or at the top level of `.get_cli.yaml`. When both files define fork settings, the `pubspec.yaml` `get_cli:` map takes precedence.
+
+```yaml
+get_cli:
+  # Defaults to GetX 4 generation behavior.
+  version: 5
+  # Defaults to false. Page, screen, and controller generation also creates state.
+  use_state: true
+  templates:
+    # Discovers non-recursive *.template files by filename.
+    path: assets/templates
+    # Explicit keys take precedence over discovered files.
+    # page: assets/templates/page.dart.template
+    # controller: assets/templates/controller.dart.template
+    # binding: assets/templates/binding.dart.template
+    # state: assets/templates/state.dart.template
+    # insert_state: assets/templates/insert_state.dart.template
+    # insert_controller: assets/templates/insert_controller.dart.template
+  locales:
+    input: translations
+    output: lib/gen
+    file_name: locales
+    class_name: AppTranslation
+```
+
+`version` defaults to `4`, and `use_state` defaults to `false`. Run `get create state:session on home` to create a state explicitly and connect it to a matching controller. For templates, `page` falls back to `view`, and missing custom templates fall back to the built-in samples.
+
+Locale generation reads only JSON files. Explicit `-i` and `-o` arguments override configuration; the default input is `assets/locales`, the default generated filename is `locales.g.dart`, and the default translation class is `AppTranslation`:
+
+```shell
+get generate locales -i translations -o lib/gen
+```
+
+Translation keys are emitted verbatim as Dart field names, so use valid, non-keyword Dart identifiers such as `welcome_message`. Invalid JSON fails generation. The current key validator rejects leading digits, whitespace, and several special characters, but it does not normalize or fully validate Dart identifiers.
+
+## Runtime and compatibility contracts
+
+- Repeating top-level or nested page generation must not duplicate route constants, `GetPage` entries, child routes, or imports.
+- Flutter project creation supports Kotlin or Java for Android. The removed Flutter iOS-language option is not passed, and a nonzero `flutter create` result stops the remaining initialization.
+- Caught CLI exceptions leave a nonzero process exit code. Automation may treat exit code `0` as success and any nonzero code as failure.
+- Toolchain compatibility is automatic. Projects only need to satisfy the SDK constraint in `pubspec.yaml`; no separate compatibility setting is required.
+
+## Command quick reference
+
+```shell
 // To create a flutter project in the current directory:
 // Note: By default it will take the folder's name as project name
 // You can name the project with `get create project:my_project`
@@ -38,6 +117,9 @@ get create screen:home
 // Getx will search automatically for the home folder
 // and add your controller there.
 get create controller:dialogcontroller on home
+
+// To create a state and connect it to a matching controller:
+get create state:session on home
 
 // To create a new view in a specific folder:
 // Note: you don't need to reference the folder,
@@ -91,13 +173,13 @@ get update
 
 // Shows the current CLI version:
 get -v
-// or `get -version`
+// or `get --version`
 
 // For help
 get help
 ```
 
-# Exploring the CLI
+## Exploring the CLI
 
 let's explore the existing commands in the cli
 

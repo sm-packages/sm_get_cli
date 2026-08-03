@@ -5,7 +5,7 @@ import 'package:version/version.dart';
 import '../../cli_config/cli_config.dart';
 import '../../common/utils/logger/log_utils.dart';
 import '../../common/utils/pub_dev/pub_dev_api.dart';
-import '../../common/utils/pubspec/pubspec_lock.dart';
+import '../../common/utils/pubspec/package_version.dart';
 import '../../core/internationalization.dart';
 import '../../core/locales.g.dart';
 import 'check_dev_version.dart';
@@ -18,7 +18,7 @@ void checkForUpdate() async {
           .then((versionInPubDev) async {
         if (versionInPubDev == null) return;
 
-        await PubspecLock.getVersionCli(disableLog: true)
+        await PackageVersion.getVersionCli(disableLog: true)
             .then((versionInstalled) async {
           if (versionInstalled == null) exit(2);
 

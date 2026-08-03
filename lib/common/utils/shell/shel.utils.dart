@@ -7,7 +7,7 @@ import '../../../core/internationalization.dart';
 import '../../../core/locales.g.dart';
 import '../logger/log_utils.dart';
 import '../pub_dev/pub_dev_api.dart';
-import '../pubspec/pubspec_lock.dart';
+import '../pubspec/package_version.dart';
 
 typedef ProcessRunner = Future<ProcessResult> Function(
   String executable,
@@ -77,7 +77,9 @@ class ShellUtils {
       var versionInPubDev =
           await PubDevApi.getLatestVersionFromPackage('sm_get_cli');
 
-      var versionInstalled = await PubspecLock.getVersionCli(disableLog: true);
+      var versionInstalled = await PackageVersion.getVersionCli(
+        disableLog: true,
+      );
 
       if (versionInstalled == versionInPubDev) {
         return LogService.info(

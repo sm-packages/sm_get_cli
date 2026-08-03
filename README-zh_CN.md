@@ -1,17 +1,96 @@
-###### 文档支持语言
+# sm_get_cli
+
+## 文档支持语言
 
 | [pt_BR](README-pt_BR.md) | [en_US](README.md) | zh_CN - 本文件 |
-|-------|-------|-------|
+| --- | --- | --- |
 
-GetX™ 框架的官方 CLI。
+社区维护的 GetX™ CLI fork，用于快速构建 Flutter 和 Server 应用。上游项目为 [`jonataslaw/get_cli`](https://github.com/jonataslaw/get_cli)；本 fork 的公开差异汇总如下。
 
-```dart
-// 安装:
-pub global activate sm_get_cli
-// 使用本命令需要设置系统环境变量: [FlutterSDK安装目录]\bin\cache\dart-sdk\bin 和 [FlutterSDK安装目录]\.pub-cache\bin
+## 安装
 
-flutter pub global activate sm_get_cli
+推荐从 pub.dev 安装已发布版本：
 
+```shell
+dart pub global activate sm_get_cli
+```
+
+请确保 pub cache 的 `bin` 目录已经加入 `PATH`。包会同时安装 `get` 和 `getx` 两个命令：
+
+```shell
+get --version
+getx --version
+```
+
+开发版本也支持从 Git 或本地路径激活：
+
+```shell
+dart pub global activate --source git https://github.com/sm-packages/sm_get_cli.git
+dart pub global activate --source path .
+```
+
+从 `get_cli` 迁移时，继续使用原有的 `get`/`getx` 命令、`get_cli:` 配置键和 `.get_cli.yaml` 文件；只有 Dart 包名和激活名称改为 `sm_get_cli`。
+
+## Fork 能力索引
+
+| 能力 | 用户契约 |
+| --- | --- |
+| 独立包与兼容命令 | 以 `sm_get_cli` 发布；保留 `get`、`getx`、`get_cli:` 和 `.get_cli.yaml`。所有支持的激活来源都能显示包版本。 |
+| State 生成与 GetX 4/5 输出 | `get create state` 和 `use_state` 可生成并接入 state；`version` 控制兼容的 binding 代码。 |
+| 项目自定义模板 | 可用显式模板路径或 `.template` 目录替换 page、controller、binding、state 和插入片段。 |
+| 可配置多语言生成 | 输入和输出可配置，也可由命令参数覆盖；文件名和类名通过配置设置。 |
+| 嵌套路由生成 | `get create page:name on parent` 会添加子路由，并避免重复路由、页面和 import。 |
+| 安全创建 Flutter 项目 | 使用当前 Flutter 支持的 Android 语言参数，安全处理含空格路径；创建失败会停止后续初始化。 |
+| 可靠的失败状态 | CLI 已处理的失败仍会留下非零进程退出码，供脚本和 CI 判断。 |
+| 当前 Dart/Flutter 工具链兼容 | fork 适配当前格式化与进程 API，同时保持生成代码契约。 |
+
+## Fork 配置
+
+以下配置可以放在 `pubspec.yaml` 的 `get_cli:` 下，或直接放在 `.get_cli.yaml` 顶层。如果两处同时配置，以 `pubspec.yaml` 的 `get_cli:` 为准。
+
+```yaml
+get_cli:
+  # 默认按 GetX 4 语义生成。
+  version: 5
+  # 默认为 false；创建 page、screen 或 controller 时同时生成 state。
+  use_state: true
+  templates:
+    # 按文件名发现当前目录下的 *.template 文件，不递归子目录。
+    path: assets/templates
+    # 显式键优先于目录自动发现。
+    # page: assets/templates/page.dart.template
+    # controller: assets/templates/controller.dart.template
+    # binding: assets/templates/binding.dart.template
+    # state: assets/templates/state.dart.template
+    # insert_state: assets/templates/insert_state.dart.template
+    # insert_controller: assets/templates/insert_controller.dart.template
+  locales:
+    input: translations
+    output: lib/gen
+    file_name: locales
+    class_name: AppTranslation
+```
+
+`version` 默认值为 `4`，`use_state` 默认值为 `false`。也可以运行 `get create state:session on home` 单独创建 state，并将它接入匹配的 controller。模板未配置 `page` 时会回退到 `view`；没有有效自定义模板时使用内置模板。
+
+多语言生成只读取 JSON 文件。显式 `-i` 和 `-o` 参数优先于配置；默认输入目录是 `assets/locales`，默认生成文件是 `locales.g.dart`，默认翻译类是 `AppTranslation`：
+
+```shell
+get generate locales -i translations -o lib/gen
+```
+
+键名会原样作为 Dart 字段名输出，因此应只使用合法且非保留字的 Dart 标识符，例如 `welcome_message`。非法 JSON 会使生成失败；当前键名校验会拒绝首位数字、空白和部分特殊字符，但不会规范化或完整校验 Dart 标识符。
+
+## 运行与兼容契约
+
+- 重复生成顶层或嵌套 page 时，不得重复写入路由常量、`GetPage`、子路由或 import。
+- Flutter 项目创建支持 Android 的 Kotlin 或 Java。不会再传递 Flutter 已移除的 iOS language 参数；`flutter create` 非零退出时会停止后续初始化。
+- CLI 捕获并记录异常后仍返回非零进程状态。自动化脚本可将退出码 `0` 视为成功，非零视为失败。
+- 工具链兼容是自动的。项目只需满足 `pubspec.yaml` 的 SDK 约束，不需要额外配置。
+
+## 命令速查
+
+```shell
 // 在当前目录创建一个 Flutter 项目:
 // 注: 默认使用文件夹名称作为项目名称
 // 你可以使用 `get create project:my_project` 给项目命名
@@ -37,6 +116,9 @@ get create screen:home
 // 注: 你无需引用文件夹, Getx 会自动搜索 home 目录,
 // 并把你的controller放在那儿
 get create controller:dialogcontroller on home
+
+// 创建 state 并接入匹配的 controller:
+get create state:session on home
 
 // 在指定文件夹创建新 view:
 // 注: 你无需引用文件夹,Getx 会自动搜索 home 目录,
@@ -89,14 +171,14 @@ get update
 
 // 显示当前 CLI 版本:
 get -v
-// 或 `get version`
+// 或 `get --version`
 
 // 帮助
 get help
 // 或 `get -h`
 ```
 
-# 探索 CLI
+## 探索 CLI
 
 让我们看看 CLI 都有啥命令吧
 
