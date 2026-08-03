@@ -36,6 +36,7 @@ Ao migrar do `get_cli`, mantenha os comandos `get`/`getx`, a chave de configura�
 | Recurso | Contrato para o usuário |
 | --- | --- |
 | Pacote independente e comandos compatíveis | Publicado como `sm_get_cli`; mantém `get`, `getx`, `get_cli:` e `.get_cli.yaml`. Todas as origens de ativação suportadas informam a versão do pacote. |
+| Destino de import do GetX configurável | `use_sm_getx: true` gera `package:sm_getx/get.dart`; o padrão continua sendo `package:get/get.dart`. |
 | Geração de state e saída para GetX 4/5 | `get create state` e `use_state` geram e conectam arquivos de state; `version` seleciona o código de binding compatível. |
 | Templates definidos pelo projeto | Arquivos explícitos ou um diretório de `.template` podem substituir templates de page, controller, binding, state e trechos de inserção. |
 | Geração de traduções configurável | Entrada e saída podem ser configuradas ou substituídas por parâmetros do comando; nome do arquivo e nome da classe são definidos pela configuração. |
@@ -54,6 +55,8 @@ get_cli:
   version: 5
   # O padrão é false. Pages, screens e controllers também geram state.
   use_state: true
+  # O padrão é false. Gera imports para o fork sm_getx.
+  use_sm_getx: true
   templates:
     # Descobre arquivos *.template neste diretório, sem percorrer subdiretórios.
     path: assets/templates
@@ -72,6 +75,8 @@ get_cli:
 ```
 
 O valor padrão de `version` é `4`, e o de `use_state` é `false`. Execute `get create state:session on home` para criar um state explicitamente e conectá-lo a um controller correspondente. Para templates, `page` usa `view` como fallback; sem um template personalizado válido, a CLI usa os modelos internos.
+
+O valor padrão de `use_sm_getx` é `false`. Quando definido como `true`, os geradores Flutter internos e a variável `@{import}` dos templates personalizados geram `import 'package:sm_getx/get.dart';` em vez de `package:get/get.dart`. O projeto já deve depender de `sm_getx`; essa opção não adiciona, remove nem altera dependências. Projetos Get Server continuam gerando `package:get_server/get_server.dart`.
 
 A geração de traduções lê somente arquivos JSON. Os parâmetros explícitos `-i` e `-o` substituem a configuração; a entrada padrão é `assets/locales`, o arquivo gerado padrão é `locales.g.dart` e a classe padrão é `AppTranslation`:
 

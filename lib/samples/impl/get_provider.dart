@@ -25,7 +25,7 @@ class ProviderSample extends Sample {
 
   String get _import => isServer
       ? "import 'package:get_server/get_server.dart';"
-      : "import 'package:get/get.dart';";
+      : PubspecUtils.getPackageImport;
   String get _importModelPath => createEndpoints
       ? "import 'package:${PubspecUtils.projectName}/$modelPath';\n"
       : '\n';

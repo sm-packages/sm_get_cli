@@ -23,7 +23,7 @@ class BindingSample extends Sample {
 
   String get _import => _isServer
       ? "import 'package:get_server/get_server.dart';"
-      : "import 'package:get/get.dart';";
+      : PubspecUtils.getPackageImport;
 
   @override
   String get content => '''$_import

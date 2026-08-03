@@ -1,3 +1,4 @@
+import '../../../common/utils/pubspec/pubspec_utils.dart';
 import '../../interface/sample_interface.dart';
 
 class GetXMainSample extends Sample {
@@ -5,7 +6,7 @@ class GetXMainSample extends Sample {
   GetXMainSample({this.isServer}) : super('lib/main.dart', overwrite: true);
 
   String get _flutterMain => '''import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+${PubspecUtils.getPackageImport}
 
 import 'app/routes/app_pages.dart';
 

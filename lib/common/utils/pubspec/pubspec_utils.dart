@@ -181,9 +181,9 @@ class PubspecUtils {
     return containsPackage('get_server');
   }
 
-  static String get getPackageImport => !isServerProject
-      ? "import 'package:get/get.dart';"
-      : "import 'package:get_server/get_server.dart';";
+  static String get getPackageImport => isServerProject
+      ? "import 'package:get_server/get_server.dart';"
+      : "import 'package:${PubspecUtilsExt.useSmGetx ? 'sm_getx' : 'get'}/get.dart';";
 
   // static v.Version? getPackageVersion(String package) {
   //   if (containsPackage(package)) {

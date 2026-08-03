@@ -1,3 +1,4 @@
+import '../../../common/utils/pubspec/pubspec_utils.dart';
 import '../../interface/sample_interface.dart';
 
 class ArcMainSample extends Sample {
@@ -5,7 +6,7 @@ class ArcMainSample extends Sample {
 
   @override
   String get content => '''import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+${PubspecUtils.getPackageImport}
 
 import 'infrastructure/navigation/navigation.dart';
 import 'infrastructure/navigation/routes.dart';

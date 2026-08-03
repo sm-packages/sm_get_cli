@@ -1,5 +1,6 @@
 import 'package:recase/recase.dart';
 
+import '../../common/utils/pubspec/pubspec_utils.dart';
 import '../interface/sample_interface.dart';
 
 /// [Sample] file from Module_State file creation.
@@ -24,7 +25,7 @@ class ${_fileName.pascalCase}State {
 }
 ''';
 
-  String get flutterState => '''import 'package:get/get.dart';
+  String get flutterState => '''${PubspecUtils.getPackageImport}
 
 class ${_fileName.pascalCase}State {
   // TODO: Implement ${_fileName.pascalCase}State

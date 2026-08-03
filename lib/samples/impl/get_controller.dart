@@ -46,7 +46,7 @@ class ${_fileName.pascalCase}Controller extends GetxController {
 }
 ''';
 
-  String get flutterController => '''import 'package:get/get.dart';
+  String get flutterController => '''${PubspecUtils.getPackageImport}
 $import
 
 class ${_fileName.pascalCase}Controller extends GetxController {

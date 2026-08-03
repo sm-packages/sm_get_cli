@@ -25,7 +25,7 @@ class GetViewSample extends Sample {
       _controller.isNotEmpty ? 'GetView<$_controller>' : 'GetView';
 
   String get _flutterView => '''import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+${PubspecUtils.getPackageImport}
 $import
 
 class $_viewName extends $_controllerName {

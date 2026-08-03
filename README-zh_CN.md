@@ -36,6 +36,7 @@ dart pub global activate --source path .
 | 能力 | 用户契约 |
 | --- | --- |
 | 独立包与兼容命令 | 以 `sm_get_cli` 发布；保留 `get`、`getx`、`get_cli:` 和 `.get_cli.yaml`。所有支持的激活来源都能显示包版本。 |
+| 可配置 GetX import 目标 | `use_sm_getx: true` 生成 `package:sm_getx/get.dart`；默认仍为 `package:get/get.dart`。 |
 | State 生成与 GetX 4/5 输出 | `get create state` 和 `use_state` 可生成并接入 state；`version` 控制兼容的 binding 代码。 |
 | 项目自定义模板 | 可用显式模板路径或 `.template` 目录替换 page、controller、binding、state 和插入片段。 |
 | 可配置多语言生成 | 输入和输出可配置，也可由命令参数覆盖；文件名和类名通过配置设置。 |
@@ -54,6 +55,8 @@ get_cli:
   version: 5
   # 默认为 false；创建 page、screen 或 controller 时同时生成 state。
   use_state: true
+  # 默认为 false；为 sm_getx fork 生成 import。
+  use_sm_getx: true
   templates:
     # 按文件名发现当前目录下的 *.template 文件，不递归子目录。
     path: assets/templates
@@ -72,6 +75,8 @@ get_cli:
 ```
 
 `version` 默认值为 `4`，`use_state` 默认值为 `false`。也可以运行 `get create state:session on home` 单独创建 state，并将它接入匹配的 controller。模板未配置 `page` 时会回退到 `view`；没有有效自定义模板时使用内置模板。
+
+`use_sm_getx` 默认值为 `false`。设为 `true` 后，内置 Flutter 生成器和自定义模板的 `@{import}` 变量会生成 `import 'package:sm_getx/get.dart';`，而不是 `package:get/get.dart`。项目必须已经依赖 `sm_getx`；此配置不会添加、删除或修改依赖。Get Server 项目仍生成 `package:get_server/get_server.dart`。
 
 多语言生成只读取 JSON 文件。显式 `-i` 和 `-o` 参数优先于配置；默认输入目录是 `assets/locales`，默认生成文件是 `locales.g.dart`，默认翻译类是 `AppTranslation`：
 

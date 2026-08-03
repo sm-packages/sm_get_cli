@@ -1,5 +1,6 @@
 import 'package:recase/recase.dart';
 
+import '../../../common/utils/pubspec/pubspec_utils.dart';
 import '../../interface/sample_interface.dart';
 
 //Usei arc pra fazer referencia a clean do katekko
@@ -16,7 +17,7 @@ class ArcScreenSample extends Sample {
   @override
   String get content => !isExample
       ? '''import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+${PubspecUtils.getPackageImport}
 
 import 'controllers/${fileName.snakeCase}.controller.dart';
 
@@ -39,7 +40,7 @@ class ${fileName.pascalCase}Screen extends GetView<${fileName.pascalCase}Control
   }
 }
 '''
-      : '''import 'package:get/get.dart';
+      : '''${PubspecUtils.getPackageImport}
 import 'package:flutter/material.dart';
 
 import 'controllers/counter.controller.dart';

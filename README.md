@@ -36,6 +36,7 @@ When migrating from `get_cli`, keep the existing `get`/`getx` commands, `get_cli
 | Capability | User contract |
 | --- | --- |
 | Independent package and compatible commands | Published as `sm_get_cli`; keeps `get`, `getx`, `get_cli:`, and `.get_cli.yaml`. All supported activation sources report the package version. |
+| Configurable GetX import target | `use_sm_getx: true` generates `package:sm_getx/get.dart`; the default remains `package:get/get.dart`. |
 | State generation and GetX 4/5 output | `get create state` and `use_state` generate and connect state files; `version` selects compatible binding output. |
 | Project-defined templates | Explicit template files or a `.template` directory can replace page, controller, binding, state, and insertion templates. |
 | Configurable locale generation | Input and output can be configured or overridden with command flags; file name and class name are set through configuration. |
@@ -54,6 +55,8 @@ get_cli:
   version: 5
   # Defaults to false. Page, screen, and controller generation also creates state.
   use_state: true
+  # Defaults to false. Generate imports for the sm_getx fork.
+  use_sm_getx: true
   templates:
     # Discovers non-recursive *.template files by filename.
     path: assets/templates
@@ -72,6 +75,8 @@ get_cli:
 ```
 
 `version` defaults to `4`, and `use_state` defaults to `false`. Run `get create state:session on home` to create a state explicitly and connect it to a matching controller. For templates, `page` falls back to `view`, and missing custom templates fall back to the built-in samples.
+
+`use_sm_getx` defaults to `false`. When it is `true`, built-in Flutter generators and the `@{import}` custom-template variable emit `import 'package:sm_getx/get.dart';` instead of `package:get/get.dart`. The project must already depend on `sm_getx`; this setting does not add, remove, or change dependencies. Get Server projects continue to import `package:get_server/get_server.dart`.
 
 Locale generation reads only JSON files. Explicit `-i` and `-o` arguments override configuration; the default input is `assets/locales`, the default generated filename is `locales.g.dart`, and the default translation class is `AppTranslation`:
 

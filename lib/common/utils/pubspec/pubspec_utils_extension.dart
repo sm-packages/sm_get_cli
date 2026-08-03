@@ -77,6 +77,17 @@ extension PubspecUtilsExt on PubspecUtils {
     },
   );
 
+  static final _useSmGetx = _PubValue<bool?>(
+    () {
+      try {
+        if (_getCliMap.containsKey('use_sm_getx')) {
+          return (_getCliMap['use_sm_getx'] as bool);
+        }
+      } on Exception catch (_) {}
+      return null;
+    },
+  );
+
   /// 获取 get_cli 配置
   static dynamic get getCliJson => PubspecUtils.getCliJson;
 
@@ -103,6 +114,9 @@ extension PubspecUtilsExt on PubspecUtils {
 
   /// 是否使用 state
   static bool get useState => _useState.value ?? false;
+
+  /// 是否生成 sm_getx 包导入
+  static bool get useSmGetx => _useSmGetx.value ?? false;
 
   static Map get _getCliMap {
     try {
