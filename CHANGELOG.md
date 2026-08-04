@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.9.1-fork.2]
+
 - Fix `get --version` and `getx --version` after path activation by resolving
   the installed package's own version metadata
 - Add `use_sm_getx` to generate `package:sm_getx/get.dart` imports without
