@@ -10,4 +10,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: sm-packages/.github/.github/workflows/publish-pub-dev.yml@v5
+    uses: sm-packages/.github/.github/workflows/publish-pub-dev.yml@v6
+    with:
+      test-command: dart test
