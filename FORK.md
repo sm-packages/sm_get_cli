@@ -34,9 +34,9 @@
 ### 1. 独立包、仓库与兼容协议
 
 - **生命周期：** `长期保留`
-- **原始意图：** 以 `sm-packages/sm_get_cli` 独立维护和发布 GetX CLI。`1.9.1-fork.1` 已发布到 pub.dev，并由同名 annotated tag 标记；当前 `pubspec.yaml` 已准备为尚未发布的 `1.9.1-fork.2`。pub.dev hosted 安装是标准用户渠道，Git 和 path 安装是受支持的显式开发渠道。
+- **原始意图：** 以 `sm-packages/sm_get_cli` 独立维护和发布 GetX CLI。当前发布版本是 `1.9.1-fork.2`，已发布到 pub.dev 并由同名 annotated tag 标记。pub.dev hosted 安装是标准用户渠道，Git 和 path 安装是受支持的显式开发渠道。
 - **必须保持的不变量：** Dart 包名、仓库地址、package import、版本查询、更新检查和安装目标统一使用 `sm_get_cli`；命令名继续为 `get` 和 `getx`；用户项目配置继续使用 `get_cli:` 和 `.get_cli.yaml`；`lib/get_cli.dart` 继续兼容性重导出 `lib/sm_get_cli.dart`。`get --version` 和 `getx --version` 必须在 hosted、Git 和 path 全局激活后都显示包自身 `pubspec.yaml` 的版本，不能依赖快照与 activation lockfile 的相对目录布局。发布版本使用上游 `pubspec.yaml` 的版本作为基线并追加 `-fork.N`：上游版本变化时从 `fork.1` 开始，同一上游基线上的后续本地发布递增 `N`。pub.dev 尚未发布或暂时返回 404 时，自动更新检查必须安全跳过，不能因空版本崩溃。
-- **当前代码和测试路径：** `pubspec.yaml`、`bin/get.dart`、`lib/sm_get_cli.dart`、`lib/get_cli.dart`、`lib/common/utils/pubspec/package_version.dart`、保留旧导入兼容的 `lib/common/utils/pubspec/pubspec_lock.dart`、`lib/common/utils/pub_dev/pub_dev_api.dart`、`lib/common/utils/shell/shel.utils.dart`、`lib/functions/version/version_update.dart`、`test/common/utils/pubspec/package_version_test.dart`、`integration_test/package_version_activation_test.dart`。版本解析有单元回归，path 与本地 Git 激活有隔离的双命令集成测试；hosted 候选仍须在发布后验收。
+- **当前代码和测试路径：** `pubspec.yaml`、`bin/get.dart`、`lib/sm_get_cli.dart`、`lib/get_cli.dart`、`lib/common/utils/pubspec/package_version.dart`、保留旧导入兼容的 `lib/common/utils/pubspec/pubspec_lock.dart`、`lib/common/utils/pub_dev/pub_dev_api.dart`、`lib/common/utils/shell/shel.utils.dart`、`lib/functions/version/version_update.dart`、`test/common/utils/pubspec/package_version_test.dart`、`integration_test/package_version_activation_test.dart`。版本解析有单元回归，path、本地 Git 和 `1.9.1-fork.2` hosted 激活均已通过隔离的双命令集成测试。
 - **用户文档：** `README.md` 的 “Installation”、“Fork capability index” 和 “Runtime and compatibility contracts”；`README-zh_CN.md` 的“安装”、“Fork 能力索引”和“运行与兼容契约”；`README-pt_BR.md` 的 “Instalação”、“Índice de recursos do fork” 和 “Contratos de execução e compatibilidade”。
 - **来源提交：** `b422403a9ad11ccf156fc23046fc3c2fcf65c1b0`、`8eca1a5c84e07552c9ada14d5b1d55c76ee0d119`。前者的中间仓库地址已经被后者的最终地址取代。版本定位修复使用 `git log -S'Isolate.resolvePackageUri' -- lib/common/utils/pubspec/package_version.dart` 定位来源提交。
 - **合并审查：** 把包名、入口、两个 executable、pub.dev 查询、Git 更新 URL 和文档安装命令作为一个原子迁移面审查；先解决源码和模板，再重新生成派生输出。禁止只接受上游的 `get_cli` 包名而保留部分 `sm_get_cli` URL，反之亦然。
@@ -159,4 +159,4 @@
 - `test/path/test.dart` 改名为可发现的 `test/path/replace_to_relative_test.dart` 属于测试基础设施修正，不是独立 fork 产品能力。
 - 本文编写时没有未合并的 `upstream/master` 提交；以后出现的上游专属行为在实际合并前不能列为 fork 能力。
 - 三份 README 的远程 controller 模板链接均指向现存的 `samples_file/controller.dart.template`；旧的 `.example` 缺陷已不再是当前风险。
-- 当前 `1.9.1-fork.2` 候选包含版本定位修复与 `get_package_prefix` 生成配置，尚未发布或创建 tag；发布验证成功后必须创建匹配的 annotated tag `v1.9.1-fork.2`。
+- `1.9.1-fork.2` 已发布到 pub.dev，匹配的 annotated tag `v1.9.1-fork.2` 指向发布提交；hosted 激活已验证 `get` 和 `getx` 两个命令。pub.dev Trusted Publisher 绑定 `sm-packages/sm_get_cli`，tag 模式为 `v{{version}}`，仅允许 push 事件。
