@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:sm_getx/get.dart';
 
 import 'package:example/app/modules/home/home_state.dart';
 

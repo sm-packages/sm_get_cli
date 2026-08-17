@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
+import 'package:sm_getx/get.dart';
 
 /// CustomPage
 class CustomPage extends GetView {

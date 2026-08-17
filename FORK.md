@@ -132,12 +132,12 @@
 - **生命周期：** `长期保留`
 - **原始意图：** 让使用任意 GetX fork 的项目通过 `get_package_prefix` 指定 Dart 包名，避免新模块继续导入官方 `get` 包。
 - **必须保持的不变量：** 配置可位于 `pubspec.yaml` 的 `get_cli:` 下或 `.get_cli.yaml` 顶层，前者按现有规则优先；默认值为 `get` 并生成 `package:get/get.dart`；指定其他合法的小写 Dart 包名后，所有内置 Flutter sample 及自定义模板 `@{import}` 统一生成 `package:<配置值>/get.dart`；空值、错误类型或非法包名必须以明确配置错误终止，不能生成无效 import 或静默回退；Get Server 项目仍生成 `package:get_server/get_server.dart`；配置只控制生成文本，不能自动添加、删除或修改项目依赖。
-- **当前代码和测试路径：** `lib/common/utils/pubspec/pubspec_utils.dart`、`lib/common/utils/pubspec/pubspec_utils_extension.dart`、`lib/commands/impl/install/install_get.dart`、`lib/functions/replace_vars/replace_vars.dart`、`lib/samples/impl/` 下使用 GetX import 的 Flutter samples、`test/common/utils/pubspec/get_package_import_test.dart`、`test/fixtures/get_package_import_main.dart`。
+- **当前代码和测试路径：** `lib/common/utils/pubspec/pubspec_utils.dart`、`lib/common/utils/pubspec/pubspec_utils_extension.dart`、`lib/commands/impl/install/install_get.dart`、`lib/functions/replace_vars/replace_vars.dart`、`lib/samples/impl/` 下使用 GetX import 的 Flutter samples、`example/.get_cli.yaml`、`example/pubspec.yaml`、`example/lib/`、`test/common/utils/pubspec/get_package_import_test.dart`、`test/fixtures/get_package_import_main.dart`。
 - **用户文档：** `README.md`、`README-zh_CN.md`、`README-pt_BR.md` 的能力索引与 fork 配置段。
 - **来源提交：** 当前变更；提交后使用 `git log -S'get_package_prefix' -- lib/common/utils/pubspec/pubspec_utils_extension.dart` 定位。
 - **合并审查：** 将配置读取、共享 import getter、内置 sample 和 `@{import}` 替换作为一个原子面审查；新增 Flutter sample 时必须复用共享 getter，不能重新硬编码包名；不得把包名前缀配置误扩展为依赖安装或版本管理功能。
 - **移除条件：** 只有明确停止支持自定义 GetX 包，或采用能覆盖相同默认值、两种配置入口、全部生成路径和 server 例外的等价包目标机制时才移除。
-- **验证：** 运行 `dart test test/common/utils/pubspec/get_package_import_test.dart`，确认默认、`pubspec.yaml` 自定义前缀、`.get_cli.yaml` 自定义前缀、Get Server，以及空值、错误类型和非法包名路径，并运行 `rg "package:get/get.dart" lib --glob '*.dart'` 复核剩余命中仅为默认行为说明或注释。
+- **验证：** 运行 `dart test test/common/utils/pubspec/get_package_import_test.dart`，确认默认、`pubspec.yaml` 自定义前缀、`.get_cli.yaml` 自定义前缀、Get Server，以及空值、错误类型和非法包名路径；运行 `flutter analyze example` 验证 `sm_getx` 示例；再运行 `rg "package:get/get.dart" lib example/lib --glob '*.dart'` 复核剩余命中仅为默认行为说明或注释。
 
 ## 上游合并清单
 

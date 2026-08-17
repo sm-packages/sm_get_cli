@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:sm_getx/get.dart';
 
 import '../modules/home/home_binding.dart';
 import '../modules/home/home_page.dart';

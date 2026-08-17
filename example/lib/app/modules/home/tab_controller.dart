@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:sm_getx/get.dart';
 
 import 'tab_state.dart';
 

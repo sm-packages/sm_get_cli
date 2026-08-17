@@ -6,5 +6,6 @@ locales:
   input: ../translations
   output: lib/gen
 use_state: true
+get_package_prefix: sm_getx
 templates:
   path: ../samples_file
