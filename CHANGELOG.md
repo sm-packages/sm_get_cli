@@ -6,6 +6,8 @@
   the installed package's own version metadata
 - Add `use_sm_getx` to generate `package:sm_getx/get.dart` imports without
   changing project dependencies
+- Support current `dcli` releases and correct the minimum `pubspec_parse`
+  version required by the CLI
 
 ## [1.9.1-fork.1]
 

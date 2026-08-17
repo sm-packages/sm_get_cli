@@ -16,16 +16,24 @@ part 'pubspec_utils_extension.dart';
 part 'pubspec_utils_templates.dart';
 
 // ignore: avoid_classes_with_only_static_members
+/// Reads and updates package metadata for the current project.
 class PubspecUtils {
   static final _pubspecFile = File('pubspec.yaml');
   static final _getCliFile = File('.get_cli.yaml');
 
+  /// Parses the current project's `pubspec.yaml`.
   static Pubspec get pubSpec => Pubspec.parse(pubspecString);
 
+  /// Returns the current project's raw `pubspec.yaml` contents.
   static String get pubspecString => _pubspecFile.readAsStringSync();
+
+  /// Returns the raw `.get_cli.yaml` contents.
   static String get getCliString => _getCliFile.readAsStringSync();
 
+  /// Decodes the current project's `pubspec.yaml` as YAML.
   static dynamic get pubspecJson => loadYaml(pubspecString);
+
+  /// Decodes `.get_cli.yaml` as YAML.
   static dynamic get getCliJson => loadYaml(getCliString);
 
   /// separtor
@@ -46,10 +54,12 @@ class PubspecUtils {
     return null;
   });
 
+  /// Returns the configured filename separator, when one is set.
   static String? get separatorFileType => _mapSep.value;
 
   static final _mapName = _PubValue<String>(() => pubSpec.name.trim());
 
+  /// Returns the current project's package name.
   static String get projectName => _mapName.value ?? '';
 
   static final _extraFolder = _PubValue<bool?>(
@@ -73,8 +83,10 @@ class PubspecUtils {
     },
   );
 
+  /// Whether generated features should use an additional subfolder.
   static bool? get extraFolder => _extraFolder.value;
 
+  /// Adds [package] to the current project's dependencies.
   static Future<bool> addDependencies(
     String package, {
     String? version,
@@ -131,6 +143,7 @@ class PubspecUtils {
     return true;
   }
 
+  /// Removes [package] from the current project's dependencies.
   static Future<void> removeDependencies(
     String package, {
     bool logger = true,

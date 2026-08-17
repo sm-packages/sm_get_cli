@@ -119,13 +119,13 @@
 
 - **生命周期：** `等待上游吸收`
 - **原始意图：** 适配较新的 Flutter/Dart 工具链和依赖主版本，同时按目标项目 SDK 约束选择 `dart_style` 的格式化语言版本。
-- **必须保持的不变量：** SDK 约束兼容读取 `sdkConstraint` 和 `sdk` 两种表示；生成模型和格式化文件时按目标项目是否支持 Dart 3.7 tall style 选择语言版本；`dart_style 3`、`dcli 7`、`process_run 1.2` 及相关 API 用法保持一致；依赖升级不能悄悄改变生成代码语义。
+- **必须保持的不变量：** SDK 约束兼容读取 `sdkConstraint` 和 `sdk` 两种表示；生成模型和格式化文件时按目标项目是否支持 Dart 3.7 tall style 选择语言版本；`dart_style 3`、`dcli 7` 至 `9`、`process_run 1.2` 及相关 API 用法保持一致；`pubspec_parse` 下界不得低于其 `environment` 非空契约引入的 `1.5.0`；依赖升级不能悄悄改变生成代码语义。
 - **当前代码和测试路径：** `pubspec.yaml`、`lib/common/utils/pubspec/pubspec_utils.dart`、`lib/common/utils/json_serialize/model_generator.dart`、`lib/functions/formatter_dart_file/frommatter_dart_file.dart`、`lib/functions/create/create_single_file.dart`。目前没有直接覆盖 SDK 约束回退、两种 formatter language version 或依赖 API 兼容性的自动化测试。
 - **用户文档：** 三种维护语言 README 的能力索引与运行兼容契约：`README.md`、`README-zh_CN.md`、`README-pt_BR.md`。该能力无需用户额外配置。
 - **来源提交和合并解决：** `d3fd528e3505269642a48224e78376b62ee271a5` 在 `pubspec.yaml` 有非空手工 remerge diff，选择了 `process_run 1.2` 并引入 `yaml_edit`；`70224b517edf4a3b60ab03123426b843c9b3e72d`、`56a080a81f590b9d8bf42c14d956acfdcd4378a7` 完成 SDK 约束回退及 `dart_style 3`、`dcli 7` 适配。
 - **合并审查：** 区分真正的 API/输出兼容改动与大范围 formatter/JSON AST 文本噪声；依赖约束、API 调用和生成输出必须一起验证。不要仅因上游版本号更高就删除本地兼容逻辑。
 - **吸收条件：** 上游支持相同或更新的工具链，SDK 约束读取和两类格式化输出等价，并有足够回归覆盖后，删除本地兼容差异和本条目。
-- **验证：** 运行 `dart analyze`、`dart test`、`dart pub publish --dry-run`；用 SDK 约束分别低于和不低于 Dart 3.7 的两个临时 pubspec 比较生成/格式化结果。当前 formatter 分支仍缺少自动测试。
+- **验证：** 分别运行 `dart pub downgrade` 和 `dart pub upgrade` 后执行 `dart analyze`、`dart test`，再运行 `dart pub publish --dry-run`；用 SDK 约束分别低于和不低于 Dart 3.7 的两个临时 pubspec 比较生成/格式化结果。当前 formatter 分支仍缺少自动测试。
 
 ### 9. 可配置 sm_getx 生成导入
 
