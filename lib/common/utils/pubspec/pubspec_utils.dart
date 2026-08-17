@@ -7,6 +7,7 @@ import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
 import '../../../core/locales.g.dart';
+import '../../../exception_handler/exceptions/cli_exception.dart';
 import '../../../extensions.dart';
 import '../../menu/menu.dart';
 import '../logger/log_utils.dart';
@@ -175,28 +176,36 @@ class PubspecUtils {
     }
   }
 
+  /// Whether [package] is declared by the current project.
   static bool containsPackage(String package, [bool isDev = false]) {
     var dependencies = isDev ? pubSpec.devDependencies : pubSpec.dependencies;
     return dependencies.containsKey(package.trim());
   }
 
+  /// Whether the current project's SDK constraint supports null safety.
   static bool get nullSafeSupport =>
       !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
 
+  /// Whether generated code should use the Dart 3.7 tall style.
   static bool get tallStyle =>
       !sdkVersionConstraint!.allowsAny(VersionConstraint.parse('>=3.7.0'));
 
+  /// Returns the current project's Dart SDK constraint.
   static VersionConstraint? get sdkVersionConstraint =>
       pubSpec.environment['sdkConstraint'] ?? pubSpec.environment['sdk'];
 
   /// make sure it is a get_server project
-  static bool get isServerProject {
-    return containsPackage('get_server');
-  }
+  static bool get isServerProject =>
+      PubspecUtilsExt.getPackagePrefix.isNotEmpty &&
+      containsPackage('get_server');
 
-  static String get getPackageImport => isServerProject
-      ? "import 'package:get_server/get_server.dart';"
-      : "import 'package:${PubspecUtilsExt.useSmGetx ? 'sm_getx' : 'get'}/get.dart';";
+  /// Returns the Get import generated for the current project.
+  static String get getPackageImport {
+    final packagePrefix = PubspecUtilsExt.getPackagePrefix;
+    return isServerProject
+        ? "import 'package:get_server/get_server.dart';"
+        : "import 'package:$packagePrefix/get.dart';";
+  }
 
   // static v.Version? getPackageVersion(String package) {
   //   if (containsPackage(package)) {

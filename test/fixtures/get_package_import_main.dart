@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:sm_get_cli/common/utils/pubspec/pubspec_utils.dart';
+import 'package:sm_get_cli/commands/impl/create/controller/controller.dart';
+import 'package:sm_get_cli/commands/impl/create/state/state.dart';
 import 'package:sm_get_cli/commands/impl/install/install_get.dart';
+import 'package:sm_get_cli/core/generator.dart';
+import 'package:sm_get_cli/exception_handler/exception_handler.dart';
 import 'package:sm_get_cli/functions/replace_vars/replace_vars.dart';
 import 'package:sm_get_cli/samples/impl/arctekko/arc_main.dart';
 import 'package:sm_get_cli/samples/impl/arctekko/arc_navigation.dart';
@@ -14,12 +18,33 @@ import 'package:sm_get_cli/samples/impl/get_state.dart';
 import 'package:sm_get_cli/samples/impl/get_view.dart';
 import 'package:sm_get_cli/samples/impl/getx_pattern/get_main.dart';
 
-Future<void> main() async {
-  if (PubspecUtilsExt.useSmGetx) {
+Future<void> main(List<String> arguments) async {
+  try {
+    await _run(arguments);
+  } on Exception catch (error) {
+    ExceptionHandler().handle(error);
+  }
+}
+
+Future<void> _run(List<String> arguments) async {
+  if (arguments case ['create-controller']) {
+    GetCli(['create', 'controller:home']);
+    await CreateControllerCommand().createController('home');
+    return;
+  }
+  if (arguments case ['create-state']) {
+    GetCli(['create', 'state:home']);
+    await CreateStateCommand().createState('home');
+    return;
+  }
+
+  if (PubspecUtilsExt.getPackagePrefix != 'get') {
     final pubspecBefore = PubspecUtils.pubspecString;
     await installGet();
     if (PubspecUtils.pubspecString != pubspecBefore) {
-      throw StateError('use_sm_getx must not change project dependencies');
+      throw StateError(
+        'get_package_prefix must not change project dependencies',
+      );
     }
   }
 

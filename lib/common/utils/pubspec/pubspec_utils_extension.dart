@@ -77,14 +77,16 @@ extension PubspecUtilsExt on PubspecUtils {
     },
   );
 
-  static final _useSmGetx = _PubValue<bool?>(
+  static final _getPackagePrefix = _PubValue<String?>(
     () {
-      try {
-        if (_getCliMap.containsKey('use_sm_getx')) {
-          return (_getCliMap['use_sm_getx'] as bool);
-        }
-      } on Exception catch (_) {}
-      return null;
+      if (!_getCliMap.containsKey('get_package_prefix')) return null;
+      final prefix = _getCliMap['get_package_prefix'];
+      if (prefix is! String || !RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(prefix)) {
+        throw CliException(
+          'get_package_prefix must be a valid Dart package name',
+        );
+      }
+      return prefix;
     },
   );
 
@@ -115,8 +117,8 @@ extension PubspecUtilsExt on PubspecUtils {
   /// 是否使用 state
   static bool get useState => _useState.value ?? false;
 
-  /// 是否生成 sm_getx 包导入
-  static bool get useSmGetx => _useSmGetx.value ?? false;
+  /// 生成 Get import 时使用的包名
+  static String get getPackagePrefix => _getPackagePrefix.value ?? 'get';
 
   static Map get _getCliMap {
     try {

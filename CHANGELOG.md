@@ -4,8 +4,8 @@
 
 - Fix `get --version` and `getx --version` after path activation by resolving
   the installed package's own version metadata
-- Add `use_sm_getx` to generate `package:sm_getx/get.dart` imports without
-  changing project dependencies
+- Add `get_package_prefix` to generate imports for any compatible GetX package
+  without changing project dependencies, rejecting invalid package names
 - Support current `dcli` releases and correct the minimum `pubspec_parse`
   version required by the CLI
 
